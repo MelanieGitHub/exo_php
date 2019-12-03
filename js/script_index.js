@@ -1,9 +1,5 @@
 $(document).ready(function() {
 
-    $('#refreshErrorI').empty();
-    $('#refreshErrorC').empty();
-    $('#refreshSucces').empty();
-
     let array_error = ["erreur=3", "erreur=4", "erreur=5", "erreur=6"];
 
     for (let elem of array_error) {

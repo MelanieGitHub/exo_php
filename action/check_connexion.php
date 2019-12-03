@@ -30,13 +30,13 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
          $_SESSION['username'] = $username;
          header('Location: ../mange.php');
       } else {
-         header('Location: ../user_login.php?erreur=1');
+         header('Location: ../index.php?erreur=1');
       }
    } else {
-      header('Location: ../user_login.php?erreur=2');
+      header('Location: ../index.php?erreur=2');
    }
 } else {
-   header('Location: ../user_login.php');
+   header('Location: ../index.php');
 }
 
 ////////////////////////////////////////////////////////
@@ -69,24 +69,24 @@ if (isset($_POST['username_i']) && isset($_POST['mail_i']) && isset($_POST['pass
 
                if ($password == $password2) {
 
-                  $requete_inscription = "INSERT INTO compte VALUES('" . $username . "', '" . $mail . "', '" . $password . "', '" . $password2 . "')";
+                  $requete_inscription = "INSERT INTO compte VALUES(NULL, '" . $username . "', '" . $mail . "', '" . $password . "')";
                   $exec_requete_inscription = mysqli_query($db, $requete_inscription);
          
-                  header('Location: ../user_login.php?inscription=1');
+                  header('Location: ../index.php?inscription=1');
                } else {
-                  header('Location: ../user_login.php?erreur=6');
+                  header('Location: ../index.php?erreur=6');
                }
             } else {
-               header('Location: ../user_login.php?erreur=5');
+               header('Location: ../index.php?erreur=5');
             }
          } else {
-            header('Location: ../user_login.php?erreur=3');
+            header('Location: ../index.php?erreur=3');
          }
       } else {
-         header('Location: ../user_login.php?erreur=4');
+         header('Location: ../index.php?erreur=4');
       }
    } else {
-      header('Location: ../user_login.php');
+      header('Location: ../index.php');
    }
 }
 

@@ -25,11 +25,9 @@ $(document).ready(function() {
                 if (cpt == data.length - 1) {
                     let pseudo = data.substring(tbl[2] + 1, tbl[3]);
                     let mail = data.substring(tbl[6] + 1, tbl[7]);
-                    let avatar = data.substring(tbl[14] + 1, tbl[15]);
 
                     $('#pseudoCompte').html(pseudo);
                     $('#mailCompte').html(mail);
-                    $('#avatarCompte').attr('src', avatar);
                 } else {
                     cpt++;
                 }

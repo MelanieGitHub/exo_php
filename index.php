@@ -151,7 +151,7 @@
                             echo "<p class='text-danger font-weight-bold text-center mt-3 pb-0 mb-0'>Format du mot de passe invalide</p>";
                         }
 
-                        if ($err == 5) {
+                        if ($err == 6) {
                             echo "<p class='text-danger font-weight-bold text-center mt-3 pb-0 mb-0'>Mots de passe différent</p>";
                         }
                     }

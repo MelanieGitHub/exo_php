@@ -1,0 +1,17 @@
+body {
+    background-color: #17a2b8;
+    color: black;
+}
+
+nav {
+    color: white;
+    font-size: 2rem;
+}
+
+.font-site {
+    font-family: 'Luckiest Guy', cursive;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
