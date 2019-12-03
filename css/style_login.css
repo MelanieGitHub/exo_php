@@ -1,0 +1,28 @@
+body {
+    background-color: #17a2b8;
+    color: white;
+}
+
+label {
+    color: black;
+}
+
+.bg-theme {
+    background-color: #17a2b8;
+}
+
+.font-site {
+    font-family: 'Luckiest Guy', cursive;
+}
+
+.logo {
+    font-size: 4rem;
+}
+
+#sctInscription {
+    display: none;
+}
+
+#div_lien_inscription {
+    display: none;
+}
