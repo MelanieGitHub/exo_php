@@ -8,10 +8,18 @@ nav {
     font-size: 2rem;
 }
 
+section {
+    display: none;
+}
+
 .font-site {
     font-family: 'Luckiest Guy', cursive;
 }
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+p {
+    margin-bottom: 0;
 }

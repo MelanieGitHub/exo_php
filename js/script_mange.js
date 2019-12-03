@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
-    $('#sctSujets').show('slow');
+    $('#sctSearch').slideDown('slow');
+    $('#sctAffichage').slideDown('slow');
 
     /////////////////////////////////////////////////////////////////////////
     ///////////////// Retrieve COMPTE Utilisateur ///////////////////////////
@@ -38,17 +39,6 @@ $(document).ready(function() {
         }
     });
 
-    /////////////////////////////////////////////////////////////////////////
-    //////////////////////// A Propos DU FORUM /////////////////////////////
-    /////////////////////////////////////////////////////////////////////////
-
-    $('#lk_About_Forum').on('click', function(event) {
-        event.preventDefault();
-
-        $('section').hide(0);
-        $('#sctAboutForum').show('slow');
-    });
-
 
     /////////////////////////////////////////////////////////////////////////
     //////////////////////// PROFIL Utilisateur /////////////////////////////
@@ -56,7 +46,7 @@ $(document).ready(function() {
 
     $('#lk_Profil').on('click', function(event) {
         event.preventDefault();
-
+        alert('truc')
         $('section').hide(0);
         $('#sctProfil').show('slow');
     });

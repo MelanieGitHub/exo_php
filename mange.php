@@ -60,12 +60,12 @@
                               </a>
                         </li>
 
-                        <!-- <li class="nav-item">
-                              <a id='lk_About_Forum' class="nav-link text-light">
-                                    <i class="fas fa-cogs"></i>
-                                    <span class="pl-2">À propos du Forum</span>
+                        <li class="nav-item">
+                              <a id='lk_Panier' class="nav-link text-light">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span class="pl-2">Mon panier</span>
                               </a>
-                        </li> -->
+                        </li>
 
                         <li class="nav-item">
                               <a href='mange.php?deconnexion=true' class="cursor-pointer nav-link text-light">
@@ -105,51 +105,204 @@
       }
       ?>
 
-      <article id='bodyArticle' class='d-none mt-5'>
+      <article id='bodyArticle' class='mt-5'>
 
             <!-- //////////////////////////////////////////////////////////////////////// -->
             <!-- ////////////////// TOUS LES ARTICLES | SUJETS ////////////////////////// -->
             <!-- //////////////////////////////////////////////////////////////////////// -->
 
-            <section id='sctSujets' class='container'>
+            <section id='sctSearch' class='container'>
+                  <div class='mb-3 p-4 border rounded row'>
+                        <h4 class='col-12 border-bottom pb-3 font-weight-bold'>Bienvenue ! </h4>
+                  </div>
+
+
                   <div class='p-2 bg-info rounded mb-3'>
                         <a class="nav-link text-light d-flex">
-                              <input class="form-control" type="text" placeholder="Rechercher ...">
+                              <input class="form-control" type="text" placeholder="Liste des plats contenant le mot...">
                               <i class="fas fa-search ml-4 mt-2"></i>
                         </a>
                   </div>
 
+                  <div class='d-flex justify-content-around'>
+                        <div class='p-4'>
+                              <form class='p-4 border border-info rounded' action="">
+                                    <div class="form-group">
+                                          <label class='text-center font-weight-bold'>Liste des plats par prix, origine: </label>
+                                          <div class='row'>
+                                                <p class='col-sm-6 mb-0'>
+                                                      <label>Prix minimum : </label>
+                                                      <input type="number" step='1' class='form-control'>
+                                                </p>
 
-                  <?php
+                                                <p class='col-sm-6 mb-0'>
+                                                      <label>Prix maximum : </label>
+                                                      <input type="number" step='1' class='form-control'>
+                                                </p>
 
-                  // while ($data = $rep_sujet->fetch()) {
-                  ?>
-                  <div class='p-4 border rounded bg-smooth-white row'>
-                        <h4 class='col-12 border-bottom pb-3 font-weight-bold'>Bienvenue ! </h4>
+                                          </div>
+                                          <div class="mt-3 form-group">
+                                                <label class='text-center' for="selectOrigine">Origine : </label>
+                                                <select id="selectOrigine" class="form-control">
+                                                      <option value="">Option 1</option>
+                                                      <option value="">Option 2</option>
+                                                      <option value="">Option 3</option>
+                                                      <option value="">...</option>
+                                                      <?php
+                                                      // session_start();
 
-                       
+                                                      // $requete = "SELECT Libelle FROM ingredient";
+                                                      // $exec_requete = mysqli_query($db, $requete);
+                                                      // $rep_ingredient = mysqli_fetch_array($exec_requete);
+
+                                                      // $exec_requete = $mysqli->query($db, $requete);
+                                                      // $rep_ingredient = mysqli_fetch_array($exec_requete);
+
+                                                      // while ($data = $rep_ingredient->fetch_assoc()) {
+                                                      ?>
+                                                      <!-- <option>  -->
+                                                      <?php //echo $data['Libelle']; 
+                                                      ?>
+                                                      <!-- </option> -->
+                                                      <?php
+                                                      // }
+
+                                                      // $rep_ingredient->closeCursor();
+
+                                                      // mysqli_close($db); // fermer la connexion
+                                                      ?>
+                                                </select>
+
+                                          </div>
+                                          <input type="submit" class='btn btn-info col-12 mt-3' value='Rechercher'>
+                                    </div>
+                              </form>
+                        </div>
+
+                        <div class='p-4 align-self-center'>
+                              <form class='p-4 border border-info rounded' action="">
+                                    <div class="form-group">
+                                          <label class='text-center font-weight-bold' for="selectIngredient">Liste des plats contenant l'ingrédient : </label>
+                                          <select id="selectIngredient" class="form-control">
+                                                <option value="">Option 1</option>
+                                                <option value="">Option 2</option>
+                                                <option value="">Option 3</option>
+                                                <option value="">...</option>
+                                                <?php
+                                                // session_start();
+
+                                                // $requete = "SELECT Libelle FROM ingredient";
+                                                // $exec_requete = mysqli_query($db, $requete);
+                                                // $rep_ingredient = mysqli_fetch_array($exec_requete);
+
+                                                // $exec_requete = $mysqli->query($db, $requete);
+                                                // $rep_ingredient = mysqli_fetch_array($exec_requete);
+
+                                                // while ($data = $rep_ingredient->fetch_assoc()) {
+                                                ?>
+                                                <!-- <option>  -->
+                                                <?php //echo $data['Libelle']; 
+                                                ?>
+                                                <!-- </option> -->
+                                                <?php
+                                                // }
+
+                                                // $rep_ingredient->closeCursor();
+
+                                                // mysqli_close($db); // fermer la connexion
+                                                ?>
+                                          </select>
+
+                                          <input type="submit" class='btn btn-info col-12 mt-3' value='Rechercher'>
+                                    </div>
+                              </form>
+                        </div>
                   </div>
 
-                  <?php
-                  // }
-                  ?>
             </section>
 
             <!-- //////////////////////////////////////////////////////////////////////// -->
-            <!-- /////////////////////// A PROPOS DU FORUM /////////////////////////////// -->
+            <!-- //////////////////////////////// AFFICHAGE ///////////////////////////// -->
             <!-- //////////////////////////////////////////////////////////////////////// -->
 
-            <section id='sctAboutForum' class='container'>
+            <section id='sctAffichage' class='container border border-dark rounded'>
+                  <div class='p-4'>
+                        <p>Résultat de la recherche :</p>
+                        <?php
+                        // session_start();
 
-                  <div class='border rounded'>
-                        <p>Titre</p>
-                        <p>Olala</p>
-                        <p>Que d'émotions</p>
-                        <p>Tellement de balise p !!!!!!!!!</p>
+                        // $requete = "SELECT Libelle FROM ingredient";
+                        // $exec_requete = mysqli_query($db, $requete);
+                        // $rep_ingredient = mysqli_fetch_array($exec_requete);
+
+                        // $exec_requete = $mysqli->query($db, $requete);
+                        // $rep_ingredient = mysqli_fetch_array($exec_requete);
+
+                        // while ($data = $rep_ingredient->fetch_assoc()) {
+                        ?>
+
+                        <div class='border-top border-bottom p-3'>
+                              <div class='row justify-content-between'>
+                                    <p class='font-weight-bold'> Titre<?php //echo $data['Titre recette'];  
+                                                                        ?> </p>
+                                    <p class='text-secondary'> Type<?php //echo $data['Type recette'];  
+                                                                        ?> </p>
+                                          <label for="">Quantité : </label>
+                                          <input class='col-1 form-control' type="number" step='1' value='<?php //echo $data['quantite']; 
+                                                                                    ?>'>
+
+                                    <p>
+                                          <button class='btn btn-dark' type='button'>
+                                                <i class="fas fa-cart-plus"></i>
+                                                <span>Ajouter</span>
+                                          </button>
+                                    </p>
+                              </div>
+                              <div class='row justify-content-between'>
+                                    <p>
+                                          <label for="">Prix : </label>
+                                          <p><?php //echo $data['prix']; 
+                                                                                    ?></p>
+                                    </p>
+                                    <p class='font-weight-bold'> Catégorie<?php //echo $data['categorie'];  
+                                                                              ?> </p>
+                                    <p class='text-secondary'> Poids<?php //echo $data['poids'];  
+                                                                        ?> </p>
+                              </div>
+
+                              <div class='row'>
+                                    <label for="">Origine : </label>
+                                    <p type="number"><?php //echo $data['origine']; 
+                                                      ?></p>
+                              </div>
+
+                              <div class='row'>
+                                    <label for="">Ingrédients : </label>
+                                    <p type="number"><?php //echo $data['ingredients']; 
+                                                      ?></p>
+                              </div>
+                        </div>
+                        <?php
+                        // }
+
+                        // $rep_ingredient->closeCursor();
+
+                        // mysqli_close($db); // fermer la connexion
+                        ?>
+
+
                   </div>
 
             </section>
 
+            <!-- //////////////////////////////////////////////////////////////////////// -->
+            <!-- //////////////////////////////// PANIER ///////////////////////////////// -->
+            <!-- ///////////////////////////////////////////////////////////////////////// -->
+
+            <section id='sctPanier' class='container border border-dark rounded'>
+                  <p>Votre commande :</p>
+
+            </section>
 
             <!-- //////////////////////////////////////////////////////////////////////// -->
             <!-- /////////////////// PROFIL | UPDATE | DELETE /////////////////////////// -->
