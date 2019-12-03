@@ -48,6 +48,20 @@
         <section id='sctConnexion'>
             <!-- zone de connexion -->
             <form action="action/check_connexion.php" method="post" class='col-6 m-auto p-5 bg-light rounded'>
+                <div id='refreshSucces'>
+                    <?php
+
+                    if (isset($_GET['inscription'])) {
+                        $success = $_GET['inscription'];
+                        if ($success == 1) {
+                            echo "<p class='text-success font-weight-bold text-center mb-4 pt-0 mt-0'>Inscription réussi !</p>";
+                        }
+                    }
+
+                    ?>
+                </div>
+
+
                 <div class="form-group row">
                     <label id="lblConnexionPseudo" for="txtConnexionPseudo" class="col-sm-4 col-form-label">Pseudo :</label>
                     <div class="col-sm-8">
@@ -65,14 +79,19 @@
                 <div class="form-group mb-0">
                     <input id='submit' type="submit" class="mt-3 btn btn-info col-12" name='connexion' value="Accéder au compte">
                 </div>
+                <div id='refreshErrorC'>
 
-                <?php
-                if (isset($_GET['erreur'])) {
-                    $err = $_GET['erreur'];
-                    if ($err == 1 || $err == 2)
-                        echo "<p class='text-danger text-center mt-3 pb-0 mb-0'>Utilisateur ou mot de passe incorrect</p>";
-                }
-                ?>
+                    <?php
+
+                    if (isset($_GET['erreur'])) {
+                        $err = $_GET['erreur'];
+                        if ($err == 1 || $err == 2) {
+                            echo "<p class='text-danger font-weight-bold text-center mt-3 pb-0 mb-0'>Utilisateur ou mot de passe incorrect</p>";
+                        }
+                    }
+
+                    ?>
+                </div>
 
             </form>
 
@@ -114,27 +133,30 @@
                 <div class="form-group mb-0">
                     <input id='submit_i' type="submit" class="mt-3 btn btn-info col-12" name='inscription' value="Confirmer l'inscription">
                 </div>
+                
+                <div id='refreshErrorI'>
 
-                <?php
-                if (isset($_GET['erreur'])) {
-                    $err = $_GET['erreur'];
-                    if ($err == 3) {
-                        echo "<p class='text-danger text-center mt-3 pb-0 mb-0'>Format du Mail invalide</p>";
-                    }
+                    <?php
+                    if (isset($_GET['erreur'])) {
+                        $err = $_GET['erreur'];
+                        if ($err == 3) {
+                            echo "<p class='text-danger font-weight-bold text-center mt-3 pb-0 mb-0'>Format du Mail invalide</p>";
+                        }
 
-                    if ($err == 4) {
-                        echo "<p class='text-danger text-center mt-3 pb-0 mb-0'>Format du Pseudo invalide</p>";
-                    }
+                        if ($err == 4) {
+                            echo "<p class='text-danger font-weight-bold text-center mt-3 pb-0 mb-0'>Format du Pseudo invalide</p>";
+                        }
 
-                    if ($err == 5) {
-                        echo "<p class='text-danger text-center mt-3 pb-0 mb-0'>Format du mot de passe invalide</p>";
-                    }
+                        if ($err == 5) {
+                            echo "<p class='text-danger font-weight-bold text-center mt-3 pb-0 mb-0'>Format du mot de passe invalide</p>";
+                        }
 
-                    if ($err == 5) {
-                        echo "<p class='text-danger text-center mt-3 pb-0 mb-0'>Mots de passe différent</p>";
+                        if ($err == 5) {
+                            echo "<p class='text-danger font-weight-bold text-center mt-3 pb-0 mb-0'>Mots de passe différent</p>";
+                        }
                     }
-                }
-                ?>
+                    ?>
+                </div>
 
             </form>
 

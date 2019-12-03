@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 // connexion à la base de données
 $db_username = 'root';
 $db_password = '';
@@ -8,6 +6,8 @@ $db_name     = 'exo_php';
 $db_host     = 'localhost';
 $db = mysqli_connect($db_host, $db_username, $db_password, $db_name)
    or die('could not connect to database');
+
+session_start();
 
 ////////////////////////////////////////////////////////
 /////////////// CONNEXION //////////////////////////////
@@ -28,7 +28,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
       if ($count_if != 0) {
          $_SESSION['username'] = $username;
-         header('Location: ../forum.php');
+         header('Location: ../mange.php');
       } else {
          header('Location: ../user_login.php?erreur=1');
       }
@@ -72,7 +72,7 @@ if (isset($_POST['username_i']) && isset($_POST['mail_i']) && isset($_POST['pass
                   $requete_inscription = "INSERT INTO compte VALUES('" . $username . "', '" . $mail . "', '" . $password . "', '" . $password2 . "')";
                   $exec_requete_inscription = mysqli_query($db, $requete_inscription);
          
-                  echo $requete_inscription;
+                  header('Location: ../user_login.php?inscription=1');
                } else {
                   header('Location: ../user_login.php?erreur=6');
                }
