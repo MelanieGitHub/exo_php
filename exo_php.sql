@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mer. 04 déc. 2019 à 10:19
+-- Généré le :  mer. 04 déc. 2019 à 16:53
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.2.24
 
@@ -83,7 +83,7 @@ INSERT INTO `ingredient` (`ID_Ingredient`, `Libelle`) VALUES
 (9, 'Sel'),
 (10, 'Poivre'),
 (11, 'Dorade'),
-(12, 'Huile'),
+(12, 'Huile d\'olive'),
 (13, 'Tagliatelles'),
 (14, 'Lardons fumés'),
 (15, 'Oeufs'),
@@ -98,7 +98,23 @@ INSERT INTO `ingredient` (`ID_Ingredient`, `Libelle`) VALUES
 (24, 'Courgettes'),
 (25, 'Feta'),
 (26, 'Lait'),
-(27, 'Origan');
+(27, 'Origan'),
+(28, 'Pain hamburger'),
+(29, 'Viande hachée'),
+(30, 'Cheddar'),
+(31, 'Tomate'),
+(32, 'Salade'),
+(33, 'Moutarde'),
+(34, 'Ketshup'),
+(35, 'Pommes de terre'),
+(36, 'Carottes'),
+(37, 'Thym'),
+(38, 'Laurier'),
+(39, 'Poireau'),
+(40, 'Céleri'),
+(41, 'Écorce d\'orange'),
+(42, 'Crevettes'),
+(43, 'Bar');
 
 -- --------------------------------------------------------
 
@@ -120,7 +136,27 @@ INSERT INTO `ingredient_plat` (`ID`, `Cle_Plat`, `Cle_Ingredient`) VALUES
 (1, 1, 1),
 (2, 1, 4),
 (3, 2, 20),
-(4, 2, 23);
+(4, 2, 23),
+(5, 5, 28),
+(6, 5, 29),
+(7, 5, 3),
+(8, 5, 30),
+(9, 5, 31),
+(10, 5, 32),
+(11, 5, 33),
+(12, 5, 34),
+(13, 3, 43),
+(14, 3, 36),
+(15, 3, 39),
+(16, 3, 40),
+(17, 4, 36),
+(18, 4, 16),
+(19, 4, 2),
+(20, 4, 35),
+(21, 6, 11),
+(22, 6, 21),
+(23, 6, 37),
+(24, 6, 38);
 
 -- --------------------------------------------------------
 
@@ -156,16 +192,21 @@ CREATE TABLE `plat` (
   `Libelle` varchar(3000) NOT NULL,
   `Type` int(11) NOT NULL,
   `Origine` int(11) NOT NULL,
-  `Prix` float NOT NULL
+  `Prix` float NOT NULL,
+  `Poids` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `plat`
 --
 
-INSERT INTO `plat` (`ID`, `Libelle`, `Type`, `Origine`, `Prix`) VALUES
-(1, 'Blanquette de dinde', 4, 2, 15.99),
-(2, 'Tartes aux pommes', 2, 4, 8.5);
+INSERT INTO `plat` (`ID`, `Libelle`, `Type`, `Origine`, `Prix`, `Poids`) VALUES
+(1, 'Blanquette de dinde', 7, 2, 15.99, 200),
+(2, 'Tartes aux pommes', 2, 4, 8.5, 100),
+(3, 'Soupe de Bar', 3, 5, 16.6, 120),
+(4, 'Curry Végé', 1, 1, 11.2, 230),
+(5, 'Hamburger', 7, 1, 6.5, 200),
+(6, 'Dorade au four', 6, 3, 19.4, 500);
 
 -- --------------------------------------------------------
 
@@ -199,7 +240,9 @@ INSERT INTO `type` (`ID_Type`, `Libelle`) VALUES
 (2, 'Dessert'),
 (3, 'Entrée'),
 (4, 'Plat chaud'),
-(5, 'Plat froid');
+(5, 'Plat froid'),
+(6, 'Poisson'),
+(7, 'Viande');
 
 --
 -- Index pour les tables déchargées
@@ -280,13 +323,13 @@ ALTER TABLE `compte`
 -- AUTO_INCREMENT pour la table `ingredient`
 --
 ALTER TABLE `ingredient`
-  MODIFY `ID_Ingredient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `ID_Ingredient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT pour la table `ingredient_plat`
 --
 ALTER TABLE `ingredient_plat`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT pour la table `origine`
@@ -298,7 +341,7 @@ ALTER TABLE `origine`
 -- AUTO_INCREMENT pour la table `plat`
 --
 ALTER TABLE `plat`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `plat_commande`
@@ -310,7 +353,7 @@ ALTER TABLE `plat_commande`
 -- AUTO_INCREMENT pour la table `type`
 --
 ALTER TABLE `type`
-  MODIFY `ID_Type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID_Type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Contraintes pour les tables déchargées
