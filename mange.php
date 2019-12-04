@@ -128,10 +128,10 @@
 
 
                   <div class='p-2 bg-info rounded mb-3'>
-                        <form action="mange.php">
+                        <form method='post'>
                               <p class="nav-link text-light d-flex">
-                                    <input class="form-control" type="text" placeholder="Liste des plats contenant le mot...">
-                                    <input class='ml-3 btn btn-light' type='submit' name='search' value='Search'>
+                                    <input class="form-control" type="text" name='search' placeholder="Liste des plats contenant le mot...">
+                                    <input class='ml-3 btn btn-light' type='submit' value='Search'>
                               </p>
                         </form>
                   </div>
@@ -209,69 +209,64 @@
             <!-- //////////////////////////////// AFFICHAGE ///////////////////////////// -->
             <!-- //////////////////////////////////////////////////////////////////////// -->
 
-            <section id='sctAffichage' class='container border border-dark rounded'>
+            <section id='sctAffichage' class='container border border-dark rounded mb-5'>
                   <div class='p-4'>
-                        <p>Résultat de la recherche :</p>
+                        <p class='pb-3 border-bottom border-dark'>Résultat de la recherche :</p>
 
                         <?php
                         if (isset($_POST['search'])) {
-                              // $search = mysqli_real_escape_string($db, htmlspecialchars($_POST['search']));
-                              $requete_recherche = "SELECT Libelle FROM plat";
+                              $search = mysqli_real_escape_string($db, htmlspecialchars($_POST['search']));
+                              $requete_recherche = "SELECT plat.Libelle, type.Libelle AS Type, origine.Libelle AS Origine, plat.Prix, plat.Poids FROM plat LEFT JOIN type ON plat.Type = type.ID_Type LEFT JOIN origine ON plat.Origine = origine.ID_Origine WHERE plat.Libelle LIKE  '%" . $search . "%'";
+                              // SELECT Libelle FROM plat WHERE Libelle LIKE '%Blanq%'
                               $exec_requete_recherche = mysqli_query($db, $requete_recherche);
 
                               while ($data = mysqli_fetch_assoc($exec_requete_recherche)) {
 
                                     ?>
+                                    <div class='border-bottom border-dark p-3'>
+                                          <div class='d-flex justify-content-between border-bottom p-3'>
+                                                <p class='col-5'>
+                                                      <span class='font-weight-bold'><?php echo $data['Libelle']; ?></span> <span class='text-secondary'><?php echo $data['Poids']; ?>g</span><br>
+                                                      <span class='font-italic'><?php echo $data['Type']; ?></span>
+                                                </p>
 
-                                    <p class='font-weight-bold'><?php echo $data['Libelle']; ?></p>
+                                                <p class='col-3 d-flex justify-content-start'>
+                                                      <label class='align-self-center' for="">Quantité : </label>
+                                                      <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
+                                                </p>
+
+                                                <p class='col-4 d-flex justify-content-end'>
+                                                      <button class='btn btn-dark' type='button'>
+                                                            <i class="fas fa-cart-plus mr-2"></i>
+                                                            <span>Ajouter</span>
+                                                      </button>
+                                                </p>
+                                          </div>
+                                          <div class='d-flex justify-content-start border-bottom p-3'>
+                                                <p class='col-4'>
+                                                      <label for="">Prix : </label>
+                                                      <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
+                                                </p>
+
+                                                <p class='col-4'>
+                                                      <label for="">Origine : </label>
+                                                      <span class='text-info'><?php echo $data['Origine']; ?></span>
+                                                </p>
+                                          </div>
+                                          <div class='d-flex justify-content-start p-3'>
+                                                <p class='col-10 '>
+                                                      <label for="">Ingrédients : </label>
+                                                      <span class='text-info'>Ex1, ex2, ex3</span>
+                                                </p>
+                                          </div>
+                                    </div>
+
+
                         <?php
                               }
                         }
 
                         ?>
-
-                        <div class='border-top border-bottom p-3'>
-                              <!-- <div class='row justify-content-between'>
-                                    <p class='font-weight-bold'> Titre<?php //echo $data['Libelle']; 
-                                                                        ?> </p>
-                                    <!-- <p class='text-secondary'> Type<?php //echo $data['Type']; 
-                                                                        ?> </p> -->
-                              <!-- <label for="">Quantité : </label>
-                                    <input class='col-1 form-control' type="number" step='1' value='1'>
-
-                                    <p>
-                                          <button class='btn btn-dark' type='button'>
-                                                <i class="fas fa-cart-plus"></i>
-                                                <span>Ajouter</span>
-                                          </button>
-                                    </p>
-                              </div> -->
-                              <!-- <div class='row justify-content-between'>
-                                    <p>
-                                          <label for="">Prix : </label>
-                                          <p><?php //echo $data['Prix']; 
-                                                ?></p>
-                                    </p>
-                                    <p class='font-weight-bold'> Catégorie<?php //echo $data['categorie'];  
-                                                                              ?> </p>
-                                    <p class='text-secondary'> Poids<?php //echo $data['poids'];  
-                                                                        ?> </p>
-                              </div>
-
-                              <div class='row'>
-                                    <label for="">Origine : </label>
-                                    <p type="number"><?php //echo $data['origine']; 
-                                                      ?></p>
-                              </div>
-
-                              <div class='row'>
-                                    <label for="">Ingrédients : </label>
-                                    <p type="number"><?php //echo $data['ingredients']; 
-                                                      ?></p>
-                              </div> -->
-                        </div>
-
-
 
                   </div>
 
@@ -293,16 +288,18 @@
             <section id='sctProfil' class='container border border-dark rounded'>
                   <div class='text-center'>
                         <div class='d-sm-flex p-4'>
-                              <div class='border p-4 col-sm-6 row'>
-                                    <p id='pseudoCompte' class='col-12 border-bottom pb-3'></p>
-                                    <div class='col-6 mt-3 align-self-end'>
-                                          <p id='mailCompte' class='pb-4'></p>
+                              <div class='border p-4 col-sm-6'>
+                                    <p id='pseudoCompte' class='col-12 border-bottom pb-3 font-weight-bold'></p>
+                                    <div class='mt-3 align-self-end'>
+                                          <p id='mailCompte' class='font-italic pb-4'></p>
 
                                           <p>
                                                 <a role='button' class='text-info' href=''>Mettre à jour mon mail</a>
                                           </p>
                                     </div>
                                     <p class='col-12 border-top mt-4 mb-0 pt-3'>
+                                          <p class='pb-3'>La suppression de votre compte sera définitive. <br>
+                                                Aucunes informations sur vous ou votre compte ne seront sauvegardées.</p>
                                           <a role='button' class='text-danger' href=''>Supprimer mon compte</a>
                                     </p>
 
@@ -316,8 +313,8 @@
                                           <form action="update_mdp.php">
                                                 <input class='form-control mb-3' type="password" placeholder="Votre mot de passe actuel" autocomplete="false" readonly onfocus="this.removeAttribute('readonly');">
                                                 <input class='form-control mb-3' type="password" placeholder="Votre nouveau mot de passe" autocomplete="false" readonly onfocus="this.removeAttribute('readonly');">
-                                                <input class='form-control' type="password" placeholder="Confirmez votre nouveau mot de passe" autocomplete="false" readonly onfocus="this.removeAttribute('readonly');">
-                                                <input class='btn btn-info' type="submit" value='Confirmer'>
+                                                <input class='form-control mb-3' type="password" placeholder="Confirmez votre nouveau mot de passe" autocomplete="false" readonly onfocus="this.removeAttribute('readonly');">
+                                                <input class='btn btn-info col-6' type="submit" value='Confirmer'>
                                           </form>
                                     </div>
                               </div>

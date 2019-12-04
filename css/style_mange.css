@@ -8,8 +8,13 @@ nav {
     font-size: 2rem;
 }
 
-section {
+section,
+#UpdatePassword {
     display: none;
+}
+
+p {
+    margin-bottom: 0;
 }
 
 .font-site {

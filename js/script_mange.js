@@ -14,7 +14,6 @@ $(document).ready(function() {
         type: 'GET',
         data: { name: user_name },
         success: function(data, statut) {
-            console.log(data)
             let cpt = 0;
             let tbl = [];
 
