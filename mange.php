@@ -138,7 +138,7 @@
 
                   <div class='d-flex justify-content-around'>
                         <div class='p-4'>
-                              <form class='p-4 border border-info rounded' action="">
+                              <form class='p-4 border border-info rounded' method="post">
 
                                     <!-- ////////////////// PRIX ET ORIGINE ////////////////////////// -->
 
@@ -147,12 +147,12 @@
                                           <div class='row'>
                                                 <p class='col-sm-6 mb-0'>
                                                       <label>Prix minimum : </label>
-                                                      <input type="number" step='1' class='form-control'>
+                                                      <input name='price_min_search' type="number" step='1' class='form-control'>
                                                 </p>
 
                                                 <p class='col-sm-6 mb-0'>
                                                       <label>Prix maximum : </label>
-                                                      <input type="number" step='1' class='form-control'>
+                                                      <input name='price_max_search' type="number" step='1' class='form-control'>
                                                 </p>
 
                                           </div>
@@ -160,7 +160,7 @@
 
                                           <div class="mt-3 form-group">
                                                 <label class='text-center' for="selectOrigine">Origine : </label>
-                                                <select id="selectOrigine" class="form-control">
+                                                <select id="selectOrigine" class="form-control" name='origin_search'>
                                                       <?php
                                                       $requete_origine = "SELECT Libelle FROM origine";
                                                       $exec_requete_origine = mysqli_query($db, $requete_origine);
@@ -173,7 +173,7 @@
                                                 </select>
 
                                           </div>
-                                          <input type="submit" class='btn btn-info col-12 mt-3' value='Rechercher'>
+                                          <input type="submit" name='price_origin_search' class='btn btn-info col-12 mt-3' value='Rechercher'>
                                     </div>
                               </form>
                         </div>
@@ -213,11 +213,80 @@
                   <div class='p-4'>
                         <p class='pb-3 border-bottom border-dark'>Résultat de la recherche :</p>
 
+                        <!-- //////////////////////////////////////////////////////////////////////// -->
+                        <!-- /////////////////////// Search by text input LIKE % //////////////////// -->
+                        <!-- //////////////////////////////////////////////////////////////////////// -->
+
+
                         <?php
                         if (isset($_POST['search'])) {
                               $search = mysqli_real_escape_string($db, htmlspecialchars($_POST['search']));
-                              $requete_recherche = "SELECT plat.Libelle, type.Libelle AS Type, origine.Libelle AS Origine, plat.Prix, plat.Poids FROM plat LEFT JOIN type ON plat.Type = type.ID_Type LEFT JOIN origine ON plat.Origine = origine.ID_Origine WHERE plat.Libelle LIKE  '%" . $search . "%'";
+                              $requete_recherche = "SELECT plat.Libelle, type.Libelle AS Type, origine.Libelle AS Origine, plat.Prix, plat.Poids FROM plat INNER JOIN type ON plat.Type = type.ID_Type INNER JOIN origine ON plat.Origine = origine.ID_Origine WHERE plat.Libelle LIKE  '%" . $search . "%'";
                               // SELECT Libelle FROM plat WHERE Libelle LIKE '%Blanq%'
+                              $exec_requete_recherche = mysqli_query($db, $requete_recherche);
+
+                              while ($data = mysqli_fetch_assoc($exec_requete_recherche)) {
+
+                                    ?>
+                                    <div class='border-bottom border-dark p-3'>
+                                          <div class='d-flex justify-content-between border-bottom p-3'>
+                                                <p class='col-5'>
+                                                      <span class='font-weight-bold'><?php echo $data['Libelle']; ?></span> <span class='text-secondary'><?php echo $data['Poids']; ?>g</span><br>
+                                                      <span class='font-italic'><?php echo $data['Type']; ?></span>
+                                                </p>
+
+                                                <p class='col-3 d-flex justify-content-start'>
+                                                      <label class='align-self-center' for="">Quantité : </label>
+                                                      <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
+                                                </p>
+
+                                                <p class='col-4 d-flex justify-content-end'>
+                                                      <button class='btn btn-dark' type='button'>
+                                                            <i class="fas fa-cart-plus mr-2"></i>
+                                                            <span>Ajouter</span>
+                                                      </button>
+                                                </p>
+                                          </div>
+                                          <div class='d-flex justify-content-start border-bottom p-3'>
+                                                <p class='col-4'>
+                                                      <label for="">Prix : </label>
+                                                      <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
+                                                </p>
+
+                                                <p class='col-4'>
+                                                      <label for="">Origine : </label>
+                                                      <span class='text-info'><?php echo $data['Origine']; ?></span>
+                                                </p>
+                                          </div>
+                                          <div class='d-flex justify-content-start p-3'>
+                                                <p class='col-10 '>
+                                                      <label for="">Ingrédients : </label>
+                                                      <span class='text-info'>Ex1, ex2, ex3</span>
+                                                </p>
+                                          </div>
+                                    </div>
+
+
+                        <?php
+                              }
+                        }
+
+                        ?>
+
+                        <!-- //////////////////////////////////////////////////////////////////////// -->
+                        <!-- /////////////////////// Search by Prix et Origine //////////////////// -->
+                        <!-- //////////////////////////////////////////////////////////////////////// -->
+
+                        <?php
+                        if (isset($_POST['price_origin_search'])) {
+                              $min_price = mysqli_real_escape_string($db, htmlspecialchars($_POST['price_min_search']));
+                              $max_price = mysqli_real_escape_string($db, htmlspecialchars($_POST['price_max_search']));
+                              $origin = $_POST['origin_search'];
+
+                              $requete_recherche = "SELECT plat.Libelle, type.Libelle AS Type, origine.Libelle AS Origine, plat.Prix, plat.Poids FROM plat 
+                              INNER JOIN type ON plat.Type = type.ID_Type INNER JOIN origine ON plat.Origine = origine.ID_Origine 
+                              WHERE origine.Libelle = '" . $origin . "' AND plat.Prix BETWEEN '" . $min_price . "' AND '" . $max_price . "'";
+
                               $exec_requete_recherche = mysqli_query($db, $requete_recherche);
 
                               while ($data = mysqli_fetch_assoc($exec_requete_recherche)) {
