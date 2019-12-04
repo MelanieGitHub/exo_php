@@ -136,71 +136,81 @@
                         </form>
                   </div>
 
-                  <div class='d-flex justify-content-around'>
-                        <div class='p-4'>
-                              <form class='p-4 border border-info rounded' method="post">
 
-                                    <!-- ////////////////// PRIX ET ORIGINE ////////////////////////// -->
+                  <div class='p-4'>
+                        <form class='p-4 border border-info rounded' method="post">
 
-                                    <div class="form-group">
-                                          <label class='text-center font-weight-bold'>Liste des plats par prix, origine: </label>
-                                          <div class='row'>
-                                                <p class='col-sm-6 mb-0'>
-                                                      <label>Prix minimum : </label>
-                                                      <input name='price_min_search' type="number" step='1' class='form-control'>
-                                                </p>
+                              <!-- ////////////////// PRIX ////////////////////////// -->
 
-                                                <p class='col-sm-6 mb-0'>
-                                                      <label>Prix maximum : </label>
-                                                      <input name='price_max_search' type="number" step='1' class='form-control'>
-                                                </p>
+                              <div class="form-group">
+                                    <label class='text-center font-weight-bold'>Liste des plats par prix : </label>
+                                    <div class='row'>
+                                          <p class='col-sm-6 mb-0'>
+                                                <label>Prix minimum : </label>
+                                                <input name='price_min_search' type="number" step='1' class='form-control'>
+                                          </p>
 
-                                          </div>
+                                          <p class='col-sm-6 mb-0'>
+                                                <label>Prix maximum : </label>
+                                                <input name='price_max_search' type="number" step='1' class='form-control'>
+                                          </p>
 
-
-                                          <div class="mt-3 form-group">
-                                                <label class='text-center' for="selectOrigine">Origine : </label>
-                                                <select id="selectOrigine" class="form-control" name='origin_search'>
-                                                      <?php
-                                                      $requete_origine = "SELECT Libelle FROM origine";
-                                                      $exec_requete_origine = mysqli_query($db, $requete_origine);
-
-                                                      while ($data = mysqli_fetch_assoc($exec_requete_origine)) {
-                                                            echo "<option>" . $data['Libelle'] . "</option>";
-                                                      }
-
-                                                      ?>
-                                                </select>
-
-                                          </div>
-                                          <input type="submit" name='price_origin_search' class='btn btn-info col-12 mt-3' value='Rechercher'>
                                     </div>
-                              </form>
-                        </div>
 
-                        <!-- ////////////////// INGREDIENTS ////////////////////////// -->
+                                    <input type="submit" name='price_origin_search' class='btn btn-info col-12 mt-3' value='Rechercher'>
+                              </div>
+                        </form>
+                  </div>
 
-                        <div class='p-4 align-self-center'>
-                              <form class='p-4 border border-info rounded' action="">
-                                    <div class="form-group">
-                                          <label class='text-center font-weight-bold' for="selectIngredient">Liste des plats contenant l'ingrédient : </label>
-                                          <select id="selectIngredient" class="form-control">
+                  <div class='p-4'>
+                        <form class='p-4 border border-info rounded' method="post">
 
+                              <!-- ////////////////// PRIX ////////////////////////// -->
+
+                              <div class="form-group">
+                                    <label class='text-center font-weight-bold'>Liste des plats par origine: </label>
+
+                                    <div class="mt-3 form-group">
+                                          <label class='text-center' for="selectOrigine">Origine : </label>
+                                          <select id="selectOrigine" class="form-control" name='origin_search'>
                                                 <?php
-                                                $requete_ingredient = "SELECT Libelle FROM ingredient";
-                                                $exec_requete_ingredient = mysqli_query($db, $requete_ingredient);
+                                                $requete_origine = "SELECT Libelle FROM origine";
+                                                $exec_requete_origine = mysqli_query($db, $requete_origine);
 
-                                                while ($data = mysqli_fetch_assoc($exec_requete_ingredient)) {
+                                                while ($data = mysqli_fetch_assoc($exec_requete_origine)) {
                                                       echo "<option>" . $data['Libelle'] . "</option>";
                                                 }
-                                                ?>
 
+                                                ?>
                                           </select>
 
-                                          <input type="submit" class='btn btn-info col-12 mt-3' value='Rechercher'>
                                     </div>
-                              </form>
-                        </div>
+                                    <input type="submit" name='price_origin_search' class='btn btn-info col-12 mt-3' value='Rechercher'>
+                              </div>
+                        </form>
+                  </div>
+
+
+                  <div class='p-4 align-self-center'>
+                        <form class='p-4 border border-info rounded' action="">
+                              <div class="form-group">
+                                    <label class='text-center font-weight-bold' for="selectIngredient">Liste des plats contenant l'ingrédient : </label>
+                                    <select id="selectIngredient" class="form-control">
+
+                                          <?php
+                                          $requete_ingredient = "SELECT Libelle FROM ingredient";
+                                          $exec_requete_ingredient = mysqli_query($db, $requete_ingredient);
+
+                                          while ($data = mysqli_fetch_assoc($exec_requete_ingredient)) {
+                                                echo "<option>" . $data['Libelle'] . "</option>";
+                                          }
+                                          ?>
+
+                                    </select>
+
+                                    <input type="submit" class='btn btn-info col-12 mt-3' value='Rechercher'>
+                              </div>
+                        </form>
                   </div>
 
             </section>
@@ -221,17 +231,16 @@
                         <?php
                         if (isset($_POST['search'])) {
                               $search = mysqli_real_escape_string($db, htmlspecialchars($_POST['search']));
-                              $requete_recherche = "SELECT plat.Libelle, type.Libelle AS Type, origine.Libelle AS Origine, plat.Prix, plat.Poids FROM plat INNER JOIN type ON plat.Type = type.ID_Type INNER JOIN origine ON plat.Origine = origine.ID_Origine WHERE plat.Libelle LIKE  '%" . $search . "%'";
-                              // SELECT Libelle FROM plat WHERE Libelle LIKE '%Blanq%'
+                              $requete_recherche = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient INNER JOIN type ON plat.Type = type.ID_Type INNER JOIN origine ON plat.Origine = origine.ID_Origine WHERE plat.Libelle LIKE  '%" . $search . "%'";
                               $exec_requete_recherche = mysqli_query($db, $requete_recherche);
-
+                              // SELECT plat.Libelle AS Plat, ingredient.Libelle AS Ingredient FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient
                               while ($data = mysqli_fetch_assoc($exec_requete_recherche)) {
 
                                     ?>
                                     <div class='border-bottom border-dark p-3'>
                                           <div class='d-flex justify-content-between border-bottom p-3'>
                                                 <p class='col-5'>
-                                                      <span class='font-weight-bold'><?php echo $data['Libelle']; ?></span> <span class='text-secondary'><?php echo $data['Poids']; ?>g</span><br>
+                                                      <span class='font-weight-bold'><?php echo $data['Plat']; ?></span> <span class='text-secondary'><?php echo $data['Poids']; ?>g</span><br>
                                                       <span class='font-italic'><?php echo $data['Type']; ?></span>
                                                 </p>
 
@@ -261,7 +270,7 @@
                                           <div class='d-flex justify-content-start p-3'>
                                                 <p class='col-10 '>
                                                       <label for="">Ingrédients : </label>
-                                                      <span class='text-info'>Ex1, ex2, ex3</span>
+                                                      <span class='text-info'><?php echo $data['Ingredient']; ?></span>
                                                 </p>
                                           </div>
                                     </div>
@@ -283,55 +292,64 @@
                               $max_price = mysqli_real_escape_string($db, htmlspecialchars($_POST['price_max_search']));
                               $origin = $_POST['origin_search'];
 
-                              $requete_recherche = "SELECT plat.Libelle, type.Libelle AS Type, origine.Libelle AS Origine, plat.Prix, plat.Poids FROM plat 
+                              $requete_origine_prix =
+                                    "SELECT plat.Libelle AS Plat, type.Libelle AS Type, 
+                              origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient 
+                              FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
+                              INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient 
                               INNER JOIN type ON plat.Type = type.ID_Type INNER JOIN origine ON plat.Origine = origine.ID_Origine 
                               WHERE origine.Libelle = '" . $origin . "' AND plat.Prix BETWEEN '" . $min_price . "' AND '" . $max_price . "'";
 
-                              $exec_requete_recherche = mysqli_query($db, $requete_recherche);
+                              $exec_requete_recherche = mysqli_query($db, $requete_origine_prix);
+                              $lengths = mysqli_fetch_lengths($exec_requete_recherche);
 
-                              while ($data = mysqli_fetch_assoc($exec_requete_recherche)) {
+                              if ($lengths == false) {
+                                    echo '<p class="mt-3 text-danger">Aucun résultat ne correspond à la requête.</p>';
+                              } else {
+                                    while ($data = mysqli_fetch_assoc($exec_requete_recherche)) {
 
-                                    ?>
-                                    <div class='border-bottom border-dark p-3'>
-                                          <div class='d-flex justify-content-between border-bottom p-3'>
-                                                <p class='col-5'>
-                                                      <span class='font-weight-bold'><?php echo $data['Libelle']; ?></span> <span class='text-secondary'><?php echo $data['Poids']; ?>g</span><br>
-                                                      <span class='font-italic'><?php echo $data['Type']; ?></span>
-                                                </p>
+                                          ?>
+                                          <div class='border-bottom border-dark p-3'>
+                                                <div class='d-flex justify-content-between border-bottom p-3'>
+                                                      <p class='col-5'>
+                                                            <span class='font-weight-bold'><?php echo $data['Plat']; ?></span> <span class='text-secondary'><?php echo $data['Poids']; ?>g</span><br>
+                                                            <span class='font-italic'><?php echo $data['Type']; ?></span>
+                                                      </p>
 
-                                                <p class='col-3 d-flex justify-content-start'>
-                                                      <label class='align-self-center' for="">Quantité : </label>
-                                                      <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
-                                                </p>
+                                                      <p class='col-3 d-flex justify-content-start'>
+                                                            <label class='align-self-center' for="">Quantité : </label>
+                                                            <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
+                                                      </p>
 
-                                                <p class='col-4 d-flex justify-content-end'>
-                                                      <button class='btn btn-dark' type='button'>
-                                                            <i class="fas fa-cart-plus mr-2"></i>
-                                                            <span>Ajouter</span>
-                                                      </button>
-                                                </p>
+                                                      <p class='col-4 d-flex justify-content-end'>
+                                                            <button class='btn btn-dark' type='button'>
+                                                                  <i class="fas fa-cart-plus mr-2"></i>
+                                                                  <span>Ajouter</span>
+                                                            </button>
+                                                      </p>
+                                                </div>
+                                                <div class='d-flex justify-content-start border-bottom p-3'>
+                                                      <p class='col-4'>
+                                                            <label for="">Prix : </label>
+                                                            <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
+                                                      </p>
+
+                                                      <p class='col-4'>
+                                                            <label for="">Origine : </label>
+                                                            <span class='text-info'><?php echo $data['Origine']; ?></span>
+                                                      </p>
+                                                </div>
+                                                <div class='d-flex justify-content-start p-3'>
+                                                      <p class='col-10 '>
+                                                            <label for="">Ingrédients : </label>
+                                                            <span class='text-info'><?php echo $data['Ingredient']; ?></span>
+                                                      </p>
+                                                </div>
                                           </div>
-                                          <div class='d-flex justify-content-start border-bottom p-3'>
-                                                <p class='col-4'>
-                                                      <label for="">Prix : </label>
-                                                      <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
-                                                </p>
-
-                                                <p class='col-4'>
-                                                      <label for="">Origine : </label>
-                                                      <span class='text-info'><?php echo $data['Origine']; ?></span>
-                                                </p>
-                                          </div>
-                                          <div class='d-flex justify-content-start p-3'>
-                                                <p class='col-10 '>
-                                                      <label for="">Ingrédients : </label>
-                                                      <span class='text-info'>Ex1, ex2, ex3</span>
-                                                </p>
-                                          </div>
-                                    </div>
 
 
                         <?php
+                                    }
                               }
                         }
 
