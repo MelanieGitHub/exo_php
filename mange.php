@@ -22,13 +22,21 @@
 
       <script src='js/script_mange.js'></script>
 
-      <link rel="stylesheet" href="css/style_mange.css?">
+      <link rel="stylesheet" href="css/style_mange.css">
 </head>
 
 <body class="bg-light">
 
       <?php
       session_start();
+
+      // connexion à la base de données
+      $db_username = 'root';
+      $db_password = '';
+      $db_name     = 'exo_php';
+      $db_host     = 'localhost';
+      $db = mysqli_connect($db_host, $db_username, $db_password, $db_name)
+            or die('could not connect to database');
       ?>
       <!-- //////////////////////////////////////////////////////////////////////// -->
       <!-- //////////////////////////// HEADER //////////////////////////////////// -->
@@ -69,7 +77,7 @@
 
                         <li class="nav-item">
                               <a href='mange.php?deconnexion=true' class="cursor-pointer nav-link text-light">
-                                    <i class="fas fa-lightbulb"></i>
+                                    <i class="fas fa-sign-out-alt"></i>
                                     <span class="pl-2">Déconnexion</span>
                               </a>
                         </li>
@@ -116,17 +124,24 @@
                         <h4 class='col-12 border-bottom pb-3 font-weight-bold'>Bienvenue ! </h4>
                   </div>
 
+                  <!-- ////////////////// RECHERCHE ////////////////////////// -->
+
 
                   <div class='p-2 bg-info rounded mb-3'>
-                        <a class="nav-link text-light d-flex">
-                              <input class="form-control" type="text" placeholder="Liste des plats contenant le mot...">
-                              <i class="fas fa-search ml-4 mt-2"></i>
-                        </a>
+                        <form action="mange.php">
+                              <p class="nav-link text-light d-flex">
+                                    <input class="form-control" type="text" placeholder="Liste des plats contenant le mot...">
+                                    <input class='ml-3 btn btn-light' type='submit' name='search' value='Search'>
+                              </p>
+                        </form>
                   </div>
 
                   <div class='d-flex justify-content-around'>
                         <div class='p-4'>
                               <form class='p-4 border border-info rounded' action="">
+
+                                    <!-- ////////////////// PRIX ET ORIGINE ////////////////////////// -->
+
                                     <div class="form-group">
                                           <label class='text-center font-weight-bold'>Liste des plats par prix, origine: </label>
                                           <div class='row'>
@@ -141,35 +156,19 @@
                                                 </p>
 
                                           </div>
+
+
                                           <div class="mt-3 form-group">
                                                 <label class='text-center' for="selectOrigine">Origine : </label>
                                                 <select id="selectOrigine" class="form-control">
-                                                      <option value="">Option 1</option>
-                                                      <option value="">Option 2</option>
-                                                      <option value="">Option 3</option>
-                                                      <option value="">...</option>
                                                       <?php
-                                                      // session_start();
+                                                      $requete_origine = "SELECT Libelle FROM origine";
+                                                      $exec_requete_origine = mysqli_query($db, $requete_origine);
 
-                                                      // $requete = "SELECT Libelle FROM ingredient";
-                                                      // $exec_requete = mysqli_query($db, $requete);
-                                                      // $rep_ingredient = mysqli_fetch_array($exec_requete);
+                                                      while ($data = mysqli_fetch_assoc($exec_requete_origine)) {
+                                                            echo "<option>" . $data['Libelle'] . "</option>";
+                                                      }
 
-                                                      // $exec_requete = $mysqli->query($db, $requete);
-                                                      // $rep_ingredient = mysqli_fetch_array($exec_requete);
-
-                                                      // while ($data = $rep_ingredient->fetch_assoc()) {
-                                                      ?>
-                                                      <!-- <option>  -->
-                                                      <?php //echo $data['Libelle']; 
-                                                      ?>
-                                                      <!-- </option> -->
-                                                      <?php
-                                                      // }
-
-                                                      // $rep_ingredient->closeCursor();
-
-                                                      // mysqli_close($db); // fermer la connexion
                                                       ?>
                                                 </select>
 
@@ -179,38 +178,23 @@
                               </form>
                         </div>
 
+                        <!-- ////////////////// INGREDIENTS ////////////////////////// -->
+
                         <div class='p-4 align-self-center'>
                               <form class='p-4 border border-info rounded' action="">
                                     <div class="form-group">
                                           <label class='text-center font-weight-bold' for="selectIngredient">Liste des plats contenant l'ingrédient : </label>
                                           <select id="selectIngredient" class="form-control">
-                                                <option value="">Option 1</option>
-                                                <option value="">Option 2</option>
-                                                <option value="">Option 3</option>
-                                                <option value="">...</option>
+
                                                 <?php
-                                                // session_start();
+                                                $requete_ingredient = "SELECT Libelle FROM ingredient";
+                                                $exec_requete_ingredient = mysqli_query($db, $requete_ingredient);
 
-                                                // $requete = "SELECT Libelle FROM ingredient";
-                                                // $exec_requete = mysqli_query($db, $requete);
-                                                // $rep_ingredient = mysqli_fetch_array($exec_requete);
-
-                                                // $exec_requete = $mysqli->query($db, $requete);
-                                                // $rep_ingredient = mysqli_fetch_array($exec_requete);
-
-                                                // while ($data = $rep_ingredient->fetch_assoc()) {
+                                                while ($data = mysqli_fetch_assoc($exec_requete_ingredient)) {
+                                                      echo "<option>" . $data['Libelle'] . "</option>";
+                                                }
                                                 ?>
-                                                <!-- <option>  -->
-                                                <?php //echo $data['Libelle']; 
-                                                ?>
-                                                <!-- </option> -->
-                                                <?php
-                                                // }
 
-                                                // $rep_ingredient->closeCursor();
-
-                                                // mysqli_close($db); // fermer la connexion
-                                                ?>
                                           </select>
 
                                           <input type="submit" class='btn btn-info col-12 mt-3' value='Rechercher'>
@@ -228,28 +212,32 @@
             <section id='sctAffichage' class='container border border-dark rounded'>
                   <div class='p-4'>
                         <p>Résultat de la recherche :</p>
+
                         <?php
-                        // session_start();
+                        if (isset($_POST['search'])) {
+                              // $search = mysqli_real_escape_string($db, htmlspecialchars($_POST['search']));
+                              $requete_recherche = "SELECT Libelle FROM plat";
+                              $exec_requete_recherche = mysqli_query($db, $requete_recherche);
 
-                        // $requete = "SELECT Libelle FROM ingredient";
-                        // $exec_requete = mysqli_query($db, $requete);
-                        // $rep_ingredient = mysqli_fetch_array($exec_requete);
+                              while ($data = mysqli_fetch_assoc($exec_requete_recherche)) {
 
-                        // $exec_requete = $mysqli->query($db, $requete);
-                        // $rep_ingredient = mysqli_fetch_array($exec_requete);
+                                    ?>
 
-                        // while ($data = $rep_ingredient->fetch_assoc()) {
+                                    <p class='font-weight-bold'><?php echo $data['Libelle']; ?></p>
+                        <?php
+                              }
+                        }
+
                         ?>
 
                         <div class='border-top border-bottom p-3'>
-                              <div class='row justify-content-between'>
-                                    <p class='font-weight-bold'> Titre<?php //echo $data['Titre recette'];  
+                              <!-- <div class='row justify-content-between'>
+                                    <p class='font-weight-bold'> Titre<?php //echo $data['Libelle']; 
                                                                         ?> </p>
-                                    <p class='text-secondary'> Type<?php //echo $data['Type recette'];  
-                                                                        ?> </p>
-                                          <label for="">Quantité : </label>
-                                          <input class='col-1 form-control' type="number" step='1' value='<?php //echo $data['quantite']; 
-                                                                                    ?>'>
+                                    <!-- <p class='text-secondary'> Type<?php //echo $data['Type']; 
+                                                                        ?> </p> -->
+                              <!-- <label for="">Quantité : </label>
+                                    <input class='col-1 form-control' type="number" step='1' value='1'>
 
                                     <p>
                                           <button class='btn btn-dark' type='button'>
@@ -257,12 +245,12 @@
                                                 <span>Ajouter</span>
                                           </button>
                                     </p>
-                              </div>
-                              <div class='row justify-content-between'>
+                              </div> -->
+                              <!-- <div class='row justify-content-between'>
                                     <p>
                                           <label for="">Prix : </label>
-                                          <p><?php //echo $data['prix']; 
-                                                                                    ?></p>
+                                          <p><?php //echo $data['Prix']; 
+                                                ?></p>
                                     </p>
                                     <p class='font-weight-bold'> Catégorie<?php //echo $data['categorie'];  
                                                                               ?> </p>
@@ -280,15 +268,9 @@
                                     <label for="">Ingrédients : </label>
                                     <p type="number"><?php //echo $data['ingredients']; 
                                                       ?></p>
-                              </div>
+                              </div> -->
                         </div>
-                        <?php
-                        // }
 
-                        // $rep_ingredient->closeCursor();
-
-                        // mysqli_close($db); // fermer la connexion
-                        ?>
 
 
                   </div>
@@ -313,16 +295,6 @@
                         <div class='d-sm-flex p-4'>
                               <div class='border p-4 col-sm-6 row'>
                                     <p id='pseudoCompte' class='col-12 border-bottom pb-3'></p>
-                                    <div class='col-6 mt-3 border-right'>
-                                          <p class='col-12 pb-3'>
-                                                <img id='avatarCompte' width='35%' class='border border-secondary' src="" alt="avatar">
-                                          </p>
-
-                                          <p>
-                                                <a role='button' class='text-info' href=''>Modifier mon avatar</a>
-                                          </p>
-                                    </div>
-
                                     <div class='col-6 mt-3 align-self-end'>
                                           <p id='mailCompte' class='pb-4'></p>
 

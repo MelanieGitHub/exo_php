@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mar. 03 déc. 2019 à 22:50
+-- Généré le :  mer. 04 déc. 2019 à 10:19
 -- Version du serveur :  10.4.8-MariaDB
--- Version de PHP :  7.1.32
+-- Version de PHP :  7.2.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,18 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `exo_php`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `commande`
+--
+
+CREATE TABLE `commande` (
+  `ID_Commande` int(11) NOT NULL,
+  `Cle_Compte` int(11) NOT NULL,
+  `Total` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -60,7 +72,7 @@ CREATE TABLE `ingredient` (
 --
 
 INSERT INTO `ingredient` (`ID_Ingredient`, `Libelle`) VALUES
-(1, 'Blanquette de veau'),
+(1, 'Dinde'),
 (2, 'Citron'),
 (3, 'Oignon'),
 (4, 'Champignons'),
@@ -82,15 +94,123 @@ INSERT INTO `ingredient` (`ID_Ingredient`, `Libelle`) VALUES
 (20, 'Pommes'),
 (21, 'Beurre'),
 (22, 'Sucre'),
-(23, 'pate feuilleté'),
+(23, 'Pâte feuilleté'),
 (24, 'Courgettes'),
 (25, 'Feta'),
 (26, 'Lait'),
 (27, 'Origan');
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `ingredient_plat`
+--
+
+CREATE TABLE `ingredient_plat` (
+  `ID` int(11) NOT NULL,
+  `Cle_Plat` int(11) NOT NULL,
+  `Cle_Ingredient` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `ingredient_plat`
+--
+
+INSERT INTO `ingredient_plat` (`ID`, `Cle_Plat`, `Cle_Ingredient`) VALUES
+(1, 1, 1),
+(2, 1, 4),
+(3, 2, 20),
+(4, 2, 23);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `origine`
+--
+
+CREATE TABLE `origine` (
+  `ID_Origine` int(11) NOT NULL,
+  `Libelle` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `origine`
+--
+
+INSERT INTO `origine` (`ID_Origine`, `Libelle`) VALUES
+(1, 'Europe'),
+(2, 'France'),
+(3, 'Chine'),
+(4, 'Espagne'),
+(5, 'Asie'),
+(6, 'Italie');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `plat`
+--
+
+CREATE TABLE `plat` (
+  `ID` int(11) NOT NULL,
+  `Libelle` varchar(3000) NOT NULL,
+  `Type` int(11) NOT NULL,
+  `Origine` int(11) NOT NULL,
+  `Prix` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `plat`
+--
+
+INSERT INTO `plat` (`ID`, `Libelle`, `Type`, `Origine`, `Prix`) VALUES
+(1, 'Blanquette de dinde', 4, 2, 15.99),
+(2, 'Tartes aux pommes', 2, 4, 8.5);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `plat_commande`
+--
+
+CREATE TABLE `plat_commande` (
+  `ID` int(11) NOT NULL,
+  `Cle_Commande` int(11) NOT NULL,
+  `Cle_Plat` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `type`
+--
+
+CREATE TABLE `type` (
+  `ID_Type` int(11) NOT NULL,
+  `Libelle` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `type`
+--
+
+INSERT INTO `type` (`ID_Type`, `Libelle`) VALUES
+(1, 'Végétarien'),
+(2, 'Dessert'),
+(3, 'Entrée'),
+(4, 'Plat chaud'),
+(5, 'Plat froid');
+
 --
 -- Index pour les tables déchargées
 --
+
+--
+-- Index pour la table `commande`
+--
+ALTER TABLE `commande`
+  ADD PRIMARY KEY (`ID_Commande`),
+  ADD KEY `Cle_Compte` (`Cle_Compte`);
 
 --
 -- Index pour la table `compte`
@@ -105,8 +225,50 @@ ALTER TABLE `ingredient`
   ADD PRIMARY KEY (`ID_Ingredient`);
 
 --
+-- Index pour la table `ingredient_plat`
+--
+ALTER TABLE `ingredient_plat`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `cle_plat` (`Cle_Plat`),
+  ADD KEY `cle_ingredient` (`Cle_Ingredient`);
+
+--
+-- Index pour la table `origine`
+--
+ALTER TABLE `origine`
+  ADD PRIMARY KEY (`ID_Origine`);
+
+--
+-- Index pour la table `plat`
+--
+ALTER TABLE `plat`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `cle_origine_plat` (`Origine`),
+  ADD KEY `cle_type_plat` (`Type`);
+
+--
+-- Index pour la table `plat_commande`
+--
+ALTER TABLE `plat_commande`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `cle_commande` (`Cle_Commande`),
+  ADD KEY `cle_plat_commande` (`Cle_Plat`);
+
+--
+-- Index pour la table `type`
+--
+ALTER TABLE `type`
+  ADD PRIMARY KEY (`ID_Type`);
+
+--
 -- AUTO_INCREMENT pour les tables déchargées
 --
+
+--
+-- AUTO_INCREMENT pour la table `commande`
+--
+ALTER TABLE `commande`
+  MODIFY `ID_Commande` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `compte`
@@ -119,6 +281,67 @@ ALTER TABLE `compte`
 --
 ALTER TABLE `ingredient`
   MODIFY `ID_Ingredient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT pour la table `ingredient_plat`
+--
+ALTER TABLE `ingredient_plat`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `origine`
+--
+ALTER TABLE `origine`
+  MODIFY `ID_Origine` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT pour la table `plat`
+--
+ALTER TABLE `plat`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `plat_commande`
+--
+ALTER TABLE `plat_commande`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `type`
+--
+ALTER TABLE `type`
+  MODIFY `ID_Type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `commande`
+--
+ALTER TABLE `commande`
+  ADD CONSTRAINT `commande_ibfk_1` FOREIGN KEY (`Cle_Compte`) REFERENCES `compte` (`ID_Compte`);
+
+--
+-- Contraintes pour la table `ingredient_plat`
+--
+ALTER TABLE `ingredient_plat`
+  ADD CONSTRAINT `cle_ingredient` FOREIGN KEY (`Cle_Ingredient`) REFERENCES `ingredient` (`ID_Ingredient`),
+  ADD CONSTRAINT `cle_plat` FOREIGN KEY (`Cle_Plat`) REFERENCES `plat` (`ID`);
+
+--
+-- Contraintes pour la table `plat`
+--
+ALTER TABLE `plat`
+  ADD CONSTRAINT `cle_origine_plat` FOREIGN KEY (`Origine`) REFERENCES `origine` (`ID_Origine`),
+  ADD CONSTRAINT `cle_type_plat` FOREIGN KEY (`Type`) REFERENCES `type` (`ID_Type`);
+
+--
+-- Contraintes pour la table `plat_commande`
+--
+ALTER TABLE `plat_commande`
+  ADD CONSTRAINT `cle_commande` FOREIGN KEY (`Cle_Commande`) REFERENCES `commande` (`ID_Commande`),
+  ADD CONSTRAINT `cle_plat_commande` FOREIGN KEY (`Cle_Plat`) REFERENCES `plat` (`ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
