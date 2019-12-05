@@ -1,11 +1,10 @@
 $(document).ready(function() {
-
     $('#sctSearch').slideDown('slow');
     $('#sctAffichage').slideDown('slow');
 
-    /////////////////////////////////////////////////////////////////////////
-    ///////////////// Retrieve COMPTE Utilisateur ///////////////////////////
-    /////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
+    // ///////////////// Retrieve COMPTE Utilisateur ///////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
 
     var user_name = $('#txtUserConnexion').html();
 
@@ -40,32 +39,32 @@ $(document).ready(function() {
         }
     });
 
-    /////////////////////////////////////////////////////////////////////////
-    //////////////////////// Search BUTTON /////////////////////////////
-    /////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
+    // //////////////////////// Search BUTTON /////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
 
     $('#cmdSearch_mot').on('click', function(event) {
         event.preventDefault();
         $('aside').hide(0);
-        $('#asideMot').show('slow');
+        $('#asideMot').slideDown('slow');
     });
 
     $('#cmdSearch_prix').on('click', function(event) {
         event.preventDefault();
         $('aside').hide(0);
-        $('#asidePrix').show('slow');
+        $('#asidePrix').slideDown('slow');
     });
 
     $('#cmdSearch_origine').on('click', function(event) {
         event.preventDefault();
         $('aside').hide(0);
-        $('#asideOrigine').show('slow');
+        $('#asideOrigine').slideDown('slow');
     });
 
     $('#cmdSearch_ingredient').on('click', function(event) {
         event.preventDefault();
         $('aside').hide(0);
-        $('#asideIngredient').show('slow');
+        $('#asideIngredient').slideDown('slow');
     });
 
 
@@ -91,4 +90,5 @@ $(document).ready(function() {
             $('#UpdatePassword').slideUp('slow');
         }
     });
+
 });

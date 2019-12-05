@@ -41,7 +41,7 @@
       <!-- //////////////////////////////////////////////////////////////////////// -->
       <!-- //////////////////////////// HEADER //////////////////////////////////// -->
 
-      <nav class="navbar navbar-expand-xl navbar-light bg-info">
+      <nav class="navbar navbar-expand-xl navbar-light bg-dark">
             <div class='col-4'>
                   <img width='6%' src="images/logo_resto.png" alt="">
                   <span class="px-2 font-site logo text-center align-middle">Mange ton Php</span>
@@ -127,7 +127,7 @@
             <section id='sctSearch'>
                   <div class='d-flex justify-content-around mb-4'>
                         <form method="post">
-                              <input type='submit' name='all_plat' class='show-section btn btn-info font-weight-bold' value='Tous nos plats'>
+                              <input type='submit' name='all_plat' class='show-section btn btn-dark font-weight-bold' value='Tous nos plats'>
                         </form>
                         <button id='cmdSearch_mot' type='button' class='btn btn-dark'>Mot clés</button>
                         <button id='cmdSearch_prix' type='button' class='btn btn-dark'>Prix</button>
@@ -138,7 +138,7 @@
                   <!-- /////////////////////// Recherche par MOT CLES ///////////////////////// -->
                   <!-- //////////////////////////////////////////////////////////////////////// -->
 
-                  <aside id='asideMot' class='p-2 bg-info rounded mb-3'>
+                  <aside id='asideMot' class='p-2 bg-success rounded mb-3'>
                         <form method='post'>
                               <p class="nav-link text-light d-flex">
                                     <input class="form-control" type="text" name='search' placeholder="Liste des plats contenant le mot...">
@@ -167,7 +167,7 @@
                                           </p>
 
                                     </div>
-                                    <input type="submit" name='price_search' class='show-section btn btn-info col-12 mt-3' value='Rechercher'>
+                                    <input type="submit" name='price_search' class='show-section btn btn-dark col-12 mt-3' value='Rechercher'>
                               </div>
                         </form>
                   </aside>
@@ -195,7 +195,7 @@
                                                 ?>
                                           </select>
                                     </div>
-                                    <input type="submit" name='origin_search_submit' class='show-section btn btn-info col-12 mt-3' value='Rechercher'>
+                                    <input type="submit" name='origin_search_submit' class='show-section btn btn-dark col-12 mt-3' value='Rechercher'>
                               </div>
                         </form>
                   </aside>
@@ -221,7 +221,7 @@
 
                                     </select>
 
-                                    <input type='submit' name='submit_ingredient' class='show-section btn btn-info col-12 mt-3' value='Rechercher'>
+                                    <input type='submit' name='submit_ingredient' class='show-section btn btn-dark col-12 mt-3' value='Rechercher'>
                               </div>
                         </form>
                   </aside>
@@ -244,7 +244,7 @@
                         if (isset($_POST['all_plat'])) {
 
                               $requete_onload = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, 
-                              origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient 
+                              origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2 
                               FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
                               INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient 
                               INNER JOIN type ON plat.Type = type.ID_Type INNER JOIN origine ON plat.Origine = origine.ID_Origine GROUP BY plat.ID";
@@ -254,43 +254,53 @@
                               while ($data = mysqli_fetch_assoc($exec_requete_recherche_onload)) {
 
                                     ?>
-                                    <div class='border-bottom border-dark p-3'>
-                                          <div class='d-flex justify-content-between border-bottom p-3'>
-                                                <p class='col-5'>
-                                                      <span class='font-weight-bold'><?php echo $data['Plat']; ?></span> <span class='text-secondary'><?php echo $data['Poids']; ?>g</span><br>
-                                                      <span class='font-italic'><?php echo $data['Type']; ?></span>
-                                                </p>
-
-                                                <p class='col-3 d-flex justify-content-start'>
-                                                      <label class='align-self-center' for="">Quantité : </label>
-                                                      <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
-                                                </p>
-
-                                                <p class='col-4 d-flex justify-content-end'>
-                                                      <button class='btn btn-dark' type='button'>
-                                                            <i class="fas fa-cart-plus mr-2"></i>
-                                                            <span>Ajouter</span>
-                                                      </button>
+                                     <div class='border-bottom border-dark p-3 d-flex'>
+                                          <div class='col-2 align-center my-auto'>
+                                                <p>
+                                                      <img src="<?php echo $data['Image']; ?>" width='100%' alt="">
                                                 </p>
                                           </div>
-                                          <div class='d-flex justify-content-start border-bottom p-3'>
-                                                <p class='col-4'>
-                                                      <label for="">Prix : </label>
-                                                      <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
-                                                </p>
+                                          <div class='col-10'>
+                                                <div class='d-flex justify-content-between border-bottom p-3'>
+                                                      <p class='col-4'>
+                                                            <span class='font-weight-bold'><?php echo $data['Plat']; ?></span> <span class='text-secondary'><?php echo $data['Poids']; ?>g</span><br>
+                                                            <span class='font-italic'><?php echo $data['Type']; ?></span>
+                                                      </p>
 
-                                                <p class='col-4'>
-                                                      <label for="">Origine : </label>
-                                                      <span class='text-info'><?php echo $data['Origine']; ?></span>
-                                                </p>
+                                                      <p class='col-4 d-flex justify-content-start'>
+                                                            <label class='align-self-center' for="">Quantité : </label>
+                                                            <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
+                                                      </p>
+
+                                                      <p class='col-4 d-flex justify-content-end'>
+                                                            <button class='btn btn-dark' type='button'>
+                                                                  <i class="fas fa-cart-plus mr-2"></i>
+                                                                  <span>Ajouter</span>
+                                                            </button>
+                                                      </p>
+                                                </div>
+                                                <div class='d-flex justify-content-start border-bottom p-3'>
+                                                      <p class='col-4'>
+                                                            <label for="">Prix : </label>
+                                                            <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
+                                                      </p>
+
+                                                      <p class='col-4'>
+                                                            <label for="">Origine : </label>
+                                                            <span class='text-info'><?php echo $data['Origine']; ?></span>
+                                                      </p>
+                                                </div>
+                                                <div class='d-flex justify-content-start p-3'>
+                                                      <p class='col-10 '>
+                                                            <label for="">Ingrédients : </label>
+                                                            <span class='text-info'><?php echo $data['Ingredient2']; ?></span>
+                                                      </p>
+                                                </div>
+
                                           </div>
-                                          <div class='d-flex justify-content-start p-3'>
-                                                <p class='col-10 '>
-                                                      <label for="">Ingrédients : </label>
-                                                      <span class='text-info'><?php echo $data['Ingredient']; ?></span>
-                                                </p>
-                                          </div>
+
                                     </div>
+
 
 
                         <?php
@@ -308,7 +318,7 @@
                               $search = mysqli_real_escape_string($db, htmlspecialchars($_POST['search']));
 
                               $requete_recherche = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, origine.Libelle AS Origine, 
-                              plat.Prix AS Prix, plat.Poids AS Poids, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient 
+                              plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2 
                               FROM ingredient_plat 
                               INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
                               INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient 
@@ -321,44 +331,53 @@
                               while ($data = mysqli_fetch_assoc($exec_requete_recherche)) {
 
                                     ?>
-                                    <div class='border-bottom border-dark p-3'>
-                                          <div class='d-flex justify-content-between border-bottom p-3'>
-                                                <p class='col-5'>
-                                                      <span class='font-weight-bold'><?php echo $data['Plat']; ?></span>
-                                                      <span class='text-secondary'><?php echo $data['Poids']; ?>g</span><br>
-                                                      <span class='font-italic'><?php echo $data['Type']; ?></span>
-                                                </p>
-
-                                                <p class='col-3 d-flex justify-content-start'>
-                                                      <label class='align-self-center' for="">Quantité : </label>
-                                                      <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
-                                                </p>
-
-                                                <p class='col-4 d-flex justify-content-end'>
-                                                      <button class='btn btn-dark' type='button'>
-                                                            <i class="fas fa-cart-plus mr-2"></i>
-                                                            <span>Ajouter</span>
-                                                      </button>
+                                      <div class='border-bottom border-dark p-3 d-flex'>
+                                          <div class='col-2 align-center my-auto'>
+                                                <p>
+                                                      <img src="<?php echo $data['Image']; ?>" width='100%' alt="">
                                                 </p>
                                           </div>
-                                          <div class='d-flex justify-content-start border-bottom p-3'>
-                                                <p class='col-4'>
-                                                      <label for="">Prix : </label>
-                                                      <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
-                                                </p>
+                                          <div class='col-10'>
+                                                <div class='d-flex justify-content-between border-bottom p-3'>
+                                                      <p class='col-4'>
+                                                            <span class='font-weight-bold'><?php echo $data['Plat']; ?></span> <span class='text-secondary'><?php echo $data['Poids']; ?>g</span><br>
+                                                            <span class='font-italic'><?php echo $data['Type']; ?></span>
+                                                      </p>
 
-                                                <p class='col-4'>
-                                                      <label for="">Origine : </label>
-                                                      <span class='text-info'><?php echo $data['Origine']; ?></span>
-                                                </p>
+                                                      <p class='col-4 d-flex justify-content-start'>
+                                                            <label class='align-self-center' for="">Quantité : </label>
+                                                            <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
+                                                      </p>
+
+                                                      <p class='col-4 d-flex justify-content-end'>
+                                                            <button class='btn btn-dark' type='button'>
+                                                                  <i class="fas fa-cart-plus mr-2"></i>
+                                                                  <span>Ajouter</span>
+                                                            </button>
+                                                      </p>
+                                                </div>
+                                                <div class='d-flex justify-content-start border-bottom p-3'>
+                                                      <p class='col-4'>
+                                                            <label for="">Prix : </label>
+                                                            <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
+                                                      </p>
+
+                                                      <p class='col-4'>
+                                                            <label for="">Origine : </label>
+                                                            <span class='text-info'><?php echo $data['Origine']; ?></span>
+                                                      </p>
+                                                </div>
+                                                <div class='d-flex justify-content-start p-3'>
+                                                      <p class='col-10 '>
+                                                            <label for="">Ingrédients : </label>
+                                                            <span class='text-info'><?php echo $data['Ingredient2']; ?></span>
+                                                      </p>
+                                                </div>
+
                                           </div>
-                                          <div class='d-flex justify-content-start p-3'>
-                                                <p class='col-10 '>
-                                                      <label for="">Ingrédients : </label>
-                                                      <span class='text-info'><?php echo $data['Ingredient']; ?></span>
-                                                </p>
-                                          </div>
+
                                     </div>
+
 
 
                         <?php
@@ -376,7 +395,7 @@
                               $origin = $_POST['origin_search'];
 
                               $requete_origine = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, 
-                              origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient 
+                              origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2 
                               FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
                               INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient 
                               INNER JOIN type ON plat.Type = type.ID_Type INNER JOIN origine ON plat.Origine = origine.ID_Origine 
@@ -384,49 +403,56 @@
 
                               $exec_requete_recherche = mysqli_query($db, $requete_origine);
 
-                              // if ($lengths == false) {
-                              //       echo '<p class="mt-3 text-danger">Aucun résultat ne correspond à la requête.</p>';
-                              // } else {
                               while ($data = mysqli_fetch_assoc($exec_requete_recherche)) {
 
                                     ?>
-                                    <div class='border-bottom border-dark p-3'>
-                                          <div class='d-flex justify-content-between border-bottom p-3'>
-                                                <p class='col-5'>
-                                                      <span class='font-weight-bold'><?php echo $data['Plat']; ?></span> <span class='text-secondary'><?php echo $data['Poids']; ?>g</span><br>
-                                                      <span class='font-italic'><?php echo $data['Type']; ?></span>
-                                                </p>
-
-                                                <p class='col-3 d-flex justify-content-start'>
-                                                      <label class='align-self-center' for="">Quantité : </label>
-                                                      <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
-                                                </p>
-
-                                                <p class='col-4 d-flex justify-content-end'>
-                                                      <button class='btn btn-dark' type='button'>
-                                                            <i class="fas fa-cart-plus mr-2"></i>
-                                                            <span>Ajouter</span>
-                                                      </button>
+                                    <div class='border-bottom border-dark p-3 d-flex'>
+                                          <div class='col-2 align-center my-auto'>
+                                                <p>
+                                                      <img src="<?php echo $data['Image']; ?>" width='100%' alt="">
                                                 </p>
                                           </div>
-                                          <div class='d-flex justify-content-start border-bottom p-3'>
-                                                <p class='col-4'>
-                                                      <label for="">Prix : </label>
-                                                      <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
-                                                </p>
+                                          <div class='col-10'>
+                                                <div class='d-flex justify-content-between border-bottom p-3'>
+                                                      <p class='col-4'>
+                                                            <span class='font-weight-bold'><?php echo $data['Plat']; ?></span> <span class='text-secondary'><?php echo $data['Poids']; ?>g</span><br>
+                                                            <span class='font-italic'><?php echo $data['Type']; ?></span>
+                                                      </p>
 
-                                                <p class='col-4'>
-                                                      <label for="">Origine : </label>
-                                                      <span class='text-info'><?php echo $data['Origine']; ?></span>
-                                                </p>
+                                                      <p class='col-4 d-flex justify-content-start'>
+                                                            <label class='align-self-center' for="">Quantité : </label>
+                                                            <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
+                                                      </p>
+
+                                                      <p class='col-4 d-flex justify-content-end'>
+                                                            <button class='btn btn-dark' type='button'>
+                                                                  <i class="fas fa-cart-plus mr-2"></i>
+                                                                  <span>Ajouter</span>
+                                                            </button>
+                                                      </p>
+                                                </div>
+                                                <div class='d-flex justify-content-start border-bottom p-3'>
+                                                      <p class='col-4'>
+                                                            <label for="">Prix : </label>
+                                                            <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
+                                                      </p>
+
+                                                      <p class='col-4'>
+                                                            <label for="">Origine : </label>
+                                                            <span class='text-info'><?php echo $data['Origine']; ?></span>
+                                                      </p>
+                                                </div>
+                                                <div class='d-flex justify-content-start p-3'>
+                                                      <p class='col-10 '>
+                                                            <label for="">Ingrédients : </label>
+                                                            <span class='text-info'><?php echo $data['Ingredient2']; ?></span>
+                                                      </p>
+                                                </div>
+
                                           </div>
-                                          <div class='d-flex justify-content-start p-3'>
-                                                <p class='col-10 '>
-                                                      <label for="">Ingrédients : </label>
-                                                      <span class='text-info'><?php echo $data['Ingredient']; ?></span>
-                                                </p>
-                                          </div>
+
                                     </div>
+
 
 
                         <?php
@@ -444,56 +470,62 @@
                         if (isset($_POST['submit_ingredient'])) {
                               $value = $_POST['select_ingredient'];
 
-                              $requete_ing = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, 
+                              $requete_ing = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, 
                               GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2 FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
                               INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient INNER JOIN type ON plat.Type = type.ID_Type 
                               INNER JOIN origine ON plat.Origine = origine.ID_Origine 
-                              GROUP BY plat.ID HAVING GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') LIKE '%Carottes%'";
-                              
+                              GROUP BY plat.ID HAVING GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') LIKE '%" . $value . "%'";
+
                               $exec_requete_ing = mysqli_query($db, $requete_ing);
 
-                              // if ($lengths == false) {
-                              //       echo '<p class="mt-3 text-danger">Aucun résultat ne correspond à la requête.</p>';
-                              // } else {
                               while ($data = mysqli_fetch_assoc($exec_requete_ing)) {
 
                                     ?>
-                                    <div class='border-bottom border-dark p-3'>
-                                          <div class='d-flex justify-content-between border-bottom p-3'>
-                                                <p class='col-5'>
-                                                      <span class='font-weight-bold'><?php echo $data['Plat']; ?></span> <span class='text-secondary'><?php echo $data['Poids']; ?>g</span><br>
-                                                      <span class='font-italic'><?php echo $data['Type']; ?></span>
-                                                </p>
-
-                                                <p class='col-3 d-flex justify-content-start'>
-                                                      <label class='align-self-center' for="">Quantité : </label>
-                                                      <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
-                                                </p>
-
-                                                <p class='col-4 d-flex justify-content-end'>
-                                                      <button class='btn btn-dark' type='button'>
-                                                            <i class="fas fa-cart-plus mr-2"></i>
-                                                            <span>Ajouter</span>
-                                                      </button>
+                                    <div class='border-bottom border-dark p-3 d-flex'>
+                                          <div class='col-2 align-center my-auto'>
+                                                <p>
+                                                      <img src="<?php echo $data['Image']; ?>" width='100%' alt="">
                                                 </p>
                                           </div>
-                                          <div class='d-flex justify-content-start border-bottom p-3'>
-                                                <p class='col-4'>
-                                                      <label for="">Prix : </label>
-                                                      <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
-                                                </p>
+                                          <div class='col-10'>
+                                                <div class='d-flex justify-content-between border-bottom p-3'>
+                                                      <p class='col-4'>
+                                                            <span class='font-weight-bold'><?php echo $data['Plat']; ?></span> <span class='text-secondary'><?php echo $data['Poids']; ?>g</span><br>
+                                                            <span class='font-italic'><?php echo $data['Type']; ?></span>
+                                                      </p>
 
-                                                <p class='col-4'>
-                                                      <label for="">Origine : </label>
-                                                      <span class='text-info'><?php echo $data['Origine']; ?></span>
-                                                </p>
+                                                      <p class='col-4 d-flex justify-content-start'>
+                                                            <label class='align-self-center' for="">Quantité : </label>
+                                                            <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
+                                                      </p>
+
+                                                      <p class='col-4 d-flex justify-content-end'>
+                                                            <button class='btn btn-dark' type='button'>
+                                                                  <i class="fas fa-cart-plus mr-2"></i>
+                                                                  <span>Ajouter</span>
+                                                            </button>
+                                                      </p>
+                                                </div>
+                                                <div class='d-flex justify-content-start border-bottom p-3'>
+                                                      <p class='col-4'>
+                                                            <label for="">Prix : </label>
+                                                            <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
+                                                      </p>
+
+                                                      <p class='col-4'>
+                                                            <label for="">Origine : </label>
+                                                            <span class='text-info'><?php echo $data['Origine']; ?></span>
+                                                      </p>
+                                                </div>
+                                                <div class='d-flex justify-content-start p-3'>
+                                                      <p class='col-10 '>
+                                                            <label for="">Ingrédients : </label>
+                                                            <span class='text-info'><?php echo $data['Ingredient2']; ?></span>
+                                                      </p>
+                                                </div>
+
                                           </div>
-                                          <div class='d-flex justify-content-start p-3'>
-                                                <p class='col-10 '>
-                                                      <label for="">Ingrédients : </label>
-                                                      <span class='text-info'><?php echo $data['Ingredient']; ?></span>
-                                                </p>
-                                          </div>
+
                                     </div>
 
 
@@ -514,7 +546,7 @@
                               $max_price = mysqli_real_escape_string($db, htmlspecialchars($_POST['price_max_search']));
 
                               $requete_prix = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, 
-                              origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient 
+                              origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2 
                               FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
                               INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient 
                               INNER JOIN type ON plat.Type = type.ID_Type INNER JOIN origine ON plat.Origine = origine.ID_Origine 
@@ -522,50 +554,55 @@
 
                               $exec_requete_recherche = mysqli_query($db, $requete_prix);
 
-                              // if ($lengths == false) {
-                              //       echo '<p class="mt-3 text-danger">Aucun résultat ne correspond à la requête.</p>';
-                              // } else {
                               while ($data = mysqli_fetch_assoc($exec_requete_recherche)) {
 
                                     ?>
-                                    <div class='border-bottom border-dark p-3'>
-                                          <div class='d-flex justify-content-between border-bottom p-3'>
-                                                <p class='col-5'>
-                                                      <span class='font-weight-bold'><?php echo $data['Plat']; ?></span> <span class='text-secondary'><?php echo $data['Poids']; ?>g</span><br>
-                                                      <span class='font-italic'><?php echo $data['Type']; ?></span>
-                                                </p>
-
-                                                <p class='col-3 d-flex justify-content-start'>
-                                                      <label class='align-self-center' for="">Quantité : </label>
-                                                      <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
-                                                </p>
-
-                                                <p class='col-4 d-flex justify-content-end'>
-                                                      <button class='btn btn-dark' type='button'>
-                                                            <i class="fas fa-cart-plus mr-2"></i>
-                                                            <span>Ajouter</span>
-                                                      </button>
+                                     <div class='border-bottom border-dark p-3 d-flex'>
+                                          <div class='col-2 align-center my-auto'>
+                                                <p>
+                                                      <img src="<?php echo $data['Image']; ?>" width='100%' alt="">
                                                 </p>
                                           </div>
-                                          <div class='d-flex justify-content-start border-bottom p-3'>
-                                                <p class='col-4'>
-                                                      <label for="">Prix : </label>
-                                                      <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
-                                                </p>
+                                          <div class='col-10'>
+                                                <div class='d-flex justify-content-between border-bottom p-3'>
+                                                      <p class='col-4'>
+                                                            <span class='font-weight-bold'><?php echo $data['Plat']; ?></span> <span class='text-secondary'><?php echo $data['Poids']; ?>g</span><br>
+                                                            <span class='font-italic'><?php echo $data['Type']; ?></span>
+                                                      </p>
 
-                                                <p class='col-4'>
-                                                      <label for="">Origine : </label>
-                                                      <span class='text-info'><?php echo $data['Origine']; ?></span>
-                                                </p>
+                                                      <p class='col-4 d-flex justify-content-start'>
+                                                            <label class='align-self-center' for="">Quantité : </label>
+                                                            <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
+                                                      </p>
+
+                                                      <p class='col-4 d-flex justify-content-end'>
+                                                            <button class='btn btn-dark' type='button'>
+                                                                  <i class="fas fa-cart-plus mr-2"></i>
+                                                                  <span>Ajouter</span>
+                                                            </button>
+                                                      </p>
+                                                </div>
+                                                <div class='d-flex justify-content-start border-bottom p-3'>
+                                                      <p class='col-4'>
+                                                            <label for="">Prix : </label>
+                                                            <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
+                                                      </p>
+
+                                                      <p class='col-4'>
+                                                            <label for="">Origine : </label>
+                                                            <span class='text-info'><?php echo $data['Origine']; ?></span>
+                                                      </p>
+                                                </div>
+                                                <div class='d-flex justify-content-start p-3'>
+                                                      <p class='col-10 '>
+                                                            <label for="">Ingrédients : </label>
+                                                            <span class='text-info'><?php echo $data['Ingredient2']; ?></span>
+                                                      </p>
+                                                </div>
+
                                           </div>
-                                          <div class='d-flex justify-content-start p-3'>
-                                                <p class='col-10 '>
-                                                      <label for="">Ingrédients : </label>
-                                                      <span class='text-info'><?php echo $data['Ingredient']; ?></span>
-                                                </p>
-                                          </div>
+
                                     </div>
-
 
                         <?php
                               }
@@ -610,7 +647,7 @@
                                                 <input class='form-control mb-3' type="password" placeholder="Votre mot de passe actuel" autocomplete="false" readonly onfocus="this.removeAttribute('readonly');">
                                                 <input class='form-control mb-3' type="password" placeholder="Votre nouveau mot de passe" autocomplete="false" readonly onfocus="this.removeAttribute('readonly');">
                                                 <input class='form-control mb-3' type="password" placeholder="Confirmez votre nouveau mot de passe" autocomplete="false" readonly onfocus="this.removeAttribute('readonly');">
-                                                <input class='btn btn-info col-6' type="submit" value='Confirmer'>
+                                                <input class='btn btn-dark col-6' type="submit" value='Confirmer'>
                                           </form>
                                     </div>
                               </div>
