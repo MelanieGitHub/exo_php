@@ -14,6 +14,7 @@ $(document).ready(function() {
         type: 'GET',
         data: { name: user_name },
         success: function(data, statut) {
+            console.log(data);
             let cpt = 0;
             let tbl = [];
 
@@ -37,6 +38,34 @@ $(document).ready(function() {
         error: function(resultat, statut, erreur) {
             console.log('Erreur lors de la récupération des données du compte utilisateur.');
         }
+    });
+
+    /////////////////////////////////////////////////////////////////////////
+    //////////////////////// Search BUTTON /////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
+
+    $('#cmdSearch_mot').on('click', function(event) {
+        event.preventDefault();
+        $('aside').hide(0);
+        $('#asideMot').show('slow');
+    });
+
+    $('#cmdSearch_prix').on('click', function(event) {
+        event.preventDefault();
+        $('aside').hide(0);
+        $('#asidePrix').show('slow');
+    });
+
+    $('#cmdSearch_origine').on('click', function(event) {
+        event.preventDefault();
+        $('aside').hide(0);
+        $('#asideOrigine').show('slow');
+    });
+
+    $('#cmdSearch_ingredient').on('click', function(event) {
+        event.preventDefault();
+        $('aside').hide(0);
+        $('#asideIngredient').show('slow');
     });
 
 

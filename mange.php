@@ -90,6 +90,7 @@
 
       <?php
 
+
       if (!$_SESSION) {
             echo "<div class='text-center mt-5'>
                         <h2 class='text-center text-danger m-auto'>Vous devez être connecté !<br/>
@@ -113,35 +114,45 @@
       }
       ?>
 
-      <article id='bodyArticle' class='mt-5'>
+      <article id='bodyArticle' class='container mt-5'>
+
+            <div class='mb-3 p-4 border rounded row'>
+                  <h4 class='col-12 border-bottom text-center pb-3 font-weight-bold'>Bienvenue ! </h4>
+            </div>
 
             <!-- //////////////////////////////////////////////////////////////////////// -->
-            <!-- ////////////////// TOUS LES ARTICLES | SUJETS ////////////////////////// -->
+            <!-- ////////////////////// SECTION RECHERCHE /////////////////////////////// -->
             <!-- //////////////////////////////////////////////////////////////////////// -->
 
-            <section id='sctSearch' class='container'>
-                  <div class='mb-3 p-4 border rounded row'>
-                        <h4 class='col-12 border-bottom pb-3 font-weight-bold'>Bienvenue ! </h4>
+            <section id='sctSearch'>
+                  <div class='d-flex justify-content-around mb-4'>
+                        <form method="post">
+                              <input type='submit' name='all_plat' class='show-section btn btn-info font-weight-bold' value='Tous nos plats'>
+                        </form>
+                        <button id='cmdSearch_mot' type='button' class='btn btn-dark'>Mot clés</button>
+                        <button id='cmdSearch_prix' type='button' class='btn btn-dark'>Prix</button>
+                        <button id='cmdSearch_origine' type='button' class='btn btn-dark'>Origine</button>
+                        <button id='cmdSearch_ingredient' type='button' class='btn btn-dark'>Ingrédient</button>
                   </div>
+                  <!-- //////////////////////////////////////////////////////////////////////// -->
+                  <!-- /////////////////////// Recherche par MOT CLES ///////////////////////// -->
+                  <!-- //////////////////////////////////////////////////////////////////////// -->
 
-                  <!-- ////////////////// RECHERCHE Par MOT CLES ////////////////////////// -->
-
-
-                  <aside class='p-2 bg-info rounded mb-3'>
+                  <aside id='asideMot' class='p-2 bg-info rounded mb-3'>
                         <form method='post'>
                               <p class="nav-link text-light d-flex">
                                     <input class="form-control" type="text" name='search' placeholder="Liste des plats contenant le mot...">
-                                    <input class='ml-3 btn btn-light' type='submit' value='Search'>
+                                    <input class='show-section ml-3 btn btn-light' type='submit' value='Search'>
                               </p>
                         </form>
                   </aside>
 
+                  <!-- //////////////////////////////////////////////////////////////////////// -->
+                  <!-- ///////////////////////// Recherche par PRIX /////////////////////////// -->
+                  <!-- //////////////////////////////////////////////////////////////////////// -->
 
-                  <aside class='p-4'>
+                  <aside id='asidePrix' class='p-4'>
                         <form class='p-4 border border-info rounded' method="post">
-
-                              <!-- ////////////////// PRIX ////////////////////////// -->
-
                               <div class="form-group">
                                     <label class='text-center font-weight-bold'>Liste des plats par prix : </label>
                                     <div class='row'>
@@ -156,12 +167,16 @@
                                           </p>
 
                                     </div>
-                                    <input type="submit" name='price_search' class='btn btn-info col-12 mt-3' value='Rechercher'>
+                                    <input type="submit" name='price_search' class='show-section btn btn-info col-12 mt-3' value='Rechercher'>
                               </div>
                         </form>
                   </aside>
 
-                  <aside class='p-4'>
+                  <!-- //////////////////////////////////////////////////////////////////////// -->
+                  <!-- /////////////////////// Recherche par ORIGINIE ///////////////////////// -->
+                  <!-- //////////////////////////////////////////////////////////////////////// -->
+
+                  <aside id='asideOrigine' class='p-4'>
                         <form class='p-4 border border-info rounded' method="post">
                               <div class="form-group">
                                     <label class='text-center font-weight-bold'>Liste des plats par origine: </label>
@@ -180,17 +195,20 @@
                                                 ?>
                                           </select>
                                     </div>
-                                    <input type="submit" name='origin_search_submit' class='btn btn-info col-12 mt-3' value='Rechercher'>
+                                    <input type="submit" name='origin_search_submit' class='show-section btn btn-info col-12 mt-3' value='Rechercher'>
                               </div>
                         </form>
                   </aside>
 
+                  <!-- //////////////////////////////////////////////////////////////////////// -->
+                  <!-- /////////////////////// Recherche par INGREDIENT /////////////////////// -->
+                  <!-- //////////////////////////////////////////////////////////////////////// -->
 
-                  <aside class='p-4 align-self-center'>
-                        <form class='p-4 border border-info rounded' action="">
+                  <aside id='asideIngredient' class='p-4 align-self-center'>
+                        <form class='p-4 border border-info rounded' method="post">
                               <div class="form-group">
                                     <label class='text-center font-weight-bold' for="selectIngredient">Liste des plats contenant l'ingrédient : </label>
-                                    <select id="selectIngredient" class="form-control">
+                                    <select id="selectIngredient" class="form-control" name='select_ingredient'>
 
                                           <?php
                                           $requete_ingredient = "SELECT Libelle FROM ingredient";
@@ -203,40 +221,37 @@
 
                                     </select>
 
-                                    <input type="submit" class='btn btn-info col-12 mt-3' value='Rechercher'>
+                                    <input type='submit' name='submit_ingredient' class='show-section btn btn-info col-12 mt-3' value='Rechercher'>
                               </div>
                         </form>
                   </aside>
-
             </section>
 
-
             <!-- //////////////////////////////////////////////////////////////////////// -->
-            <!-- //////////////////////////////// AFFICHAGE ///////////////////////////// -->
+            <!-- //////////////////////////// SECTION AFFICHAGE ///////////////////////// -->
             <!-- //////////////////////////////////////////////////////////////////////// -->
 
-            <section id='sctAffichage' class='container border border-dark rounded mb-5'>
+            <section id='sctAffichage' class='border border-dark rounded mb-5'>
+                  <p class='p-4 border-bottom border-dark text-center w-50 m-auto font-weight-bold'>Votre recherche :</p>
                   <div class='p-4'>
-                        <p class='pb-3 border-bottom border-dark'>Résultat de la recherche :</p>
 
-                        <!-- /////////////////////////////////////////////////////////////////////// -->
-                        <!-- /////////////////////// Tri par MOT CLES /////////////////////////////// -->
+
+                        <!-- //////////////////////////////////////////////////////////////////////// -->
+                        <!-- /////////////////////// TOUS les PLATS ///////////////////////////////// -->
                         <!-- //////////////////////////////////////////////////////////////////////// -->
 
-
                         <?php
-                        if (isset($_POST['search'])) {
-                              $search = mysqli_real_escape_string($db, htmlspecialchars($_POST['search']));
+                        if (isset($_POST['all_plat'])) {
 
-                              $requete_recherche = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient 
-                              INNER JOIN type ON plat.Type = type.ID_Type 
-                              INNER JOIN origine ON plat.Origine = origine.ID_Origine WHERE plat.Libelle LIKE '%" . $search . "%' GROUP BY plat.ID";
-                              //CETTE PUTIN DE REQUETES FONCTIONNE
+                              $requete_onload = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, 
+                              origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient 
+                              FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
+                              INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient 
+                              INNER JOIN type ON plat.Type = type.ID_Type INNER JOIN origine ON plat.Origine = origine.ID_Origine GROUP BY plat.ID";
 
-                              $exec_requete_recherche = mysqli_query($db, $requete_recherche);
+                              $exec_requete_recherche_onload = mysqli_query($db, $requete_onload);
 
-                              // SELECT plat.Libelle AS Plat, ingredient.Libelle AS Ingredient FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient
-                              while ($data = mysqli_fetch_assoc($exec_requete_recherche)) {
+                              while ($data = mysqli_fetch_assoc($exec_requete_recherche_onload)) {
 
                                     ?>
                                     <div class='border-bottom border-dark p-3'>
@@ -281,28 +296,76 @@
                         <?php
                               }
                         }
-
                         ?>
 
+                        <!-- /////////////////////////////////////////////////////////////////////// -->
+                        <!-- /////////////////////// Tri par MOT CLES /////////////////////////////// -->
+                        <!-- //////////////////////////////////////////////////////////////////////// -->
 
 
+                        <?php
+                        if (isset($_POST['search'])) {
+                              $search = mysqli_real_escape_string($db, htmlspecialchars($_POST['search']));
+
+                              $requete_recherche = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, origine.Libelle AS Origine, 
+                              plat.Prix AS Prix, plat.Poids AS Poids, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient 
+                              FROM ingredient_plat 
+                              INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
+                              INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient 
+                              INNER JOIN type ON plat.Type = type.ID_Type 
+                              INNER JOIN origine ON plat.Origine = origine.ID_Origine 
+                              WHERE plat.Libelle LIKE '%" . $search . "%' GROUP BY plat.ID";
+
+                              $exec_requete_recherche = mysqli_query($db, $requete_recherche);
+
+                              while ($data = mysqli_fetch_assoc($exec_requete_recherche)) {
+
+                                    ?>
+                                    <div class='border-bottom border-dark p-3'>
+                                          <div class='d-flex justify-content-between border-bottom p-3'>
+                                                <p class='col-5'>
+                                                      <span class='font-weight-bold'><?php echo $data['Plat']; ?></span>
+                                                      <span class='text-secondary'><?php echo $data['Poids']; ?>g</span><br>
+                                                      <span class='font-italic'><?php echo $data['Type']; ?></span>
+                                                </p>
+
+                                                <p class='col-3 d-flex justify-content-start'>
+                                                      <label class='align-self-center' for="">Quantité : </label>
+                                                      <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
+                                                </p>
+
+                                                <p class='col-4 d-flex justify-content-end'>
+                                                      <button class='btn btn-dark' type='button'>
+                                                            <i class="fas fa-cart-plus mr-2"></i>
+                                                            <span>Ajouter</span>
+                                                      </button>
+                                                </p>
+                                          </div>
+                                          <div class='d-flex justify-content-start border-bottom p-3'>
+                                                <p class='col-4'>
+                                                      <label for="">Prix : </label>
+                                                      <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
+                                                </p>
+
+                                                <p class='col-4'>
+                                                      <label for="">Origine : </label>
+                                                      <span class='text-info'><?php echo $data['Origine']; ?></span>
+                                                </p>
+                                          </div>
+                                          <div class='d-flex justify-content-start p-3'>
+                                                <p class='col-10 '>
+                                                      <label for="">Ingrédients : </label>
+                                                      <span class='text-info'><?php echo $data['Ingredient']; ?></span>
+                                                </p>
+                                          </div>
+                                    </div>
 
 
+                        <?php
+                              }
+                        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                        ?>
 
                         <!-- //////////////////////////////////////////////////////////////////////// -->
                         <!-- /////////////////////// Tri par ORIGINE //////////////////////////////// -->
@@ -373,18 +436,73 @@
 
                         ?>
 
+                        <!-- //////////////////////////////////////////////////////////////////////// -->
+                        <!-- /////////////////////// Tri par INGREDIENT ///////////////////////////// -->
+                        <!-- //////////////////////////////////////////////////////////////////////// -->
+
+                        <?php
+                        if (isset($_POST['submit_ingredient'])) {
+                              $value = $_POST['select_ingredient'];
+
+                              $requete_ing = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, 
+                              GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2 FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
+                              INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient INNER JOIN type ON plat.Type = type.ID_Type 
+                              INNER JOIN origine ON plat.Origine = origine.ID_Origine 
+                              GROUP BY plat.ID HAVING GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') LIKE '%Carottes%'";
+                              
+                              $exec_requete_ing = mysqli_query($db, $requete_ing);
+
+                              // if ($lengths == false) {
+                              //       echo '<p class="mt-3 text-danger">Aucun résultat ne correspond à la requête.</p>';
+                              // } else {
+                              while ($data = mysqli_fetch_assoc($exec_requete_ing)) {
+
+                                    ?>
+                                    <div class='border-bottom border-dark p-3'>
+                                          <div class='d-flex justify-content-between border-bottom p-3'>
+                                                <p class='col-5'>
+                                                      <span class='font-weight-bold'><?php echo $data['Plat']; ?></span> <span class='text-secondary'><?php echo $data['Poids']; ?>g</span><br>
+                                                      <span class='font-italic'><?php echo $data['Type']; ?></span>
+                                                </p>
+
+                                                <p class='col-3 d-flex justify-content-start'>
+                                                      <label class='align-self-center' for="">Quantité : </label>
+                                                      <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
+                                                </p>
+
+                                                <p class='col-4 d-flex justify-content-end'>
+                                                      <button class='btn btn-dark' type='button'>
+                                                            <i class="fas fa-cart-plus mr-2"></i>
+                                                            <span>Ajouter</span>
+                                                      </button>
+                                                </p>
+                                          </div>
+                                          <div class='d-flex justify-content-start border-bottom p-3'>
+                                                <p class='col-4'>
+                                                      <label for="">Prix : </label>
+                                                      <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
+                                                </p>
+
+                                                <p class='col-4'>
+                                                      <label for="">Origine : </label>
+                                                      <span class='text-info'><?php echo $data['Origine']; ?></span>
+                                                </p>
+                                          </div>
+                                          <div class='d-flex justify-content-start p-3'>
+                                                <p class='col-10 '>
+                                                      <label for="">Ingrédients : </label>
+                                                      <span class='text-info'><?php echo $data['Ingredient']; ?></span>
+                                                </p>
+                                          </div>
+                                    </div>
 
 
+                        <?php
+                              }
+                        }
+                        // }
 
-
-
-
-
-
-
-
-
-
+                        ?>
 
                         <!-- //////////////////////////////////////////////////////////////////////// -->
                         <!-- /////////////////////// Tri par PRIX /////////////////////////////////// -->
@@ -395,7 +513,7 @@
                               $min_price = mysqli_real_escape_string($db, htmlspecialchars($_POST['price_min_search']));
                               $max_price = mysqli_real_escape_string($db, htmlspecialchars($_POST['price_max_search']));
 
-                              $requete_prix ="SELECT plat.Libelle AS Plat, type.Libelle AS Type, 
+                              $requete_prix = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, 
                               origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient 
                               FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
                               INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient 
@@ -457,25 +575,13 @@
                         ?>
 
                   </div>
-
             </section>
-
-
-
-
-
-
-
-
-
-
-
 
             <!-- //////////////////////////////////////////////////////////////////////// -->
             <!-- /////////////////// PROFIL | UPDATE | DELETE /////////////////////////// -->
             <!-- //////////////////////////////////////////////////////////////////////// -->
 
-            <section id='sctProfil' class='container border border-dark rounded'>
+            <section id='sctProfil' class='border border-dark rounded'>
                   <div class='text-center'>
                         <div class='d-sm-flex p-4'>
                               <div class='border p-4 col-sm-6'>
@@ -516,7 +622,6 @@
             </section>
 
       </article>
-
 
 </body>
 
