@@ -2,12 +2,7 @@
 session_start();
 
 // connexion à la base de données
-$db_username = 'root';
-$db_password = '';
-$db_name     = 'exo_php';
-$db_host     = 'localhost';
-$db = mysqli_connect($db_host, $db_username, $db_password, $db_name)
-      or die('could not connect to database');
+include('include/connexion_bdd.php');
 
 if (!$_SESSION) {
       echo "<div class='text-center mt-5'>
@@ -21,7 +16,10 @@ if (!$_SESSION) {
                         </div>";
 } else {
       echo "<script>
-            window.onload = function(){ document.getElementById('txtUserConnexion').innerHTML = '" . $_SESSION['username'] . "';}; </script>";
+                  window.onload = function(){ 
+                        document.getElementById('txtUserConnexion').innerHTML = '" . $_SESSION['username'] . "';
+                  }; 
+            </script>";
 }
 
 if (isset($_GET['deconnexion'])) {
@@ -31,6 +29,7 @@ if (isset($_GET['deconnexion'])) {
             header("location:index.php");
       }
 }
+
 ?>
 
 <!DOCTYPE html>

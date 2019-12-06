@@ -5,13 +5,14 @@
 	- Update set compte --> modification du mail et du mot de passe
 
 2. Partie administrateur 
-	- Select * from ingredient, plat, ingredient_plat, origine et type
+	- Select * from plat, ingredient_plat, origine et type
+	- Select * from ingredient where ingredient.id exist in ingredient_plat
 
 	- Insert into plat --> libelle, type, origine, prix, poids, image 
 	- Insert into ingredient/origine/type --> libelle 
 	- Insert into ingredient_plat --> cle_plat, cle_ingredient 
 	
-	- Delete from plat/ingredient/ingredient_plat --> WHERE table.ID_champs = .$value.
+	- Delete from plat(2)/ingredient_plat(1) --> where table.ID_champs = .$value.
 		1/ delete cle secondaire 
 		2/ delete cle primaire 
 
@@ -22,8 +23,11 @@
 
 	- Select * from compte, commande, plat_commande
 	
-	- Delete from compte (CASCADE) --> WHERE table.ID_champs = .$value AND (...)
-	- Delete from commande/ 
+	- Delete from compte (CASCADE) --> where table.ID_champs = .$value AND (...)
+	- Delete from plat_commande --> where plat_commande.cle_commande = = .$value.
+	- Delete from commande --> where table.ID_champs = .$value.
+
+
 3. Recherches par caractéristiques 
 	- Select from ingredient_plat Inner plat Inner ingredient ...
 
@@ -33,3 +37,5 @@
 	insert plat from commande, 
 	delete plat from commande
 4. Factures 
+
+

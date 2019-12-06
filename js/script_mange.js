@@ -8,6 +8,8 @@ $(document).ready(function() {
 
     var user_name = $('#txtUserConnexion').html();
     console.log(user_name)
+
+    //Connexion bdd avec ajax s'ouvre au demarrage ajax, se ferme à la fin ajax
     $.ajax({
         url: 'action/retrieve_user.php',
         type: 'GET',
@@ -24,11 +26,11 @@ $(document).ready(function() {
                 }
 
                 if (cpt == data.length - 1) {
-                    // let pseudo = data.substring(tbl[2] + 1, tbl[3]);
-                    let pseudo = data.substring(tbl[2] + 1, tbl[3]);
-                    let mail = data.substring(tbl[6] + 1, tbl[7]);
+                    let id = data.substring(tbl[2] + 1, tbl[3]);
+                    let pseudo = data.substring(tbl[6] + 1, tbl[7]);
+                    let mail = data.substring(tbl[10] + 1, tbl[11]);
 
-                    // $('#idCompte').attr('data-id-user', id);
+                    $('#idCompte').attr('data-id-user', id);
                     $('#pseudoCompte').html(pseudo);
                     $('#mailCompte').html(mail);
                 } else {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  ven. 06 déc. 2019 à 15:07
+-- Généré le :  ven. 06 déc. 2019 à 15:25
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.2.24
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `exo_php`
+-- Base de données :  `mange_ton_php`
 --
 
 -- --------------------------------------------------------
