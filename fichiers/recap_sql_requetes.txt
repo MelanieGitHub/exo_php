@@ -12,14 +12,18 @@
 	- Insert into ingredient_plat --> cle_plat, cle_ingredient 
 	
 	- Delete from plat/ingredient/ingredient_plat --> WHERE table.ID_champs = .$value.
-		1/ delete cle secondaires 
+		1/ delete cle secondaire 
 		2/ delete cle primaire 
 
 	- Update set plat --> libelle, type, origine, prix, poids, image 
 	- Update set ingredient --> libelle 
-	- Update set ingredient_plat -->  cle_plat, cle_ingredient 
+	- Update set ingredient_plat -->  cle_plat, cle_ingredient
+	- Update set type/origine --> libelle 
 
-- Select * from compte, commande, plat_commande
+	- Select * from compte, commande, plat_commande
+	
+	- Delete from compte (CASCADE) --> WHERE table.ID_champs = .$value AND (...)
+	- Delete from commande/ 
 3. Recherches par caractéristiques 
 	- Select from ingredient_plat Inner plat Inner ingredient ...
 
