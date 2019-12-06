@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mer. 04 déc. 2019 à 16:53
+-- Généré le :  ven. 06 déc. 2019 à 09:44
 -- Version du serveur :  10.4.8-MariaDB
--- Version de PHP :  7.2.24
+-- Version de PHP :  7.1.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -193,20 +193,21 @@ CREATE TABLE `plat` (
   `Type` int(11) NOT NULL,
   `Origine` int(11) NOT NULL,
   `Prix` float NOT NULL,
-  `Poids` int(11) NOT NULL
+  `Poids` int(11) NOT NULL,
+  `Image` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `plat`
 --
 
-INSERT INTO `plat` (`ID`, `Libelle`, `Type`, `Origine`, `Prix`, `Poids`) VALUES
-(1, 'Blanquette de dinde', 7, 2, 15.99, 200),
-(2, 'Tartes aux pommes', 2, 4, 8.5, 100),
-(3, 'Soupe de Bar', 3, 5, 16.6, 120),
-(4, 'Curry Végé', 1, 1, 11.2, 230),
-(5, 'Hamburger', 7, 1, 6.5, 200),
-(6, 'Dorade au four', 6, 3, 19.4, 500);
+INSERT INTO `plat` (`ID`, `Libelle`, `Type`, `Origine`, `Prix`, `Poids`, `Image`) VALUES
+(1, 'Blanquette de dinde', 7, 2, 15.99, 200, 'images/blanquette_dinde.jpg'),
+(2, 'Tartes aux pommes', 2, 4, 8.5, 100, 'images/tarte_pomme.jpg'),
+(3, 'Soupe de Bar', 3, 5, 16.6, 120, 'images/soupe_bar.jpg'),
+(4, 'Curry Végé', 1, 1, 11.2, 230, 'images/curry_vege.jpg'),
+(5, 'Hamburger', 7, 1, 6.5, 200, 'images/burger.jpg'),
+(6, 'Dorade au four', 6, 3, 19.4, 500, 'images/dorade_four.jpg');
 
 -- --------------------------------------------------------
 
