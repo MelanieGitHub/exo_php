@@ -10,8 +10,10 @@
 	- Insert into plat --> libelle, type, origine, prix, poids, image 
 	- Insert into ingredient/origine/type --> libelle 
 	- Insert into ingredient_plat --> cle_plat, cle_ingredient 
-
-	- Delete from plat/ingredient/ingredient_plat/origine/type --> WHERE table.ID_champs = .$value.
+	
+	- Delete from plat/ingredient/ingredient_plat --> WHERE table.ID_champs = .$value.
+		1/ delete cle secondaires 
+		2/ delete cle primaire 
 
 	- Update set plat --> libelle, type, origine, prix, poids, image 
 	- Update set ingredient --> libelle 
