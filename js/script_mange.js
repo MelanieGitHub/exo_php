@@ -7,13 +7,13 @@ $(document).ready(function() {
     // /////////////////////////////////////////////////////////////////////////
 
     var user_name = $('#txtUserConnexion').html();
-
+    console.log(user_name)
     $.ajax({
         url: 'action/retrieve_user.php',
         type: 'GET',
         data: { name: user_name },
         success: function(data, statut) {
-            console.log(data);
+            console.log('Data :' + data);
             let cpt = 0;
             let tbl = [];
 
@@ -24,9 +24,11 @@ $(document).ready(function() {
                 }
 
                 if (cpt == data.length - 1) {
+                    // let pseudo = data.substring(tbl[2] + 1, tbl[3]);
                     let pseudo = data.substring(tbl[2] + 1, tbl[3]);
                     let mail = data.substring(tbl[6] + 1, tbl[7]);
 
+                    // $('#idCompte').attr('data-id-user', id);
                     $('#pseudoCompte').html(pseudo);
                     $('#mailCompte').html(mail);
                 } else {
@@ -65,6 +67,16 @@ $(document).ready(function() {
         event.preventDefault();
         $('aside').hide(0);
         $('#asideIngredient').slideDown('slow');
+    });
+
+    /////////////////////////////////////////////////////////////////////////
+    //////////////////////// PROFIL Utilisateur /////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
+
+    $('#lk_Commande').on('click', function(event) {
+        event.preventDefault();
+        $('section').hide(0);
+        $('#sctCommande').show('slow');
     });
 
 

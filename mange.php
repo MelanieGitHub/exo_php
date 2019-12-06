@@ -1,3 +1,38 @@
+<?php
+session_start();
+
+// connexion à la base de données
+$db_username = 'root';
+$db_password = '';
+$db_name     = 'exo_php';
+$db_host     = 'localhost';
+$db = mysqli_connect($db_host, $db_username, $db_password, $db_name)
+      or die('could not connect to database');
+
+if (!$_SESSION) {
+      echo "<div class='text-center mt-5'>
+                              <h2 class='text-center text-danger m-auto'>Vous devez être connecté !<br/>
+                              <a class='text-dark' href='index.php'> 
+                                    <i class=\"fas fa-link pr-3\"></i>
+                                          Se connecter
+                                    <i class=\"fas fa-link pl-3\"></i> 
+                              </a>
+                              </h2>
+                        </div>";
+} else {
+      echo "<script>
+            window.onload = function(){ document.getElementById('txtUserConnexion').innerHTML = '" . $_SESSION['username'] . "';}; </script>";
+}
+
+if (isset($_GET['deconnexion'])) {
+      if ($_GET['deconnexion'] == true) {
+            $_SESSION['username'] = '';
+            session_destroy();
+            header("location:index.php");
+      }
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -27,17 +62,7 @@
 
 <body class="bg-light">
 
-      <?php
-      session_start();
 
-      // connexion à la base de données
-      $db_username = 'root';
-      $db_password = '';
-      $db_name     = 'exo_php';
-      $db_host     = 'localhost';
-      $db = mysqli_connect($db_host, $db_username, $db_password, $db_name)
-            or die('could not connect to database');
-      ?>
       <!-- //////////////////////////////////////////////////////////////////////// -->
       <!-- //////////////////////////// HEADER //////////////////////////////////// -->
 
@@ -69,6 +94,13 @@
                         </li>
 
                         <li class="nav-item">
+                              <a id='lk_Commande' class="cursor-pointer nav-link text-light">
+                                    <i class="fas fa-list"></i>
+                                    <span class="pl-2">Mes commandes</span>
+                              </a>
+                        </li>
+
+                        <li class="nav-item">
                               <a id='lk_Panier' class="nav-link text-light">
                                     <i class="fas fa-shopping-cart"></i>
                                     <span class="pl-2">Mon panier</span>
@@ -85,34 +117,11 @@
             </div>
       </nav>
 
+
+
       <!-- //////////////////////////////////////////////////////////////////////// -->
-      <!-- ///////////////////////////// BODY ///////////////////////////////////// -->
-
-      <?php
-
-
-      if (!$_SESSION) {
-            echo "<div class='text-center mt-5'>
-                        <h2 class='text-center text-danger m-auto'>Vous devez être connecté !<br/>
-                        <a class='text-dark' href='index.php'> 
-                              <i class=\"fas fa-link pr-3\"></i>
-                                    Se connecter
-                              <i class=\"fas fa-link pl-3\"></i> 
-                        </a>
-                        </h2>
-                  </div>";
-      } else {
-            echo "<script>document.getElementById('txtUserConnexion').innerHTML = '" . $_SESSION['username'] . "';</script>";
-      }
-
-      if (isset($_GET['deconnexion'])) {
-            if ($_GET['deconnexion'] == true) {
-                  $_SESSION['username'] = '';
-                  session_destroy();
-                  header("location:index.php");
-            }
-      }
-      ?>
+      <!-- ///////////////////////////// BODY CONTENT ///////////////////////////// -->
+      <!-- //////////////////////////////////////////////////////////////////////// -->
 
       <article id='bodyArticle' class='container mt-5'>
 
@@ -138,7 +147,7 @@
                   <!-- /////////////////////// Recherche par MOT CLES ///////////////////////// -->
                   <!-- //////////////////////////////////////////////////////////////////////// -->
 
-                  <aside id='asideMot' class='p-2 bg-success rounded mb-3'>
+                  <aside id='asideMot' class='p-2 bg-dark rounded mb-3'>
                         <form method='post'>
                               <p class="nav-link text-light d-flex">
                                     <input class="form-control" type="text" name='search' placeholder="Liste des plats contenant le mot...">
@@ -152,7 +161,7 @@
                   <!-- //////////////////////////////////////////////////////////////////////// -->
 
                   <aside id='asidePrix' class='p-4'>
-                        <form class='p-4 border border-info rounded' method="post">
+                        <form class='p-4 border border-dark rounded' method="post">
                               <div class="form-group">
                                     <label class='text-center font-weight-bold'>Liste des plats par prix : </label>
                                     <div class='row'>
@@ -177,7 +186,7 @@
                   <!-- //////////////////////////////////////////////////////////////////////// -->
 
                   <aside id='asideOrigine' class='p-4'>
-                        <form class='p-4 border border-info rounded' method="post">
+                        <form class='p-4 border border-dark rounded' method="post">
                               <div class="form-group">
                                     <label class='text-center font-weight-bold'>Liste des plats par origine: </label>
 
@@ -205,7 +214,7 @@
                   <!-- //////////////////////////////////////////////////////////////////////// -->
 
                   <aside id='asideIngredient' class='p-4 align-self-center'>
-                        <form class='p-4 border border-info rounded' method="post">
+                        <form class='p-4 border border-dark rounded' method="post">
                               <div class="form-group">
                                     <label class='text-center font-weight-bold' for="selectIngredient">Liste des plats contenant l'ingrédient : </label>
                                     <select id="selectIngredient" class="form-control" name='select_ingredient'>
@@ -254,7 +263,7 @@
                               while ($data = mysqli_fetch_assoc($exec_requete_recherche_onload)) {
 
                                     ?>
-                                     <div class='border-bottom border-dark p-3 d-flex'>
+                                    <div class='border-bottom border-dark p-3 d-flex'>
                                           <div class='col-2 align-center my-auto'>
                                                 <p>
                                                       <img src="<?php echo $data['Image']; ?>" width='100%' alt="">
@@ -282,18 +291,18 @@
                                                 <div class='d-flex justify-content-start border-bottom p-3'>
                                                       <p class='col-4'>
                                                             <label for="">Prix : </label>
-                                                            <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
+                                                            <span class='font-weight-bold text-dark'><?php echo $data['Prix']; ?> €</span>
                                                       </p>
 
                                                       <p class='col-4'>
                                                             <label for="">Origine : </label>
-                                                            <span class='text-info'><?php echo $data['Origine']; ?></span>
+                                                            <span class='text-dark'><?php echo $data['Origine']; ?></span>
                                                       </p>
                                                 </div>
                                                 <div class='d-flex justify-content-start p-3'>
                                                       <p class='col-10 '>
                                                             <label for="">Ingrédients : </label>
-                                                            <span class='text-info'><?php echo $data['Ingredient2']; ?></span>
+                                                            <span class='text-dark'><?php echo $data['Ingredient2']; ?></span>
                                                       </p>
                                                 </div>
 
@@ -331,7 +340,7 @@
                               while ($data = mysqli_fetch_assoc($exec_requete_recherche)) {
 
                                     ?>
-                                      <div class='border-bottom border-dark p-3 d-flex'>
+                                    <div class='border-bottom border-dark p-3 d-flex'>
                                           <div class='col-2 align-center my-auto'>
                                                 <p>
                                                       <img src="<?php echo $data['Image']; ?>" width='100%' alt="">
@@ -359,18 +368,18 @@
                                                 <div class='d-flex justify-content-start border-bottom p-3'>
                                                       <p class='col-4'>
                                                             <label for="">Prix : </label>
-                                                            <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
+                                                            <span class='font-weight-bold text-dark'><?php echo $data['Prix']; ?> €</span>
                                                       </p>
 
                                                       <p class='col-4'>
                                                             <label for="">Origine : </label>
-                                                            <span class='text-info'><?php echo $data['Origine']; ?></span>
+                                                            <span class='text-dark'><?php echo $data['Origine']; ?></span>
                                                       </p>
                                                 </div>
                                                 <div class='d-flex justify-content-start p-3'>
                                                       <p class='col-10 '>
                                                             <label for="">Ingrédients : </label>
-                                                            <span class='text-info'><?php echo $data['Ingredient2']; ?></span>
+                                                            <span class='text-dark'><?php echo $data['Ingredient2']; ?></span>
                                                       </p>
                                                 </div>
 
@@ -434,18 +443,18 @@
                                                 <div class='d-flex justify-content-start border-bottom p-3'>
                                                       <p class='col-4'>
                                                             <label for="">Prix : </label>
-                                                            <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
+                                                            <span class='font-weight-bold text-dark'><?php echo $data['Prix']; ?> €</span>
                                                       </p>
 
                                                       <p class='col-4'>
                                                             <label for="">Origine : </label>
-                                                            <span class='text-info'><?php echo $data['Origine']; ?></span>
+                                                            <span class='text-dark'><?php echo $data['Origine']; ?></span>
                                                       </p>
                                                 </div>
                                                 <div class='d-flex justify-content-start p-3'>
                                                       <p class='col-10 '>
                                                             <label for="">Ingrédients : </label>
-                                                            <span class='text-info'><?php echo $data['Ingredient2']; ?></span>
+                                                            <span class='text-dark'><?php echo $data['Ingredient2']; ?></span>
                                                       </p>
                                                 </div>
 
@@ -509,18 +518,18 @@
                                                 <div class='d-flex justify-content-start border-bottom p-3'>
                                                       <p class='col-4'>
                                                             <label for="">Prix : </label>
-                                                            <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
+                                                            <span class='font-weight-bold text-dark'><?php echo $data['Prix']; ?> €</span>
                                                       </p>
 
                                                       <p class='col-4'>
                                                             <label for="">Origine : </label>
-                                                            <span class='text-info'><?php echo $data['Origine']; ?></span>
+                                                            <span class='text-dark'><?php echo $data['Origine']; ?></span>
                                                       </p>
                                                 </div>
                                                 <div class='d-flex justify-content-start p-3'>
                                                       <p class='col-10 '>
                                                             <label for="">Ingrédients : </label>
-                                                            <span class='text-info'><?php echo $data['Ingredient2']; ?></span>
+                                                            <span class='text-dark'><?php echo $data['Ingredient2']; ?></span>
                                                       </p>
                                                 </div>
 
@@ -532,7 +541,6 @@
                         <?php
                               }
                         }
-                        // }
 
                         ?>
 
@@ -557,7 +565,7 @@
                               while ($data = mysqli_fetch_assoc($exec_requete_recherche)) {
 
                                     ?>
-                                     <div class='border-bottom border-dark p-3 d-flex'>
+                                    <div class='border-bottom border-dark p-3 d-flex'>
                                           <div class='col-2 align-center my-auto'>
                                                 <p>
                                                       <img src="<?php echo $data['Image']; ?>" width='100%' alt="">
@@ -585,18 +593,18 @@
                                                 <div class='d-flex justify-content-start border-bottom p-3'>
                                                       <p class='col-4'>
                                                             <label for="">Prix : </label>
-                                                            <span class='font-weight-bold text-info'><?php echo $data['Prix']; ?> €</span>
+                                                            <span class='font-weight-bold text-dark'><?php echo $data['Prix']; ?> €</span>
                                                       </p>
 
                                                       <p class='col-4'>
                                                             <label for="">Origine : </label>
-                                                            <span class='text-info'><?php echo $data['Origine']; ?></span>
+                                                            <span class='text-dark'><?php echo $data['Origine']; ?></span>
                                                       </p>
                                                 </div>
                                                 <div class='d-flex justify-content-start p-3'>
                                                       <p class='col-10 '>
                                                             <label for="">Ingrédients : </label>
-                                                            <span class='text-info'><?php echo $data['Ingredient2']; ?></span>
+                                                            <span class='text-dark'><?php echo $data['Ingredient2']; ?></span>
                                                       </p>
                                                 </div>
 
@@ -607,12 +615,83 @@
                         <?php
                               }
                         }
-                        // }
 
                         ?>
 
                   </div>
             </section>
+
+
+            <!-- //////////////////////////////////////////////////////////////////////// -->
+            <!-- ////////////////////// SECTION COMMANDES /////////////////////////////// -->
+            <!-- //////////////////////////////////////////////////////////////////////// -->
+
+            <section id='sctCommande'>
+                  <?php
+
+                  $req_commande = "SELECT plat_commande.ID AS ID, commande.Cle_Compte AS Compte, commande.ID_Commande AS N_Com, 
+                  commande.Total_Commande as Total_Com
+                  FROM plat_commande 
+                  INNER JOIN commande ON commande.ID_Commande = plat_commande.Cle_Commande 
+                  WHERE commande.Cle_Compte = '1' GROUP BY N_Com";
+
+                  $exec_requete_commande = mysqli_query($db, $req_commande);
+
+                  while ($data = mysqli_fetch_assoc($exec_requete_commande)) {
+
+                        ?>
+                        <div class='mb-3'>
+                              <div class='col-12 border-bottom mb-3'>
+                                    <div class='col-10 m-auto rounded py-2 d-flex justify-content-around'>
+                                          <p>
+                                                <span class='font-weight-bold'>Commande n° : </span>
+                                                <span><?php echo $data['N_Com']; ?></span>
+                                          </p>
+                                          <p>
+                                                <span class='font-weight-bold'>Total : </span>
+                                                <span><?php echo $data['Total_Com']; ?></span>
+                                          </p>
+                                          <p>
+                                                <span class='font-weight-bold'>Date : </span>
+                                                <span>A définir dans le table</span>
+                                          </p>
+
+                                          <p>
+                                                <button id='cmd_Details_Commande' class='btn btn-dark font-weight-bold' type='button'>Détails</button>
+                                          </p>
+                                    </div>
+                              </div>
+                        </div>
+
+                  <?php
+                  }
+
+                  ?>
+
+            </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             <!-- //////////////////////////////////////////////////////////////////////// -->
             <!-- /////////////////// PROFIL | UPDATE | DELETE /////////////////////////// -->
@@ -627,12 +706,12 @@
                                           <p id='mailCompte' class='font-italic pb-4'></p>
 
                                           <p>
-                                                <a role='button' class='text-info' href=''>Mettre à jour mon mail</a>
+                                                <a role='button' class='text-dark' href=''>Mettre à jour mon mail</a>
                                           </p>
                                     </div>
                                     <p class='col-12 border-top mt-4 mb-0 pt-3'>
                                           <p class='pb-3'>La suppression de votre compte sera définitive. <br>
-                                                Aucunes informations sur vous ou votre compte ne seront sauvegardées.</p>
+                                                Aucunes darkrmations sur vous ou votre compte ne seront sauvegardées.</p>
                                           <a role='button' class='text-danger' href=''>Supprimer mon compte</a>
                                     </p>
 

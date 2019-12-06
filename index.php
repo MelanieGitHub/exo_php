@@ -23,7 +23,7 @@
 </head>
 
 
-<body>
+<body class='bg-dark'>
     <div class="container mt-5">
         <div class='text-center mb-5'>
             <img width='6%' src="images/logo_resto.png" alt="">
@@ -52,9 +52,9 @@
                     <?php
 
                     if (isset($_GET['inscription'])) {
-                        $success = $_GET['inscription'];
-                        if ($success == 1) {
-                            echo "<p class='text-success font-weight-bold text-center mb-4 pt-0 mt-0'>Inscription réussi !</p>";
+                        $dark = $_GET['inscription'];
+                        if ($dark == 1) {
+                            echo "<p class='text-dark font-weight-bold text-center mb-4 pt-0 mt-0'>Inscription réussi !</p>";
                         }
                     }
 
@@ -77,7 +77,7 @@
                 </div>
 
                 <div class="form-group mb-0">
-                    <input id='submit' type="submit" class="mt-3 btn btn-info col-12" name='connexion' value="Accéder au compte">
+                    <input id='submit' type="submit" class="mt-3 btn btn-dark col-12" name='connexion' value="Accéder au compte">
                 </div>
                 <div id='refreshErrorC'>
 
@@ -131,7 +131,7 @@
                 </div>
 
                 <div class="form-group mb-0">
-                    <input id='submit_i' type="submit" class="mt-3 btn btn-info col-12" name='inscription' value="Confirmer l'inscription">
+                    <input id='submit_i' type="submit" class="mt-3 btn btn-dark col-12" name='inscription' value="Confirmer l'inscription">
                 </div>
                 
                 <div id='refreshErrorI'>

@@ -1,14 +1,9 @@
 body {
-    background-color: #17a2b8;
     color: white;
 }
 
 label {
     color: black;
-}
-
-.bg-theme {
-    background-color: #17a2b8;
 }
 
 .font-site {

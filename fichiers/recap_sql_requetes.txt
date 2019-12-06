@@ -1,0 +1,29 @@
+1. Authentification : 
+	- Insert into compte --> inscription 
+	- Select from compte --> connexion 
+	- Delete from compte --> suppression en cascade du compte user 
+	- Update set compte --> modification du mail et du mot de passe
+
+2. Partie administrateur 
+	- Select * from ingredient, plat, ingredient_plat, origine et type
+
+	- Insert into plat --> libelle, type, origine, prix, poids, image 
+	- Insert into ingredient/origine/type --> libelle 
+	- Insert into ingredient_plat --> cle_plat, cle_ingredient 
+
+	- Delete from plat/ingredient/ingredient_plat/origine/type --> WHERE table.ID_champs = .$value.
+
+	- Update set plat --> libelle, type, origine, prix, poids, image 
+	- Update set ingredient --> libelle 
+	- Update set ingredient_plat -->  cle_plat, cle_ingredient 
+
+- Select * from compte, commande, plat_commande
+3. Recherches par caractéristiques 
+	- Select from ingredient_plat Inner plat Inner ingredient ...
+
+
+4. Panier / Commande : Select OK --> Manque 
+	Insert commande, 
+	insert plat from commande, 
+	delete plat from commande
+4. Factures 

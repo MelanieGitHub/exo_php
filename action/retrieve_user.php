@@ -8,16 +8,13 @@ $db_host     = 'localhost';
 $db = mysqli_connect($db_host, $db_username, $db_password, $db_name)
     or die('could not connect to database');
     
-$name = $_GET['name'];
+$name = $_SESSION['username'];
 
-$requete_user = "SELECT Pseudo, Mail, Password FROM compte WHERE Pseudo = '" . $name . "'";
+$requete_user = "SELECT * FROM compte WHERE Pseudo = '" . $name . "'";
 $exec_requete = mysqli_query($db, $requete_user);
 $reponse = mysqli_fetch_assoc($exec_requete);
 $return = serialize($reponse);
 echo ($return);
-
-
-
 
 
 
