@@ -26,6 +26,7 @@ p {
     cursor: pointer;
 }
 
-p {
-    margin-bottom: 0;
+.logo {
+    font-size: 2rem;
+    color: white;
 }

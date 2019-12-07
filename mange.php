@@ -5,15 +5,16 @@ session_start();
 include('include/connexion_bdd.php');
 
 if (!$_SESSION) {
-      echo "<div class='text-center mt-5'>
-                              <h2 class='text-center text-danger m-auto'>Vous devez être connecté !<br/>
-                              <a class='text-dark' href='index.php'> 
-                                    <i class=\"fas fa-link pr-3\"></i>
-                                          Se connecter
-                                    <i class=\"fas fa-link pl-3\"></i> 
-                              </a>
-                              </h2>
-                        </div>";
+      header("location:deconnecte.php");
+      // echo "<div class='text-center mt-5 mb-5'>
+      //                         <h2 class='text-center text-danger m-auto'>Vous devez être connecté !<br/>
+      //                         <a class='text-dark' href='index.php'> 
+      //                               <i class=\"fas fa-link pr-3\"></i>
+      //                                     Se connecter
+      //                               <i class=\"fas fa-link pl-3\"></i> 
+      //                         </a>
+      //                         </h2>
+      //                   </div>";
 } else {
       echo "<script>
                   window.onload = function(){ 
