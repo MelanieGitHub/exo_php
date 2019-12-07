@@ -711,22 +711,24 @@ if (isset($_GET['deconnexion'])) {
                                     </div>
                                     <p class='col-12 border-top mt-4 mb-0 pt-3'>
                                           <p class='pb-3'>La suppression de votre compte sera définitive. <br>
-                                                Aucunes darkrmations sur vous ou votre compte ne seront sauvegardées.</p>
+                                                Aucunes des données de votre compte ne seront sauvegardées.</p>
                                           <a role='button' class='text-danger' href=''>Supprimer mon compte</a>
                                     </p>
 
                               </div>
 
                               <div class='p-4 m-auto col-sm-6'>
+                                    <p id='reponseUpdate' class='text-center mb-3 font-weight-bold'></p>
+
                                     <p class='mx-auto align-self-start'>
                                           <a role='button' id='majPassword' class='btn btn-dark text-light'>Mettre à jour mon mot de passe</a>
                                     </p>
                                     <div id='UpdatePassword' class='border rounded p-4 col-10 m-auto'>
-                                          <form action="update_mdp.php">
-                                                <input class='form-control mb-3' type="password" placeholder="Votre mot de passe actuel" autocomplete="false" readonly onfocus="this.removeAttribute('readonly');">
-                                                <input class='form-control mb-3' type="password" placeholder="Votre nouveau mot de passe" autocomplete="false" readonly onfocus="this.removeAttribute('readonly');">
-                                                <input class='form-control mb-3' type="password" placeholder="Confirmez votre nouveau mot de passe" autocomplete="false" readonly onfocus="this.removeAttribute('readonly');">
-                                                <input class='btn btn-dark col-6' type="submit" value='Confirmer'>
+                                          <form>
+                                                <input id='txtCheckPassword' class='form-control mb-3' type="password" placeholder="Votre mot de passe actuel" autocomplete="false" readonly onfocus="this.removeAttribute('readonly');">
+                                                <input id='txtUpdatePassword' class='form-control mb-3' type="password" placeholder="Votre nouveau mot de passe" autocomplete="false" readonly onfocus="this.removeAttribute('readonly');">
+                                                <input id='txtUpdatePassword2' class='form-control mb-3' type="password" placeholder="Confirmez votre nouveau mot de passe" autocomplete="false" readonly onfocus="this.removeAttribute('readonly');">
+                                                <input id='btnUpdatePassword' class='btn btn-dark col-6' type="submit" value='Confirmer'>
                                           </form>
                                     </div>
                               </div>
