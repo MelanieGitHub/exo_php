@@ -670,29 +670,6 @@ if (isset($_GET['deconnexion'])) {
 
             </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <!-- //////////////////////////////////////////////////////////////////////// -->
             <!-- /////////////////// PROFIL | UPDATE | DELETE /////////////////////////// -->
             <!-- //////////////////////////////////////////////////////////////////////// -->
@@ -703,10 +680,13 @@ if (isset($_GET['deconnexion'])) {
                               <div class='border p-4 col-sm-6'>
                                     <p id='pseudoCompte' class='col-12 border-bottom pb-3 font-weight-bold'></p>
                                     <div class='mt-3 align-self-end'>
-                                          <p id='mailCompte' class='font-italic pb-4'></p>
+                                          <p id='reponseUpdateMail' class='text-center mb-3 font-weight-bold'></p>
+                                          <form>
+                                                <p id='mailCompte' class='font-italic pb-4 row justify-content-center'></p>
+                                          </form>
 
                                           <p>
-                                                <a role='button' class='text-dark' href=''>Mettre à jour mon mail</a>
+                                                <a id='majMail' role='button' class='text-dark' href=''>Mettre à jour mon mail</a>
                                           </p>
                                     </div>
                                     <p class='col-12 border-top mt-4 mb-0 pt-3'>
