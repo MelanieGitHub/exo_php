@@ -195,5 +195,40 @@ $(document).ready(function() {
     });
 
 
+    $('#btnDeleteCompte').on('click', function(event) {
+        event.preventDefault();
+
+        $('#txtPasswordDelete').slideDown('slow');
+
+        $('#btnDelete').on('click', function(event) {
+            event.preventDefault();
+
+            let user_id = $('#pseudoCompte').attr('data-id-user');
+            let user_check = $('#txtCheckDelete').val()
+                //Connexion bdd avec ajax s'ouvre au demarrage ajax, se ferme à la fin ajax
+
+            $.ajax({
+                url: 'action/delete_compte.php',
+                type: 'POST',
+                data: {
+                    id: user_id,
+                    check: user_check
+                },
+                success: function(data, statut) {
+                    console.log(data + ' - ' + statut);
+
+                    if (data == 'invalide') {
+                        $('#reponseDelete').html('Mot de passe incorrect.');
+                    } else {
+                        alert('Suppression réussi !')
+                        $(location).attr('href', 'index.php');
+                    }
+                },
+                error: function(resultat, statut, erreur) {
+                    console.log('Erreur lors de la mise à jour des données du compte utilisateur.');
+                }
+            });
+        });
+    });
 
 });

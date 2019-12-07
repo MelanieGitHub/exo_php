@@ -10,7 +10,8 @@ nav {
 
 section,
 aside,
-#UpdatePassword {
+#UpdatePassword,
+#txtPasswordDelete {
     display: none;
 }
 
