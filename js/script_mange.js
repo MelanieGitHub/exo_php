@@ -11,10 +11,28 @@ $(document).ready(function() {
         url: 'action/retrieve_user.php',
         type: 'GET',
         success: function(data, statut) {
-            //Use JSON 
-            let message = 'user'
+            let cpt = 0;
+            let tbl = [];
 
-            Unserialize_Object(data, message);
+            for (let i = 0; i < data.length; i++) {
+
+                if (data[i] == '"') {
+                    tbl.push(i);
+                }
+
+                if (cpt == data.length - 1) {
+                    console.log(message)
+                    let id = data.substring(tbl[2] + 1, tbl[3]);
+                    let pseudo = data.substring(tbl[6] + 1, tbl[7]);
+                    let mail = data.substring(tbl[10] + 1, tbl[11]);
+
+                    $('#pseudoCompte').attr('data-id-user', id);
+                    $('#pseudoCompte').html(pseudo);
+                    $('#mailCompte').html(mail);
+                } else {
+                    cpt++;
+                }
+            }
         },
         error: function(resultat, statut, erreur) {
             console.log('Erreur lors de la récupération des données du compte utilisateur.');
@@ -244,62 +262,3 @@ $(document).ready(function() {
     });
 
 });
-
-
-function Unserialize_Object(data, message) {
-    let cpt = 0;
-    let tbl = [];
-
-    for (let i = 0; i < data.length; i++) {
-
-        if (data[i] == '"') {
-            tbl.push(i);
-        }
-
-        if (cpt == data.length - 1) {
-            console.log(message)
-            Retrieve_Object(data, tbl, message);
-        } else {
-            cpt++;
-        }
-    }
-}
-
-function Retrieve_Object(data, tbl, message) {
-
-    switch (message) {
-        case 'user':
-            let id = data.substring(tbl[2] + 1, tbl[3]);
-            let pseudo = data.substring(tbl[6] + 1, tbl[7]);
-            let mail = data.substring(tbl[10] + 1, tbl[11]);
-
-            $('#pseudoCompte').attr('data-id-user', id);
-            $('#pseudoCompte').html(pseudo);
-            $('#mailCompte').html(mail);
-            break;
-
-        case 'commande':
-            console.log('\n>>>>>>>>>>>> message : COMMANDE <<<<<<<<<<<<<<\n\n');
-            console.log(data)
-            console.log(tbl)
-            let nom = data.substring(tbl[2] + 1, tbl[3]);
-            let comm = data.substring(tbl[6] + 1, tbl[7]);
-            let quantite = data.substring(tbl[10] + 1, tbl[11]);
-            let prix = data.substring(tbl[14] + 1, tbl[15]);
-            let total = data.substring(tbl[16] + 1, tbl[17]);
-
-            console.log(nom)
-            console.log(comm) //1
-            console.log(quantite) //1
-            console.log(prix) //15.99
-            console.log(total) //15.99
-            break;
-
-        default:
-            console.log('Erreur on function Retrieve_Object()')
-            break;
-    }
-
-}
-
-// a: 10: { i: 0;s: 19: "Blanquette de dinde";i: 1;i: 1;i: 2;i: 1;i: 3;d: 15.99;i: 4;d: 15.99;i: 5;s: 14: "Dorade au four";i: 6;i: 1;i: 7;i: 2;i: 8;d: 19.4;i: 9;d: 38.8; }
