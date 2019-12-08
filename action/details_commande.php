@@ -27,7 +27,7 @@ while ($stmt->fetch()) {
     array_push($resulat, $nom, $comm, $quantite, $prix, $total);
 }
 
-$return = serialize($resulat);
+$return = json_encode($resulat);
 echo $return;
 
 

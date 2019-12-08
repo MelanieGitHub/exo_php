@@ -77,54 +77,11 @@ $(document).ready(function() {
             },
             success: function(data, statut) {
                 console.log(data);
-                console.log(statut);
-                // let message = 'commande';
-                // Unserialize_Object(data, message);
-                let cpt = 0;
-                let tbl = [];
-
-                for (let i = 0; i < data.length; i++) {
-
-                    if (data[i] == ';') {
-                        tbl.push(i);
-                    }
-
-                    cpt++;
+                // console.log(JSON.stringify(data));
+                let truc = jQuery.parseJSON(data)
+                for (let elem of truc) {
+                    console.log(elem);
                 }
-
-                let tbl2 = [];
-                for (let i = 0; i < data.length; i++) {
-
-                    if (data[i] == ':') {
-                        tbl2.push(i);
-                    }
-                }
-
-                let nom = data.substring(tbl2[4] + 1, tbl[1]);
-                let comm = data.substring(tbl2[6] + 1, tbl[3]);
-                let quantite = data.substring(tbl2[8] + 1, tbl[5]);
-                let prix = data.substring(tbl2[10] + 1, tbl[7]);
-                let total = data.substring(tbl2[12] + 1, tbl[9]);
-
-                console.log('Nom : ' + nom)
-                console.log('commande : ' + comm) //1
-                console.log('quantite : ' + quantite) //1
-                console.log('prix : ' + prix) //15.99
-                console.log('total : ' + total) //15.99
-
-                let nom2 = data.substring(tbl2[15] + 1, tbl[11]);
-                let comm2 = data.substring(tbl2[17] + 1, tbl[13]);
-                let quantite2 = data.substring(tbl2[19] + 1, tbl[15]);
-                let prix2 = data.substring(tbl2[21] + 1, tbl[17]);
-                let total2 = data.substring(tbl2[23] + 1, tbl[19]);
-
-                console.log('Nom : ' + nom2)
-                console.log('commande : ' + comm2) //1
-                console.log('quantite : ' + quantite2) //1
-                console.log('prix : ' + prix2) //15.99
-                console.log('total : ' + total2) //15.99
-                    // } else {}
-
             },
             error: function(resultat, statut, erreur) {
                 console.log('Erreur lors de la mise à jour des données du compte utilisateur.');
