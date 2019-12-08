@@ -21,7 +21,6 @@ $(document).ready(function() {
                 }
 
                 if (cpt == data.length - 1) {
-                    console.log(message)
                     let id = data.substring(tbl[2] + 1, tbl[3]);
                     let pseudo = data.substring(tbl[6] + 1, tbl[7]);
                     let mail = data.substring(tbl[10] + 1, tbl[11]);
@@ -78,6 +77,13 @@ $(document).ready(function() {
         $('#sctCommande').show('slow');
     });
 
+    $('#retour_commande').on('click', function(event) {
+        event.preventDefault();
+
+        $('section').hide(0);
+        $('#sctCommande').show('slow');
+    });
+
 
     $('.details-commande').on('click', function(event) {
         event.preventDefault();
@@ -95,10 +101,19 @@ $(document).ready(function() {
             },
             success: function(data, statut) {
                 console.log(data);
-                // console.log(JSON.stringify(data));
-                let truc = jQuery.parseJSON(data)
-                for (let elem of truc) {
-                    console.log(elem);
+                let details_tbl = $.parseJSON(data);
+
+                let tbl_object = [];
+                $('#injectDetailsCommande').empty();
+
+                for (let i = 0; i < details_tbl.length; i += 7) {
+                    console.log('Index : ' + i);
+                    tbl_object.push(details_tbl.slice(i, i + 7));
+                    console.log('Index : ' + i);
+
+                    console.log('Tableau : ' + tbl_object);
+                    console.log('Index : ' + i);
+                    $('#injectDetailsCommande').append(" <div class='border-bottom border-dark p-3 '><p><span class='text-danger font-weight-bold'> Supprimer le doublon du numero et du total de la commande</span></p><p><span>Plat : </span><span class='text-primary'>" + details_tbl[i] + "</span></p><p><span>Quantité : </span><span class='text-primary'> " + details_tbl[i + 2] + "</span></p><p><span>Prix : </span><span class='text-primary'> " + details_tbl[i + 3] + "€</span></p><p><span>Total plat : </span><span class='text-primary'>" + details_tbl[i + 4] + "</span></p><p><span>Commande n° : </span><span class='text-primary'>" + details_tbl[i + 1] + "</span></p><p><span>Total de la commande : </span><span class='text-primary'>" + details_tbl[i + 5] + "</span></p><p><span>Date de commande : </span><span class='text-primary'>" + details_tbl[i + 6] + "</span></p></div>")
                 }
             },
             error: function(resultat, statut, erreur) {
@@ -106,6 +121,18 @@ $(document).ready(function() {
             }
         });
     });
+
+    /////////////////////////////////////////////////////////////////////////
+    //////////////////////// PANIER /////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
+
+    $('#lk_Panier').on('click', function(event) {
+        event.preventDefault();
+        $('section').hide(0);
+        $('#sctPanier').show('slow');
+    });
+
+
 
     /////////////////////////////////////////////////////////////////////////
     //////////////////////// PROFIL Utilisateur /////////////////////////////

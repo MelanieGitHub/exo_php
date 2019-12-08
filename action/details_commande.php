@@ -6,12 +6,13 @@ include('../include/connexion_bdd.php');
 
 $id = mysqli_real_escape_string($db, htmlspecialchars($_GET['id']));
 
-$requete_select_commande = "SELECT plat.Libelle, commande.ID_Commande AS Numero_Commande, plat_commande.Quantite, 
-plat.Prix AS Prix_Unitaire, ROUND(plat.Prix * plat_commande.Quantite, 2) AS Total 
-FROM plat_commande 
+$requete_select_commande = "SELECT plat.Libelle, 
+commande.ID_Commande AS Numero_Commande, plat_commande.Quantite, 
+plat.Prix AS Prix_Unitaire, ROUND(plat.Prix * plat_commande.Quantite, 2) AS Total, 
+commande.Total_Commande, commande.Date_commande FROM plat_commande 
 INNER JOIN plat ON plat.ID = plat_commande.Cle_plat 
 INNER JOIN commande ON commande.ID_Commande = plat_commande.Cle_Commande 
-WHERE plat_commande.Cle_Commande = '" . $id . "' GROUP BY plat.ID";
+WHERE plat_commande.Cle_Commande = '" .$id. "' GROUP BY plat.ID";
 
 
 $stmt = $db->prepare($requete_select_commande);
@@ -20,11 +21,11 @@ $stmt = $db->prepare($requete_select_commande);
 $stmt->execute();
 
 /* Association des variables de résultat */
-$stmt->bind_result($nom, $comm, $quantite, $prix, $total);
+$stmt->bind_result($prix_comm, $date, $nom, $comm, $quantite, $prix, $total);
 $resulat = [];
 /* Lecture des valeurs */
 while ($stmt->fetch()) {
-    array_push($resulat, $nom, $comm, $quantite, $prix, $total);
+    array_push($resulat, $prix_comm, $date, $nom, $comm, $quantite, $prix, $total);
 }
 
 $return = json_encode($resulat);

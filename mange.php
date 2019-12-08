@@ -92,7 +92,7 @@ if (isset($_GET['deconnexion'])) {
                         </li>
 
                         <li class="nav-item">
-                              <a id='lk_Panier' class="nav-link text-light">
+                              <a id='lk_Panier' class="cursor-pointer nav-link text-light">
                                     <i class="fas fa-shopping-cart"></i>
                                     <span class="pl-2">Mon panier</span>
                               </a>
@@ -271,7 +271,7 @@ if (isset($_GET['deconnexion'])) {
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-end'>
-                                                            <button class='btn btn-dark' type='button'>
+                                                            <button class='ajouter_plat btn btn-dark' type='button'>
                                                                   <i class="fas fa-cart-plus mr-2"></i>
                                                                   <span>Ajouter</span>
                                                             </button>
@@ -348,7 +348,7 @@ if (isset($_GET['deconnexion'])) {
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-end'>
-                                                            <button class='btn btn-dark' type='button'>
+                                                            <button class='ajouter_plat btn btn-dark' type='button'>
                                                                   <i class="fas fa-cart-plus mr-2"></i>
                                                                   <span>Ajouter</span>
                                                             </button>
@@ -423,7 +423,7 @@ if (isset($_GET['deconnexion'])) {
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-end'>
-                                                            <button class='btn btn-dark' type='button'>
+                                                            <button class='ajouter_plat btn btn-dark' type='button'>
                                                                   <i class="fas fa-cart-plus mr-2"></i>
                                                                   <span>Ajouter</span>
                                                             </button>
@@ -498,7 +498,7 @@ if (isset($_GET['deconnexion'])) {
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-end'>
-                                                            <button class='btn btn-dark' type='button'>
+                                                            <button class='ajouter_plat btn btn-dark' type='button'>
                                                                   <i class="fas fa-cart-plus mr-2"></i>
                                                                   <span>Ajouter</span>
                                                             </button>
@@ -573,7 +573,7 @@ if (isset($_GET['deconnexion'])) {
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-end'>
-                                                            <button class='btn btn-dark' type='button'>
+                                                            <button class='ajouter_plat btn btn-dark' type='button'>
                                                                   <i class="fas fa-cart-plus mr-2"></i>
                                                                   <span>Ajouter</span>
                                                             </button>
@@ -663,61 +663,37 @@ if (isset($_GET['deconnexion'])) {
 
 
             <section id='sctDetailsCommande' class='border border-dark rounded mb-5'>
-                  <div class='p-4'>
+                  <div class='p-3 col-6 m-auto'>
+                        <a id='retour_commande' class="p-2 btn btn-dark text-center text-light col-12">
+                              <i class="fas fa-list"></i>
+                              <span class="pl-2">Retourner à la liste de <b>Commande</b></span>
+                        </a>
+                  </div>
+                  <div id='injectDetailsCommande' class='p-4'>
 
-
-                        <div class='border-bottom border-dark p-3 d-flex'>
-                              <div class='col-2 align-center my-auto'>
-                                    <p>
-                                          <img src="<?php echo $data['Image']; ?>" width='100%' alt="">
-                                    </p>
-                              </div>
-                              <div class='col-10'>
-                                    <div class='d-flex justify-content-between border-bottom p-3'>
-                                          <p class='col-4'>
-                                                <span class='font-weight-bold'>echo $data['Plat']</span> <span class='text-secondary'>echo $data['Poids']g</span><br>
-                                                <span class='font-italic'>echo $data['Type']</span>
-                                          </p>
-
-                                          <p class='col-4 d-flex justify-content-start'>
-                                                <label class='align-self-center' for="">Quantité : </label>
-                                                <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
-                                          </p>
-
-                                          <p class='col-4 d-flex justify-content-end'>
-                                                <button class='btn btn-dark' type='button'>
-                                                      <i class="fas fa-cart-plus mr-2"></i>
-                                                      <span>Ajouter</span>
-                                                </button>
-                                          </p>
-                                    </div>
-                                    <div class='d-flex justify-content-start border-bottom p-3'>
-                                          <p class='col-4'>
-                                                <label for="">Prix : </label>
-                                                <span class='font-weight-bold text-dark'>echo $data['Prix'] €</span>
-                                          </p>
-
-                                          <p class='col-4'>
-                                                <label for="">Origine : </label>
-                                                <span class='text-dark'>echo $data['Origine']</span>
-                                          </p>
-                                    </div>
-                                    <div class='d-flex justify-content-start p-3'>
-                                          <p class='col-10 '>
-                                                <label for="">Ingrédients : </label>
-                                                <span class='text-dark'>echo $data['Ingredient2']</span>
-                                          </p>
-                                    </div>
-
-                              </div>
-
-                        </div>
-
+                        <!-- <div class='border-bottom border-dark p-3 '>
+                              <p><span>Plat : </span><span class='text-primary'>" + details_tbl[i] + "</span></p>
+                              <p><span>Quantité : </span><span class='text-primary'> " + details_tbl[i + 2] + "</span></p>
+                              <p><span>Prix : </span><span class='text-primary'> " + details_tbl[i + 3] + "€</span></p>
+                              <p><span>Total plat : </span><span class='text-primary'>" + details_tbl[i + 4] + "</span></p>
+                              <p><span>Commande n° : </span><span class='text-primary'>" + details_tbl[i + 1] + "</span></p>
+                              <p><span>Total de la commande : </span><span class='text-primary'>" + details_tbl[i + 5] + "</span></p>
+                              <p><span>Date de commande : </span><span class='text-primary'>" + details_tbl[i + 6] + "</span></p>
+                        </div> -->
 
                   </div>
             </section>
 
 
+            <!-- //////////////////////////////////////////////////////////////////////// -->
+            <!-- //////////////////////// Section PANIER //////////////////////////////// -->
+            <!-- //////////////////////////////////////////////////////////////////////// -->
+
+            <section id='sctPanier' class='border border-dark rounded'>
+                  <div class='text-center'>
+                        <p>TESTTTTT</p>
+                  </div>
+            </section>
             <!-- //////////////////////////////////////////////////////////////////////// -->
             <!-- /////////////////// PROFIL | UPDATE | DELETE /////////////////////////// -->
             <!-- //////////////////////////////////////////////////////////////////////// -->
