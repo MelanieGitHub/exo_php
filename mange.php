@@ -624,7 +624,7 @@ if (isset($_GET['deconnexion'])) {
                   commande.Total_Commande as Total_Com
                   FROM plat_commande 
                   INNER JOIN commande ON commande.ID_Commande = plat_commande.Cle_Commande 
-                  WHERE commande.Cle_Compte = '2' GROUP BY N_Com";
+                  WHERE commande.Cle_Compte = '1' GROUP BY N_Com";
 
                   $exec_requete_commande = mysqli_query($db, $req_commande);
 
