@@ -6,15 +6,6 @@ include('include/connexion_bdd.php');
 
 if (!$_SESSION) {
       header("location:deconnecte.php");
-      // echo "<div class='text-center mt-5 mb-5'>
-      //                         <h2 class='text-center text-danger m-auto'>Vous devez être connecté !<br/>
-      //                         <a class='text-dark' href='index.php'> 
-      //                               <i class=\"fas fa-link pr-3\"></i>
-      //                                     Se connecter
-      //                               <i class=\"fas fa-link pl-3\"></i> 
-      //                         </a>
-      //                         </h2>
-      //                   </div>";
 } else {
       echo "<script>
                   window.onload = function(){ 
@@ -655,7 +646,7 @@ if (isset($_GET['deconnexion'])) {
                                           </p>
 
                                           <p>
-                                                <button id='cmd_Details_Commande' class='btn btn-dark font-weight-bold' type='button'>Détails</button>
+                                                <button id='cmd_Details_Commande' data-cle='<?php echo $data['N_Com']; ?>'class='details-commande btn btn-dark font-weight-bold' type='button'>Détails</button>
                                           </p>
                                     </div>
                               </div>

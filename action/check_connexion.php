@@ -17,13 +17,22 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
    if ($username !== "" && $password !== "") {
 
-      $requete_if = "SELECT count(*) FROM compte WHERE Pseudo = '" . $username . "' AND Password = '" . $password . "' ";
-      $exec_requete_if = mysqli_query($db, $requete_if);
-      $reponse_if = mysqli_fetch_array($exec_requete_if);
-      $count_if = $reponse_if['count(*)'];
+      $requete_account = "SELECT ID_Compte, Pseudo FROM compte WHERE Pseudo = '" . $username . "' AND Password = '" . $password . "' ";
+      $exec_requete_ = mysqli_query($db, $requete_account);
+      $data = mysqli_fetch_assoc($exec_requete_);
+      $id_session =  $data['ID_Compte'];
+      $pseudo_session = $data['Pseudo'];
 
-      if ($count_if != 0) {
-         $_SESSION['username'] = $username;
+      $requete = "SELECT count(*) FROM compte WHERE Pseudo = '" . $username . "' AND Password = '" . $password . "' ";
+      $exec_requete = mysqli_query($db, $requete);
+
+      $reponse = mysqli_fetch_array($exec_requete);
+      $count = $reponse['count(*)'];
+
+      if ($count != 0) {
+         $_SESSION['username'] = $pseudo_session;
+         $_SESSION['idsession'] = $id_session;
+         
          header('Location: ../mange.php');
       } else {
          header('Location: ../index.php?erreur=1');
@@ -67,7 +76,7 @@ if (isset($_POST['username_i']) && isset($_POST['mail_i']) && isset($_POST['pass
 
                   $requete_inscription = "INSERT INTO compte VALUES(NULL, '" . $username . "', '" . $mail . "', '" . $password . "')";
                   $exec_requete_inscription = mysqli_query($db, $requete_inscription);
-         
+
                   header('Location: ../index.php?inscription=1');
                } else {
                   header('Location: ../index.php?erreur=6');
@@ -86,7 +95,4 @@ if (isset($_POST['username_i']) && isset($_POST['mail_i']) && isset($_POST['pass
    }
 }
 
-   mysqli_close($db); // fermer la connexion
-
-
-
+mysqli_close($db); // fermer la connexion

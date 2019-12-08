@@ -4,9 +4,9 @@ session_start();
 // connexion à la base de données
 include('../include/connexion_bdd.php');
     
-$name = $_SESSION['username'];
+$id = $_SESSION['idsession'];
 
-$requete_user = "SELECT * FROM compte WHERE Pseudo = '" . $name . "'";
+$requete_user = "SELECT * FROM compte WHERE ID_Compte = '" . $id . "'";
 $exec_requete = mysqli_query($db, $requete_user);
 $reponse = mysqli_fetch_assoc($exec_requete);
 $return = serialize($reponse);
