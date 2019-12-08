@@ -242,7 +242,8 @@ if (isset($_GET['deconnexion'])) {
                         if (isset($_POST['all_plat'])) {
 
                               $requete_onload = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, 
-                              origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2 
+                              origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, 
+                              GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2, plat.ID AS ID_plat, plat.ID AS ID_plat
                               FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
                               INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient 
                               INNER JOIN type ON plat.Type = type.ID_Type INNER JOIN origine ON plat.Origine = origine.ID_Origine GROUP BY plat.ID";
@@ -266,12 +267,12 @@ if (isset($_GET['deconnexion'])) {
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-start'>
-                                                            <label class='align-self-center' for="">Quantité : </label>
+                                                            <label class='align-self-center' >Quantité : </label>
                                                             <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-end'>
-                                                            <button class='ajouter_plat btn btn-dark' type='button'>
+                                                            <button data-cle='<?php echo $data['ID_plat']; ?>' class='ajouter_plat btn btn-dark' type='button'>
                                                                   <i class="fas fa-cart-plus mr-2"></i>
                                                                   <span>Ajouter</span>
                                                             </button>
@@ -279,18 +280,18 @@ if (isset($_GET['deconnexion'])) {
                                                 </div>
                                                 <div class='d-flex justify-content-start border-bottom p-3'>
                                                       <p class='col-4'>
-                                                            <label for="">Prix : </label>
+                                                            <label >Prix : </label>
                                                             <span class='font-weight-bold text-dark'><?php echo $data['Prix']; ?> €</span>
                                                       </p>
 
                                                       <p class='col-4'>
-                                                            <label for="">Origine : </label>
+                                                            <label >Origine : </label>
                                                             <span class='text-dark'><?php echo $data['Origine']; ?></span>
                                                       </p>
                                                 </div>
                                                 <div class='d-flex justify-content-start p-3'>
                                                       <p class='col-10 '>
-                                                            <label for="">Ingrédients : </label>
+                                                            <label class='font-weight-bold'>Ingrédients : </label>
                                                             <span class='text-dark'><?php echo $data['Ingredient2']; ?></span>
                                                       </p>
                                                 </div>
@@ -316,7 +317,7 @@ if (isset($_GET['deconnexion'])) {
                               $search = mysqli_real_escape_string($db, htmlspecialchars($_POST['search']));
 
                               $requete_recherche = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, origine.Libelle AS Origine, 
-                              plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2 
+                              plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2, plat.ID AS ID_plat 
                               FROM ingredient_plat 
                               INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
                               INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient 
@@ -343,12 +344,12 @@ if (isset($_GET['deconnexion'])) {
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-start'>
-                                                            <label class='align-self-center' for="">Quantité : </label>
+                                                            <label class='align-self-center' >Quantité : </label>
                                                             <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-end'>
-                                                            <button class='ajouter_plat btn btn-dark' type='button'>
+                                                            <button data-cle='<?php echo $data['ID_plat']; ?>' class='ajouter_plat btn btn-dark' type='button'>
                                                                   <i class="fas fa-cart-plus mr-2"></i>
                                                                   <span>Ajouter</span>
                                                             </button>
@@ -356,18 +357,18 @@ if (isset($_GET['deconnexion'])) {
                                                 </div>
                                                 <div class='d-flex justify-content-start border-bottom p-3'>
                                                       <p class='col-4'>
-                                                            <label for="">Prix : </label>
+                                                            <label >Prix : </label>
                                                             <span class='font-weight-bold text-dark'><?php echo $data['Prix']; ?> €</span>
                                                       </p>
 
                                                       <p class='col-4'>
-                                                            <label for="">Origine : </label>
+                                                            <label >Origine : </label>
                                                             <span class='text-dark'><?php echo $data['Origine']; ?></span>
                                                       </p>
                                                 </div>
                                                 <div class='d-flex justify-content-start p-3'>
                                                       <p class='col-10 '>
-                                                            <label for="">Ingrédients : </label>
+                                                            <label class='font-weight-bold'>Ingrédients : </label>
                                                             <span class='text-dark'><?php echo $data['Ingredient2']; ?></span>
                                                       </p>
                                                 </div>
@@ -393,7 +394,7 @@ if (isset($_GET['deconnexion'])) {
                               $origin = $_POST['origin_search'];
 
                               $requete_origine = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, 
-                              origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2 
+                              origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2, plat.ID AS ID_plat 
                               FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
                               INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient 
                               INNER JOIN type ON plat.Type = type.ID_Type INNER JOIN origine ON plat.Origine = origine.ID_Origine 
@@ -418,12 +419,12 @@ if (isset($_GET['deconnexion'])) {
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-start'>
-                                                            <label class='align-self-center' for="">Quantité : </label>
+                                                            <label class='align-self-center' >Quantité : </label>
                                                             <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-end'>
-                                                            <button class='ajouter_plat btn btn-dark' type='button'>
+                                                            <button data-cle='<?php echo $data['ID_plat']; ?>' class='ajouter_plat btn btn-dark' type='button'>
                                                                   <i class="fas fa-cart-plus mr-2"></i>
                                                                   <span>Ajouter</span>
                                                             </button>
@@ -431,18 +432,18 @@ if (isset($_GET['deconnexion'])) {
                                                 </div>
                                                 <div class='d-flex justify-content-start border-bottom p-3'>
                                                       <p class='col-4'>
-                                                            <label for="">Prix : </label>
+                                                            <label >Prix : </label>
                                                             <span class='font-weight-bold text-dark'><?php echo $data['Prix']; ?> €</span>
                                                       </p>
 
                                                       <p class='col-4'>
-                                                            <label for="">Origine : </label>
+                                                            <label >Origine : </label>
                                                             <span class='text-dark'><?php echo $data['Origine']; ?></span>
                                                       </p>
                                                 </div>
                                                 <div class='d-flex justify-content-start p-3'>
                                                       <p class='col-10 '>
-                                                            <label for="">Ingrédients : </label>
+                                                            <label class='font-weight-bold'>Ingrédients : </label>
                                                             <span class='text-dark'><?php echo $data['Ingredient2']; ?></span>
                                                       </p>
                                                 </div>
@@ -469,7 +470,7 @@ if (isset($_GET['deconnexion'])) {
                               $value = $_POST['select_ingredient'];
 
                               $requete_ing = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, 
-                              GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2 FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
+                              GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2, plat.ID AS ID_plat FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
                               INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient INNER JOIN type ON plat.Type = type.ID_Type 
                               INNER JOIN origine ON plat.Origine = origine.ID_Origine 
                               GROUP BY plat.ID HAVING GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') LIKE '%" . $value . "%'";
@@ -493,12 +494,12 @@ if (isset($_GET['deconnexion'])) {
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-start'>
-                                                            <label class='align-self-center' for="">Quantité : </label>
+                                                            <label class='align-self-center' >Quantité : </label>
                                                             <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-end'>
-                                                            <button class='ajouter_plat btn btn-dark' type='button'>
+                                                            <button data-cle='<?php echo $data['ID_plat']; ?>' class='ajouter_plat btn btn-dark' type='button'>
                                                                   <i class="fas fa-cart-plus mr-2"></i>
                                                                   <span>Ajouter</span>
                                                             </button>
@@ -506,18 +507,18 @@ if (isset($_GET['deconnexion'])) {
                                                 </div>
                                                 <div class='d-flex justify-content-start border-bottom p-3'>
                                                       <p class='col-4'>
-                                                            <label for="">Prix : </label>
+                                                            <label >Prix : </label>
                                                             <span class='font-weight-bold text-dark'><?php echo $data['Prix']; ?> €</span>
                                                       </p>
 
                                                       <p class='col-4'>
-                                                            <label for="">Origine : </label>
+                                                            <label >Origine : </label>
                                                             <span class='text-dark'><?php echo $data['Origine']; ?></span>
                                                       </p>
                                                 </div>
                                                 <div class='d-flex justify-content-start p-3'>
                                                       <p class='col-10 '>
-                                                            <label for="">Ingrédients : </label>
+                                                            <label class='font-weight-bold'>Ingrédients : </label>
                                                             <span class='text-dark'><?php echo $data['Ingredient2']; ?></span>
                                                       </p>
                                                 </div>
@@ -543,7 +544,7 @@ if (isset($_GET['deconnexion'])) {
                               $max_price = mysqli_real_escape_string($db, htmlspecialchars($_POST['price_max_search']));
 
                               $requete_prix = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, 
-                              origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2 
+                              origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2, plat.ID AS ID_plat 
                               FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
                               INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient 
                               INNER JOIN type ON plat.Type = type.ID_Type INNER JOIN origine ON plat.Origine = origine.ID_Origine 
@@ -568,12 +569,12 @@ if (isset($_GET['deconnexion'])) {
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-start'>
-                                                            <label class='align-self-center' for="">Quantité : </label>
+                                                            <label class='align-self-center' >Quantité : </label>
                                                             <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-end'>
-                                                            <button class='ajouter_plat btn btn-dark' type='button'>
+                                                            <button data-cle='<?php echo $data['ID_plat']; ?>' class='ajouter_plat btn btn-dark' type='button'>
                                                                   <i class="fas fa-cart-plus mr-2"></i>
                                                                   <span>Ajouter</span>
                                                             </button>
@@ -581,18 +582,18 @@ if (isset($_GET['deconnexion'])) {
                                                 </div>
                                                 <div class='d-flex justify-content-start border-bottom p-3'>
                                                       <p class='col-4'>
-                                                            <label for="">Prix : </label>
+                                                            <label >Prix : </label>
                                                             <span class='font-weight-bold text-dark'><?php echo $data['Prix']; ?> €</span>
                                                       </p>
 
                                                       <p class='col-4'>
-                                                            <label for="">Origine : </label>
+                                                            <label >Origine : </label>
                                                             <span class='text-dark'><?php echo $data['Origine']; ?></span>
                                                       </p>
                                                 </div>
                                                 <div class='d-flex justify-content-start p-3'>
                                                       <p class='col-10 '>
-                                                            <label for="">Ingrédients : </label>
+                                                            <label class='font-weight-bold'>Ingrédients : </label>
                                                             <span class='text-dark'><?php echo $data['Ingredient2']; ?></span>
                                                       </p>
                                                 </div>
@@ -623,7 +624,7 @@ if (isset($_GET['deconnexion'])) {
                   commande.Total_Commande as Total_Com
                   FROM plat_commande 
                   INNER JOIN commande ON commande.ID_Commande = plat_commande.Cle_Commande 
-                  WHERE commande.Cle_Compte = '1' GROUP BY N_Com";
+                  WHERE commande.Cle_Compte = '2' GROUP BY N_Com";
 
                   $exec_requete_commande = mysqli_query($db, $req_commande);
 
@@ -634,8 +635,7 @@ if (isset($_GET['deconnexion'])) {
                               <div class='col-12 border-bottom mb-3'>
                                     <div class='col-10 m-auto rounded py-2 d-flex justify-content-around'>
                                           <p>
-                                                <span class='font-weight-bold'>Commande n° : </span>
-                                                <span><?php echo $data['N_Com']; ?></span>
+                                                <span> <b>Commande n° :</b> </span><span class='text-primary'>CN300<?php echo $data['N_Com']; ?></span>
                                           </p>
                                           <p>
                                                 <span class='font-weight-bold'>Total : </span>
@@ -669,19 +669,7 @@ if (isset($_GET['deconnexion'])) {
                               <span class="pl-2">Retourner à la liste de <b>Commande</b></span>
                         </a>
                   </div>
-                  <div id='injectDetailsCommande' class='p-4'>
-
-                        <!-- <div class='border-bottom border-dark p-3 '>
-                              <p><span>Plat : </span><span class='text-primary'>" + details_tbl[i] + "</span></p>
-                              <p><span>Quantité : </span><span class='text-primary'> " + details_tbl[i + 2] + "</span></p>
-                              <p><span>Prix : </span><span class='text-primary'> " + details_tbl[i + 3] + "€</span></p>
-                              <p><span>Total plat : </span><span class='text-primary'>" + details_tbl[i + 4] + "</span></p>
-                              <p><span>Commande n° : </span><span class='text-primary'>" + details_tbl[i + 1] + "</span></p>
-                              <p><span>Total de la commande : </span><span class='text-primary'>" + details_tbl[i + 5] + "</span></p>
-                              <p><span>Date de commande : </span><span class='text-primary'>" + details_tbl[i + 6] + "</span></p>
-                        </div> -->
-
-                  </div>
+                  <div id='injectDetailsCommande' class='p-4'></div>
             </section>
 
 
@@ -691,7 +679,7 @@ if (isset($_GET['deconnexion'])) {
 
             <section id='sctPanier' class='border border-dark rounded'>
                   <div class='text-center'>
-                        <p>TESTTTTT</p>
+                        <p class='text-info font-weight-bold p-5'>En cours</p>
                   </div>
             </section>
             <!-- //////////////////////////////////////////////////////////////////////// -->

@@ -113,7 +113,7 @@ $(document).ready(function() {
 
                     console.log('Tableau : ' + tbl_object);
                     console.log('Index : ' + i);
-                    $('#injectDetailsCommande').append(" <div class='border-bottom border-dark p-3 '><p><span class='text-danger font-weight-bold'> Supprimer le doublon du numero et du total de la commande</span></p><p><span>Plat : </span><span class='text-primary'>" + details_tbl[i] + "</span></p><p><span>Quantité : </span><span class='text-primary'> " + details_tbl[i + 2] + "</span></p><p><span>Prix : </span><span class='text-primary'> " + details_tbl[i + 3] + "€</span></p><p><span>Total plat : </span><span class='text-primary'>" + details_tbl[i + 4] + "</span></p><p><span>Commande n° : </span><span class='text-primary'>" + details_tbl[i + 1] + "</span></p><p><span>Total de la commande : </span><span class='text-primary'>" + details_tbl[i + 5] + "</span></p><p><span>Date de commande : </span><span class='text-primary'>" + details_tbl[i + 6] + "</span></p></div>")
+                    $('#injectDetailsCommande').append(" <div class='border-bottom border-dark p-3 '><p><span class='text-danger font-weight-bold'> Supprimer le doublon du numero et du total de la commande</span></p><p><span>Plat : </span><span class='text-primary'>" + details_tbl[i] + "</span></p><p><span>Quantité : </span><span class='text-primary'> " + details_tbl[i + 2] + "</span></p><p><span>Prix : </span><span class='text-primary'> " + details_tbl[i + 3] + "€</span></p><p><span>Total : </span><span class='text-primary'>" + details_tbl[i + 4] + "</span></p><p><span class='text-danger font-italic'>Commande n° : </span><span class='text-primary'>" + details_tbl[i + 1] + "</span></p><p><span class='text-danger font-italic'>Total de la commande : </span><span class='text-primary'>" + details_tbl[i + 5] + "</span></p><p><span>Date de commande : </span><span class='text-primary'>" + details_tbl[i + 6] + "</span></p></div>")
                 }
             },
             error: function(resultat, statut, erreur) {
@@ -133,6 +133,12 @@ $(document).ready(function() {
     });
 
 
+
+    $('.ajouter_plat ').on('click', function(event) {
+        event.preventDefault();
+        $('section').hide(0);
+        $('#sctPanier').show('slow');
+    });
 
     /////////////////////////////////////////////////////////////////////////
     //////////////////////// PROFIL Utilisateur /////////////////////////////
