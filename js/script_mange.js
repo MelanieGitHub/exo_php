@@ -66,27 +66,60 @@ $(document).ready(function() {
 
         let val = $(this).attr('data-cle');
 
+        $('section').hide(0);
+        $('#sctDetailsCommande').slideDown('slow');
+
         $.ajax({
             url: 'action/details_commande.php',
             type: 'GET',
             data: {
-                element: element,
-                id: user_id,
-                password: user_password,
-                password2: user_password2,
-                check: user_check_password
+                id: val
             },
             success: function(data, statut) {
-                if (data == 'invalide') {
-                    $('#reponseUpdate').removeClass('text-success').addClass('text-danger').html('Mot de passe invalide.');
-                } else if (data == 'different') {
-                    $('#reponseUpdate').removeClass('text-success').addClass('text-danger').html('Mot de passe différent.');
-                } else if (data == 'faux') {
-                    $('#reponseUpdate').removeClass('text-success').addClass('text-danger').html('Ancien mot de passe faux.');
-                } else {
-                    $('#UpdatePassword').slideUp('slow');
-                    $('#reponseUpdate').removeClass('text-danger').addClass('text-success').html('Mise à jour réussie');
+                console.log(data);
+                console.log(statut);
+                // let message = 'commande';
+                // Unserialize_Object(data, message);
+                let cpt = 0;
+                let tbl = [];
+
+                for (let i = 0; i < data.length; i++) {
+
+                    if (data[i] == ';') {
+                        tbl.push(i);
+                    }
+
+                    if (cpt == data.length - 1) {
+                        // Retrieve_Object(data, tbl, message);
+                        let nom = data.substring(tbl[0] + 1, tbl[1]);
+                        let comm = data.substring(tbl[2] + 1, tbl[3]);
+                        let quantite = data.substring(tbl[4] + 1, tbl[5]);
+                        let prix = data.substring(tbl[6] + 1, tbl[7]);
+                        let total = data.substring(tbl[8] + 1, tbl[9]);
+
+                        console.log('Nom : ' + nom)
+                        console.log('commande : ' + comm) //1
+                        console.log('quantite : ' + quantite) //1
+                        console.log('prix : ' + prix) //15.99
+                        console.log('total : ' + total) //15.99
+
+                        let nom2 = data.substring(tbl[10] + 1, tbl[11]);
+                        let comm2 = data.substring(tbl[12] + 1, tbl[13]);
+                        let quantite2 = data.substring(tbl[14] + 1, tbl[15]);
+                        let prix2 = data.substring(tbl[16] + 1, tbl[17]);
+                        let total2 = data.substring(tbl[18] + 1, tbl[19]);
+
+                        console.log('Nom : ' + nom2)
+                        console.log('commande : ' + comm2) //1
+                        console.log('quantite : ' + quantite2) //1
+                        console.log('prix : ' + prix2) //15.99
+                        console.log('total : ' + total2) //15.99
+                    } else {
+                        cpt++;
+                    }
                 }
+
+
             },
             error: function(resultat, statut, erreur) {
                 console.log('Erreur lors de la mise à jour des données du compte utilisateur.');
@@ -100,7 +133,6 @@ $(document).ready(function() {
 
     $('#lk_Profil').on('click', function(event) {
         event.preventDefault();
-        alert('fhjzrei');
         $('section').hide(0);
         $('#sctProfil').show('slow');
     });
@@ -286,38 +318,19 @@ function Retrieve_Object(data, tbl, message) {
 
         case 'commande':
             console.log('\n>>>>>>>>>>>> message : COMMANDE <<<<<<<<<<<<<<\n\n');
+            console.log(data)
+            console.log(tbl)
+            let nom = data.substring(tbl[2] + 1, tbl[3]);
+            let comm = data.substring(tbl[6] + 1, tbl[7]);
+            let quantite = data.substring(tbl[10] + 1, tbl[11]);
+            let prix = data.substring(tbl[14] + 1, tbl[15]);
+            let total = data.substring(tbl[16] + 1, tbl[17]);
 
-            // console.log(tbl)
-            // let tbl_value = [];
-            // console.log('Tableau : ' + tbl);
-            // console.log('Longeur : ' + tbl.length);
-
-            // for (let i = 0; i < tbl.length; i += 10) {
-            //     console.log('index : ' + i + ' - tab : ' + tbl.slice(i, tbl[i]));
-            // }
-            // let slice = tbl.slice(0, 12);
-            // let sliceL = slice.length;
-            // let slice2 = tbl.slice(13, 23);
-            // let slice2L = slice2.length;
-            // let slice3 = tbl.slice(23, 24);
-            // let slice3L = slice3.length;;
-            // console.log('\nslice 1 : ' + slice);
-            // console.log('slice 1 L : ' + sliceL);
-            // console.log('slice 2 : ' + slice2);
-            // console.log('slice 2 L : ' + slice2L);
-            // console.log('slice 3 : ' + slice3);
-            // console.log('slice 3 L : ' + slice3L + '\n\n');
-
-            // console.log('\n\n SUBSTR : ' + data.substring(tbl[4] + 1, tbl[5]) + '\n\n');
-
-            // let id_com = data.substring(tbl[2] + 1, tbl[3]);
-            // let cle_compte = data.substring(tbl[6] + 1, tbl[7]);
-            // let num_com = data.substring(tbl[10] + 1, tbl[11]);
-
-            // console.log('ID : ' + id_com);
-            // console.log('Compte : ' + cle_compte);
-            // console.log('Commande : ' + num_com);
-
+            console.log(nom)
+            console.log(comm) //1
+            console.log(quantite) //1
+            console.log(prix) //15.99
+            console.log(total) //15.99
             break;
 
         default:
@@ -326,3 +339,5 @@ function Retrieve_Object(data, tbl, message) {
     }
 
 }
+
+// a: 10: { i: 0;s: 19: "Blanquette de dinde";i: 1;i: 1;i: 2;i: 1;i: 3;d: 15.99;i: 4;d: 15.99;i: 5;s: 14: "Dorade au four";i: 6;i: 1;i: 7;i: 2;i: 8;d: 19.4;i: 9;d: 38.8; }

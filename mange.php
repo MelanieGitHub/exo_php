@@ -618,7 +618,8 @@ if (isset($_GET['deconnexion'])) {
             <section id='sctCommande'>
                   <?php
 
-                  $req_commande = "SELECT plat_commande.ID AS ID, commande.Cle_Compte AS Compte, commande.ID_Commande AS N_Com, 
+                  $req_commande = "SELECT plat_commande.ID AS ID, commande.Date_Commande AS Date, 
+                  commande.Cle_Compte AS Compte, commande.ID_Commande AS N_Com, 
                   commande.Total_Commande as Total_Com
                   FROM plat_commande 
                   INNER JOIN commande ON commande.ID_Commande = plat_commande.Cle_Commande 
@@ -642,11 +643,11 @@ if (isset($_GET['deconnexion'])) {
                                           </p>
                                           <p>
                                                 <span class='font-weight-bold'>Date : </span>
-                                                <span>A définir dans le table</span>
+                                                <span><?php echo $data['Date']; ?></span>
                                           </p>
 
                                           <p>
-                                                <button id='cmd_Details_Commande' data-cle='<?php echo $data['N_Com']; ?>'class='details-commande btn btn-dark font-weight-bold' type='button'>Détails</button>
+                                                <button id='cmd_Details_Commande' data-cle='<?php echo $data['N_Com']; ?>' class='details-commande btn btn-dark font-weight-bold' type='button'>Détails</button>
                                           </p>
                                     </div>
                               </div>
@@ -659,6 +660,64 @@ if (isset($_GET['deconnexion'])) {
 
             </section>
 
+
+
+            <section id='sctDetailsCommande' class='border border-dark rounded mb-5'>
+                  <div class='p-4'>
+
+
+                        <div class='border-bottom border-dark p-3 d-flex'>
+                              <div class='col-2 align-center my-auto'>
+                                    <p>
+                                          <img src="<?php echo $data['Image']; ?>" width='100%' alt="">
+                                    </p>
+                              </div>
+                              <div class='col-10'>
+                                    <div class='d-flex justify-content-between border-bottom p-3'>
+                                          <p class='col-4'>
+                                                <span class='font-weight-bold'>echo $data['Plat']</span> <span class='text-secondary'>echo $data['Poids']g</span><br>
+                                                <span class='font-italic'>echo $data['Type']</span>
+                                          </p>
+
+                                          <p class='col-4 d-flex justify-content-start'>
+                                                <label class='align-self-center' for="">Quantité : </label>
+                                                <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
+                                          </p>
+
+                                          <p class='col-4 d-flex justify-content-end'>
+                                                <button class='btn btn-dark' type='button'>
+                                                      <i class="fas fa-cart-plus mr-2"></i>
+                                                      <span>Ajouter</span>
+                                                </button>
+                                          </p>
+                                    </div>
+                                    <div class='d-flex justify-content-start border-bottom p-3'>
+                                          <p class='col-4'>
+                                                <label for="">Prix : </label>
+                                                <span class='font-weight-bold text-dark'>echo $data['Prix'] €</span>
+                                          </p>
+
+                                          <p class='col-4'>
+                                                <label for="">Origine : </label>
+                                                <span class='text-dark'>echo $data['Origine']</span>
+                                          </p>
+                                    </div>
+                                    <div class='d-flex justify-content-start p-3'>
+                                          <p class='col-10 '>
+                                                <label for="">Ingrédients : </label>
+                                                <span class='text-dark'>echo $data['Ingredient2']</span>
+                                          </p>
+                                    </div>
+
+                              </div>
+
+                        </div>
+
+
+                  </div>
+            </section>
+
+
             <!-- //////////////////////////////////////////////////////////////////////// -->
             <!-- /////////////////// PROFIL | UPDATE | DELETE /////////////////////////// -->
             <!-- //////////////////////////////////////////////////////////////////////// -->
@@ -670,7 +729,7 @@ if (isset($_GET['deconnexion'])) {
                                     <p id='pseudoCompte' class='col-12 border-bottom pb-3 font-weight-bold'></p>
                                     <div class='mt-3 align-self-end'>
                                           <p id='reponseUpdateMail' class='text-center mb-3 font-weight-bold'></p>
-                                                <p id='mailCompte' class='font-italic pb-4 row justify-content-center'></p>
+                                          <p id='mailCompte' class='font-italic pb-4 row justify-content-center'></p>
 
                                           <p>
                                                 <a id='majMail' role='button' class='text-dark' href=''>Mettre à jour mon mail</a>

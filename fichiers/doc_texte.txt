@@ -24,7 +24,7 @@ plat.Prix AS Prix_Unitaire, ROUND(plat.Prix * plat_commande.Quantite, 2) AS Tota
 FROM plat_commande 
 INNER JOIN plat ON plat.ID = plat_commande.Cle_plat 
 INNER JOIN commande ON commande.ID_Commande = plat_commande.Cle_Commande 
-WHERE commande.Cle_Compte = '1' AND plat_commande.Cle_Commande = '1'7
+WHERE commande.Cle_Compte = '1' AND plat_commande.Cle_Commande = '1'
 
 
 
