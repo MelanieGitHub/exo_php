@@ -127,6 +127,13 @@ $(document).ready(function() {
         event.preventDefault();
         $('section').hide(0);
         $('#sctPanier').show('slow');
+        let panier = [];
+        // console.log(sessionStorage.length)
+
+        for (let i = 0; i < sessionStorage.length; i++) {
+            panier.push(sessionStorage.getItem(sessionStorage.key(i)));
+        }
+        console.log(panier)
     });
 
     /////////////////////////////////////////////////////////////////////////
@@ -135,8 +142,33 @@ $(document).ready(function() {
 
     $('.ajouter_plat ').on('click', function(event) {
         event.preventDefault();
-        $('section').hide(0);
-        $('#sctPanier').show('slow');
+
+        let id_plat = $(this).attr('data-cle');
+        let quantite = $('input[data-cle=' + id_plat + ']').val();
+
+        $.ajax({
+            url: 'action/retrieve_plat.php',
+            type: 'GET',
+            data: {
+                id: id_plat
+            },
+            success: function(data, statut) {
+                let details_tbl = $.parseJSON(data);
+                // console.log(details_tbl);
+
+                details_tbl.push(quantite);
+                // console.log(details_tbl);
+
+                let cle = '1';
+                let last_id = sessionStorage.length;
+
+                sessionStorage.setItem("plat" + id_plat, details_tbl);
+
+            },
+            error: function(resultat, statut, erreur) {
+                console.log('Erreur lors de l\'ajout au panier.');
+            }
+        });
     });
 
     /////////////////////////////////////////////////////////////////////////

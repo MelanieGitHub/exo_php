@@ -55,6 +55,7 @@ if (isset($_GET['deconnexion'])) {
 
       <!-- //////////////////////////////////////////////////////////////////////// -->
       <!-- //////////////////////////// NAVBAR //////////////////////////////////// -->
+      <!-- //////////////////////////////////////////////////////////////////////// -->
 
       <nav class="navbar navbar-expand-xl navbar-light bg-dark">
             <div class='col-4'>
@@ -139,6 +140,7 @@ if (isset($_GET['deconnexion'])) {
                         <button id='cmdSearch_type' type='button' class='btn btn-dark'>Type</button>
                         <button id='cmdSearch_ingredient' type='button' class='btn btn-dark'>Ingrédient</button>
                   </div>
+
                   <!-- //////////////////////////////////////////////////////////////////////// -->
                   <!-- /////////////////////// Recherche par MOT CLES ///////////////////////// -->
                   <!-- //////////////////////////////////////////////////////////////////////// -->
@@ -237,6 +239,7 @@ if (isset($_GET['deconnexion'])) {
             <section id='sctAffichage' class='border border-dark rounded mb-5'>
                   <p class='p-4 border-bottom border-dark text-center w-50 m-auto font-weight-bold'>Votre recherche :</p>
                   <div class='p-4'>
+
                         <!-- //////////////////////////////////////////////////////////////////////// -->
                         <!-- /////////////////////// TOUS les PLATS ///////////////////////////////// -->
                         <!-- //////////////////////////////////////////////////////////////////////// -->
@@ -271,7 +274,7 @@ if (isset($_GET['deconnexion'])) {
 
                                                       <p class='col-4 d-flex justify-content-start'>
                                                             <label class='align-self-center'>Quantité : </label>
-                                                            <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
+                                                            <input data-cle='<?php echo $data['ID_plat']; ?>' class='input-quantite ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-end'>
@@ -317,16 +320,6 @@ if (isset($_GET['deconnexion'])) {
                         <?php
                         if (isset($_POST['search'])) {
                               include('bdd_sql/sql_recherche_mots.php');
-                              // $search = mysqli_real_escape_string($db, htmlspecialchars($_POST['search']));
-
-                              // $requete_recherche = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, origine.Libelle AS Origine, 
-                              // plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2, plat.ID AS ID_plat 
-                              // FROM ingredient_plat 
-                              // INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
-                              // INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient 
-                              // INNER JOIN type ON plat.Type = type.ID_Type 
-                              // INNER JOIN origine ON plat.Origine = origine.ID_Origine 
-                              // WHERE plat.Libelle LIKE '%" . $search . "%' GROUP BY plat.ID";
 
                               $exec_requete_recherche = mysqli_query($db, $requete_recherche);
 
@@ -609,7 +602,7 @@ if (isset($_GET['deconnexion'])) {
                                           </p>
 
                                           <p>
-                                                <button id='cmd_Details_Commande' data-cle='<?php echo $data['N_Com']; ?>' class='details-commande btn btn-dark font-weight-bold' type='button'>Détails</button>
+                                                <button data-cle='<?php echo $data['N_Com']; ?>' class='details-commande btn btn-dark font-weight-bold' type='button'>Détails</button>
                                           </p>
                                     </div>
                               </div>
