@@ -164,16 +164,16 @@ if (isset($_GET['deconnexion'])) {
                                     <div class='row'>
                                           <p class='col-sm-6 mb-0'>
                                                 <label>Prix minimum : </label>
-                                                <input name='price_min_search' type="number" step='1' class='form-control'>
+                                                <input name='prix_min_search' type="number" step='1' class='form-control'>
                                           </p>
 
                                           <p class='col-sm-6 mb-0'>
                                                 <label>Prix maximum : </label>
-                                                <input name='price_max_search' type="number" step='1' class='form-control'>
+                                                <input name='prix_max_search' type="number" step='1' class='form-control'>
                                           </p>
 
                                     </div>
-                                    <input type="submit" name='price_search' class='show-section btn btn-dark col-12 mt-3' value='Rechercher'>
+                                    <input type="submit" name='prix_search' class='show-section btn btn-dark col-12 mt-3' value='Rechercher'>
                               </div>
                         </form>
                   </aside>
@@ -189,7 +189,7 @@ if (isset($_GET['deconnexion'])) {
 
                                     <div class="mt-3 form-group">
                                           <label class='text-center' for="selectOrigine">Origine : </label>
-                                          <select id="selectOrigine" class="form-control" name='origin_search'>
+                                          <select id="selectOrigine" class="form-control" name='type_search'>
                                                 <?php
                                                 $requete_origine = "SELECT Libelle FROM origine";
                                                 $exec_requete_origine = mysqli_query($db, $requete_origine);
@@ -201,7 +201,7 @@ if (isset($_GET['deconnexion'])) {
                                                 ?>
                                           </select>
                                     </div>
-                                    <input type="submit" name='origin_search_submit' class='show-section btn btn-dark col-12 mt-3' value='Rechercher'>
+                                    <input type="submit" name='type_search_submit' class='show-section btn btn-dark col-12 mt-3' value='Rechercher'>
                               </div>
                         </form>
                   </aside>
@@ -399,15 +399,8 @@ if (isset($_GET['deconnexion'])) {
                         <!-- //////////////////////////////////////////////////////////////////////// -->
 
                         <?php
-                        if (isset($_POST['origin_search_submit'])) {
-                              $origin = $_POST['origin_search'];
-
-                              $requete_origine = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, 
-                              origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2, plat.ID AS ID_plat 
-                              FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
-                              INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient 
-                              INNER JOIN type ON plat.Type = type.ID_Type INNER JOIN origine ON plat.Origine = origine.ID_Origine 
-                              WHERE origine.Libelle = '" . $origin . "' GROUP BY plat.ID";
+                        if (isset($_POST['type_search_submit'])) {
+                              include('bdd_sql/sql_recherche_type.php');
 
                               $exec_requete_recherche = mysqli_query($db, $requete_origine);
 
@@ -460,14 +453,9 @@ if (isset($_GET['deconnexion'])) {
                                           </div>
 
                                     </div>
-
-
-
                         <?php
                               }
                         }
-                        // }
-
                         ?>
 
                         <!-- //////////////////////////////////////////////////////////////////////// -->
@@ -476,13 +464,7 @@ if (isset($_GET['deconnexion'])) {
 
                         <?php
                         if (isset($_POST['submit_ingredient'])) {
-                              $value = $_POST['select_ingredient'];
-
-                              $requete_ing = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, 
-                              GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2, plat.ID AS ID_plat FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
-                              INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient INNER JOIN type ON plat.Type = type.ID_Type 
-                              INNER JOIN origine ON plat.Origine = origine.ID_Origine 
-                              GROUP BY plat.ID HAVING GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') LIKE '%" . $value . "%'";
+                             include('bdd_sql/sql_recherche_ingredient.php');
 
                               $exec_requete_ing = mysqli_query($db, $requete_ing);
 
@@ -535,12 +517,9 @@ if (isset($_GET['deconnexion'])) {
                                           </div>
 
                                     </div>
-
-
                         <?php
                               }
                         }
-
                         ?>
 
                         <!-- //////////////////////////////////////////////////////////////////////// -->
@@ -548,17 +527,8 @@ if (isset($_GET['deconnexion'])) {
                         <!-- //////////////////////////////////////////////////////////////////////// -->
 
                         <?php
-                        if (isset($_POST['price_search'])) {
-                              $min_price = mysqli_real_escape_string($db, htmlspecialchars($_POST['price_min_search']));
-                              $max_price = mysqli_real_escape_string($db, htmlspecialchars($_POST['price_max_search']));
-
-                              $requete_prix = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, 
-                              origine.Libelle AS Origine, plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2, plat.ID AS ID_plat 
-                              FROM ingredient_plat INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
-                              INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient 
-                              INNER JOIN type ON plat.Type = type.ID_Type INNER JOIN origine ON plat.Origine = origine.ID_Origine 
-                              WHERE plat.Prix BETWEEN '" . $min_price . "' AND '" . $max_price . "' GROUP BY plat.ID";
-
+                        if (isset($_POST['prix_search'])) {
+                              include('bdd_sql/sql_recherche_prix.php');
                               $exec_requete_recherche = mysqli_query($db, $requete_prix);
 
                               while ($data = mysqli_fetch_assoc($exec_requete_recherche)) {
@@ -610,38 +580,24 @@ if (isset($_GET['deconnexion'])) {
                                           </div>
 
                                     </div>
-
                         <?php
                               }
                         }
-
                         ?>
 
                   </div>
             </section>
-
 
             <!-- //////////////////////////////////////////////////////////////////////// -->
             <!-- ////////////////////// SECTION COMMANDES /////////////////////////////// -->
             <!-- //////////////////////////////////////////////////////////////////////// -->
 
             <section id='sctCommande'>
-
-                  <p class='p-5 text-danger font-weight-bold'>Changer le mode d'envoi de la requete pour récuperer l'id avec Ajax OU récuperer l'id courant dans la session avec Php</p>
-
                   <?php
                   include('bdd_sql/sql_retrieve_commande.php');
-                  // $id = $_SESSION['idsession'];
-
-                  // $req_commande = "SELECT plat_commande.ID AS ID, commande.Date_Commande AS Date, 
-                  // commande.Cle_Compte AS Compte, commande.ID_Commande AS N_Com, commande.Total_Commande as Total_Com
-                  // FROM plat_commande INNER JOIN commande ON commande.ID_Commande = plat_commande.Cle_Commande 
-                  // WHERE commande.Cle_Compte = '" . $id . "' GROUP BY N_Com";
-
                   $exec_requete_commande = mysqli_query($db, $req_commande);
 
                   while ($data = mysqli_fetch_assoc($exec_requete_commande)) {
-
                         ?>
                         <div class='mb-3'>
                               <div class='col-12 border-bottom mb-3'>
@@ -669,10 +625,11 @@ if (isset($_GET['deconnexion'])) {
                   }
 
                   ?>
-
             </section>
 
-
+            <!-- //////////////////////////////////////////////////////////////////////// -->
+            <!-- //////////////////////// Section DETAILS COMMANDE ////////////////////// -->
+            <!-- //////////////////////////////////////////////////////////////////////// -->
 
             <section id='sctDetailsCommande' class='border border-dark rounded mb-5'>
                   <div class='p-3 col-6 m-auto'>
@@ -684,7 +641,6 @@ if (isset($_GET['deconnexion'])) {
                   <div id='injectDetailsCommande' class='p-4'></div>
             </section>
 
-
             <!-- //////////////////////////////////////////////////////////////////////// -->
             <!-- //////////////////////// Section PANIER //////////////////////////////// -->
             <!-- //////////////////////////////////////////////////////////////////////// -->
@@ -695,7 +651,7 @@ if (isset($_GET['deconnexion'])) {
                   </div>
             </section>
             <!-- //////////////////////////////////////////////////////////////////////// -->
-            <!-- /////////////////// PROFIL | UPDATE | DELETE /////////////////////////// -->
+            <!-- ///////////////////////// Section PROFIL /////////////////////////////// -->
             <!-- //////////////////////////////////////////////////////////////////////// -->
 
             <section id='sctProfil' class='border border-dark rounded'>
