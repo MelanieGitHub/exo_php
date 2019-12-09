@@ -6,7 +6,6 @@ $(document).ready(function() {
     // ///////////////// Retrieve COMPTE Utilisateur ///////////////////////////
     // /////////////////////////////////////////////////////////////////////////
 
-    //Connexion bdd avec ajax s'ouvre au demarrage ajax, se ferme à la fin ajax
     $.ajax({
         url: 'action/retrieve_user.php',
         type: 'GET',
@@ -39,7 +38,7 @@ $(document).ready(function() {
     });
 
     // /////////////////////////////////////////////////////////////////////////
-    // //////////////////////// Search BUTTON /////////////////////////////
+    // //////////////////////// ZONE DE RECHERCHE //////////////////////////////
     // /////////////////////////////////////////////////////////////////////////
 
     $('#cmdSearch_mot').on('click', function(event) {
@@ -54,10 +53,10 @@ $(document).ready(function() {
         $('#asidePrix').slideDown('slow');
     });
 
-    $('#cmdSearch_origine').on('click', function(event) {
+    $('#cmdSearch_type').on('click', function(event) {
         event.preventDefault();
         $('aside').hide(0);
-        $('#asideOrigine').slideDown('slow');
+        $('#asideType').slideDown('slow');
     });
 
     $('#cmdSearch_ingredient').on('click', function(event) {
@@ -67,7 +66,7 @@ $(document).ready(function() {
     });
 
     /////////////////////////////////////////////////////////////////////////
-    //////////////////////// PROFIL Utilisateur /////////////////////////////
+    //////////////////////// Gestion des COMMANDES //////////////////////////
     /////////////////////////////////////////////////////////////////////////
 
     $('#lk_Commande').on('click', function(event) {
@@ -84,6 +83,9 @@ $(document).ready(function() {
         $('#sctCommande').show('slow');
     });
 
+    /////////////////////////////////////////////////////////////////////////
+    //////////////////////// DETAILS des COMMANDES //////////////////////////
+    /////////////////////////////////////////////////////////////////////////
 
     $('.details-commande').on('click', function(event) {
         event.preventDefault();
@@ -100,20 +102,14 @@ $(document).ready(function() {
                 id: val
             },
             success: function(data, statut) {
-                // console.log(data);
                 let details_tbl = $.parseJSON(data);
 
                 let tbl_object = [];
                 $('#injectDetailsCommande').empty();
 
                 for (let i = 0; i < details_tbl.length; i += 7) {
-                    // console.log('Index : ' + i);
                     tbl_object.push(details_tbl.slice(i, i + 7));
-                    // console.log('Index : ' + i);
 
-                    // console.log('Tableau : ' + tbl_object);
-                    // console.log('Index : ' + i);
-                    //J'avoue j'ai eu la flemme de le faire en JS, C'est moche mais ça marche 
                     $('#injectDetailsCommande').append(" <div class='border-bottom border-dark p-3 '><p><span class='text-danger font-weight-bold'> Supprimer le doublon du numero et du total de la commande</span></p><p><span>Plat : </span><span class='text-primary'>" + details_tbl[i] + "</span></p><p><span>Quantité : </span><span class='text-primary'> " + details_tbl[i + 2] + "</span></p><p><span>Prix : </span><span class='text-primary'> " + details_tbl[i + 3] + "€</span></p><p><span>Total : </span><span class='text-primary'>" + details_tbl[i + 4] + "</span></p><p><span class='text-danger font-italic'>Commande n° : </span><span class='text-primary'>" + details_tbl[i + 1] + "</span></p><p><span class='text-danger font-italic'>Total de la commande : </span><span class='text-primary'>" + details_tbl[i + 5] + "</span></p><p><span>Date de commande : </span><span class='text-primary'>" + details_tbl[i + 6] + "</span></p></div>")
                 }
             },
@@ -124,7 +120,7 @@ $(document).ready(function() {
     });
 
     /////////////////////////////////////////////////////////////////////////
-    //////////////////////// PANIER /////////////////////////////////////////
+    //////////////////////// Gestion du PANIER //////////////////////////////
     /////////////////////////////////////////////////////////////////////////
 
     $('#lk_Panier').on('click', function(event) {
@@ -133,7 +129,9 @@ $(document).ready(function() {
         $('#sctPanier').show('slow');
     });
 
-
+    /////////////////////////////////////////////////////////////////////////
+    //////////////////////// AJOUTER au PANIER //////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
 
     $('.ajouter_plat ').on('click', function(event) {
         event.preventDefault();
@@ -142,7 +140,7 @@ $(document).ready(function() {
     });
 
     /////////////////////////////////////////////////////////////////////////
-    //////////////////////// PROFIL Utilisateur /////////////////////////////
+    //////////////////////// Gestion de L'UTILISATEUR ///////////////////////
     /////////////////////////////////////////////////////////////////////////
 
     $('#lk_Profil').on('click', function(event) {
@@ -151,7 +149,9 @@ $(document).ready(function() {
         $('#sctProfil').show('slow');
     });
 
-    ///////////////// Mot de passe /////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
+    /////////////////// MODIFIER PASSWORD de l'utilisateur //////////////////
+    /////////////////////////////////////////////////////////////////////////
 
     $('#majPassword').on('click', function(event) {
         event.preventDefault();
@@ -172,8 +172,6 @@ $(document).ready(function() {
         let user_check_password = $('#txtCheckPassword').val();
         let user_id = $('#pseudoCompte').attr('data-id-user');
         let element = 'Password';
-
-        //Connexion bdd avec ajax s'ouvre au demarrage ajax, se ferme à la fin ajax
 
         $.ajax({
             url: 'action/update_password.php',
@@ -203,7 +201,9 @@ $(document).ready(function() {
         });
     });
 
-    ///////////////// Mail /////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
+    /////////////////// MODIFIER MAIL de l'utilisateur //////////////////////
+    /////////////////////////////////////////////////////////////////////////
 
     $('#majMail').on('click', function(event) {
         event.preventDefault();
@@ -229,8 +229,6 @@ $(document).ready(function() {
             let user_id = $('#pseudoCompte').attr('data-id-user');
             let element = 'Mail';
 
-            //Connexion bdd avec ajax s'ouvre au demarrage ajax, se ferme à la fin ajax
-
             $.ajax({
                 url: 'action/update_password.php',
                 type: 'POST',
@@ -240,8 +238,6 @@ $(document).ready(function() {
                     mail: user_mail
                 },
                 success: function(data, statut) {
-                    // console.log(data);
-
                     if (data == 'invalide') {
                         $('#reponseUpdateMail').removeClass('text-success').addClass('text-danger').html('Mail invalide.');
                     } else {
@@ -258,7 +254,6 @@ $(document).ready(function() {
 
     });
 
-
     $('#btnDeleteCompte').on('click', function(event) {
         event.preventDefault();
 
@@ -269,7 +264,6 @@ $(document).ready(function() {
 
             let user_id = $('#pseudoCompte').attr('data-id-user');
             let user_check = $('#txtCheckDelete').val()
-                //Connexion bdd avec ajax s'ouvre au demarrage ajax, se ferme à la fin ajax
 
             $.ajax({
                 url: 'action/delete_compte.php',
@@ -279,8 +273,6 @@ $(document).ready(function() {
                     check: user_check
                 },
                 success: function(data, statut) {
-                    console.log(data + ' - ' + statut);
-
                     if (data == 'invalide') {
                         $('#reponseDelete').html('Mot de passe incorrect.');
                     } else {
@@ -289,7 +281,7 @@ $(document).ready(function() {
                     }
                 },
                 error: function(resultat, statut, erreur) {
-                    console.log('Erreur lors de la mise à jour des données du compte utilisateur.');
+                    console.log('Erreur lors de la suppression des données du compte utilisateur.');
                 }
             });
         });

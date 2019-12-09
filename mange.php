@@ -4,6 +4,7 @@ session_start();
 // connexion à la base de données
 include('bdd_sql/connexion_bdd.php');
 
+// Gestion de la session utilisateur 
 if (!$_SESSION) {
       header("location:deconnecte.php");
 } else {
@@ -21,7 +22,6 @@ if (isset($_GET['deconnexion'])) {
             header("location:index.php");
       }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -53,9 +53,8 @@ if (isset($_GET['deconnexion'])) {
 
 <body class="bg-light">
 
-
       <!-- //////////////////////////////////////////////////////////////////////// -->
-      <!-- //////////////////////////// HEADER //////////////////////////////////// -->
+      <!-- //////////////////////////// NAVBAR //////////////////////////////////// -->
 
       <nav class="navbar navbar-expand-xl navbar-light bg-dark">
             <div class='col-4'>
@@ -114,7 +113,7 @@ if (isset($_GET['deconnexion'])) {
 
       <article id='bodyArticle' class='container mt-5'>
 
-            <div class='mb-3 p-4 border rounded row'>
+            <header class='mb-3 p-4 border rounded row'>
                   <h4 class='col-12 border-bottom text-center pb-3 font-weight-bold'>Bienvenue ! </h4>
                   <p class='p-5 text-center col-12'>
                         <!-- <span class='text-primary'>Ajouter un champs 'statut' au compte utilisateur (admin, user); <br></span> -->
@@ -124,7 +123,7 @@ if (isset($_GET['deconnexion'])) {
                         <span class='text-danger'>If commande empty --> INSERT INTO commande with statut : en cours; <br> </span>
                         <span class='text-danger'>OU créer deux tables temporaire, tant que la commande n'est pas passé et qu'il ne s'est pas passé x temps <br>--> Possibilité d'ajouter à la commande + plat_commande temporaire <br> </span>
                   </p>
-            </div>
+            </header>
 
             <!-- //////////////////////////////////////////////////////////////////////// -->
             <!-- ////////////////////// SECTION RECHERCHE /////////////////////////////// -->
@@ -137,7 +136,7 @@ if (isset($_GET['deconnexion'])) {
                         </form>
                         <button id='cmdSearch_mot' type='button' class='btn btn-dark'>Mot clés</button>
                         <button id='cmdSearch_prix' type='button' class='btn btn-dark'>Prix</button>
-                        <button id='cmdSearch_origine' type='button' class='btn btn-dark'>Origine</button>
+                        <button id='cmdSearch_type' type='button' class='btn btn-dark'>Type</button>
                         <button id='cmdSearch_ingredient' type='button' class='btn btn-dark'>Ingrédient</button>
                   </div>
                   <!-- //////////////////////////////////////////////////////////////////////// -->
@@ -179,25 +178,24 @@ if (isset($_GET['deconnexion'])) {
                   </aside>
 
                   <!-- //////////////////////////////////////////////////////////////////////// -->
-                  <!-- /////////////////////// Recherche par ORIGINIE ///////////////////////// -->
+                  <!-- /////////////////////// Recherche par TYPE ///////////////////////////// -->
                   <!-- //////////////////////////////////////////////////////////////////////// -->
 
-                  <aside id='asideOrigine' class='p-4'>
+                  <aside id='asideType' class='p-4'>
                         <form class='p-4 border border-dark rounded' method="post">
                               <div class="form-group">
-                                    <label class='text-center font-weight-bold'>Liste des plats par origine: </label>
+                                    <label class='text-center font-weight-bold'>Liste des plats par type: </label>
 
                                     <div class="mt-3 form-group">
-                                          <label class='text-center' for="selectOrigine">Origine : </label>
-                                          <select id="selectOrigine" class="form-control" name='type_search'>
+                                          <label class='text-center'>Type : </label>
+                                          <select class="form-control" name='type_search'>
                                                 <?php
-                                                $requete_origine = "SELECT Libelle FROM origine";
-                                                $exec_requete_origine = mysqli_query($db, $requete_origine);
+                                                $requete_typ = "SELECT Libelle FROM type";
+                                                $exec_requete_typ = mysqli_query($db, $requete_typ);
 
-                                                while ($data = mysqli_fetch_assoc($exec_requete_origine)) {
+                                                while ($data = mysqli_fetch_assoc($exec_requete_typ)) {
                                                       echo "<option>" . $data['Libelle'] . "</option>";
                                                 }
-
                                                 ?>
                                           </select>
                                     </div>
@@ -224,7 +222,6 @@ if (isset($_GET['deconnexion'])) {
                                                 echo "<option>" . $data['Libelle'] . "</option>";
                                           }
                                           ?>
-
                                     </select>
 
                                     <input type='submit' name='submit_ingredient' class='show-section btn btn-dark col-12 mt-3' value='Rechercher'>
@@ -240,8 +237,6 @@ if (isset($_GET['deconnexion'])) {
             <section id='sctAffichage' class='border border-dark rounded mb-5'>
                   <p class='p-4 border-bottom border-dark text-center w-50 m-auto font-weight-bold'>Votre recherche :</p>
                   <div class='p-4'>
-
-
                         <!-- //////////////////////////////////////////////////////////////////////// -->
                         <!-- /////////////////////// TOUS les PLATS ///////////////////////////////// -->
                         <!-- //////////////////////////////////////////////////////////////////////// -->
@@ -319,7 +314,6 @@ if (isset($_GET['deconnexion'])) {
                         <!-- /////////////////////// Tri par MOT CLES /////////////////////////////// -->
                         <!-- //////////////////////////////////////////////////////////////////////// -->
 
-
                         <?php
                         if (isset($_POST['search'])) {
                               include('bdd_sql/sql_recherche_mots.php');
@@ -395,14 +389,14 @@ if (isset($_GET['deconnexion'])) {
                         ?>
 
                         <!-- //////////////////////////////////////////////////////////////////////// -->
-                        <!-- /////////////////////// Tri par ORIGINE //////////////////////////////// -->
+                        <!-- /////////////////////// Tri par TYPE /////////////////////////////////// -->
                         <!-- //////////////////////////////////////////////////////////////////////// -->
 
                         <?php
                         if (isset($_POST['type_search_submit'])) {
                               include('bdd_sql/sql_recherche_type.php');
 
-                              $exec_requete_recherche = mysqli_query($db, $requete_origine);
+                              $exec_requete_recherche = mysqli_query($db, $requete_type);
 
                               while ($data = mysqli_fetch_assoc($exec_requete_recherche)) {
 
