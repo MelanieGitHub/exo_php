@@ -2,7 +2,7 @@
 session_start();
 
 // connexion à la base de données
-include('../include/connexion_bdd.php');
+include('../bdd_sql/connexion_bdd.php');
 
 $id = mysqli_real_escape_string($db, htmlspecialchars($_POST['id']));
 $element = mysqli_real_escape_string($db, htmlspecialchars($_POST['element']));

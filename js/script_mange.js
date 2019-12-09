@@ -100,19 +100,20 @@ $(document).ready(function() {
                 id: val
             },
             success: function(data, statut) {
-                console.log(data);
+                // console.log(data);
                 let details_tbl = $.parseJSON(data);
 
                 let tbl_object = [];
                 $('#injectDetailsCommande').empty();
 
                 for (let i = 0; i < details_tbl.length; i += 7) {
-                    console.log('Index : ' + i);
+                    // console.log('Index : ' + i);
                     tbl_object.push(details_tbl.slice(i, i + 7));
-                    console.log('Index : ' + i);
+                    // console.log('Index : ' + i);
 
-                    console.log('Tableau : ' + tbl_object);
-                    console.log('Index : ' + i);
+                    // console.log('Tableau : ' + tbl_object);
+                    // console.log('Index : ' + i);
+                    //J'avoue j'ai eu la flemme de le faire en JS, C'est moche mais ça marche 
                     $('#injectDetailsCommande').append(" <div class='border-bottom border-dark p-3 '><p><span class='text-danger font-weight-bold'> Supprimer le doublon du numero et du total de la commande</span></p><p><span>Plat : </span><span class='text-primary'>" + details_tbl[i] + "</span></p><p><span>Quantité : </span><span class='text-primary'> " + details_tbl[i + 2] + "</span></p><p><span>Prix : </span><span class='text-primary'> " + details_tbl[i + 3] + "€</span></p><p><span>Total : </span><span class='text-primary'>" + details_tbl[i + 4] + "</span></p><p><span class='text-danger font-italic'>Commande n° : </span><span class='text-primary'>" + details_tbl[i + 1] + "</span></p><p><span class='text-danger font-italic'>Total de la commande : </span><span class='text-primary'>" + details_tbl[i + 5] + "</span></p><p><span>Date de commande : </span><span class='text-primary'>" + details_tbl[i + 6] + "</span></p></div>")
                 }
             },
@@ -239,7 +240,7 @@ $(document).ready(function() {
                     mail: user_mail
                 },
                 success: function(data, statut) {
-                    console.log(data);
+                    // console.log(data);
 
                     if (data == 'invalide') {
                         $('#reponseUpdateMail').removeClass('text-success').addClass('text-danger').html('Mail invalide.');

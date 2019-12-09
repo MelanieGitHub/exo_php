@@ -2,7 +2,7 @@
 session_start();
 
 // connexion à la base de données
-include('../include/connexion_bdd.php');
+include('../bdd_sql/connexion_bdd.php');
     
 $id = $_SESSION['idsession'];
 

@@ -2,7 +2,7 @@
 session_start();
 
 // connexion à la base de données
-include('include/connexion_bdd.php');
+include('bdd_sql/connexion_bdd.php');
 
 if (!$_SESSION) {
       header("location:deconnecte.php");
@@ -322,16 +322,17 @@ if (isset($_GET['deconnexion'])) {
 
                         <?php
                         if (isset($_POST['search'])) {
-                              $search = mysqli_real_escape_string($db, htmlspecialchars($_POST['search']));
+                              include('bdd_sql/sql_recherche_mots.php');
+                              // $search = mysqli_real_escape_string($db, htmlspecialchars($_POST['search']));
 
-                              $requete_recherche = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, origine.Libelle AS Origine, 
-                              plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2, plat.ID AS ID_plat 
-                              FROM ingredient_plat 
-                              INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
-                              INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient 
-                              INNER JOIN type ON plat.Type = type.ID_Type 
-                              INNER JOIN origine ON plat.Origine = origine.ID_Origine 
-                              WHERE plat.Libelle LIKE '%" . $search . "%' GROUP BY plat.ID";
+                              // $requete_recherche = "SELECT plat.Libelle AS Plat, type.Libelle AS Type, origine.Libelle AS Origine, 
+                              // plat.Prix AS Prix, plat.Poids AS Poids, plat.Image AS Image, GROUP_CONCAT(ingredient.Libelle SEPARATOR ', ') AS Ingredient2, plat.ID AS ID_plat 
+                              // FROM ingredient_plat 
+                              // INNER JOIN plat ON plat.ID = ingredient_plat.Cle_Plat 
+                              // INNER JOIN ingredient ON ingredient.ID_Ingredient = ingredient_plat.Cle_Ingredient 
+                              // INNER JOIN type ON plat.Type = type.ID_Type 
+                              // INNER JOIN origine ON plat.Origine = origine.ID_Origine 
+                              // WHERE plat.Libelle LIKE '%" . $search . "%' GROUP BY plat.ID";
 
                               $exec_requete_recherche = mysqli_query($db, $requete_recherche);
 
@@ -629,7 +630,7 @@ if (isset($_GET['deconnexion'])) {
                   <p class='p-5 text-danger font-weight-bold'>Changer le mode d'envoi de la requete pour récuperer l'id avec Ajax OU récuperer l'id courant dans la session avec Php</p>
 
                   <?php
-                  include('include/sql_retrieve_commande.php');
+                  include('bdd_sql/sql_retrieve_commande.php');
                   // $id = $_SESSION['idsession'];
 
                   // $req_commande = "SELECT plat_commande.ID AS ID, commande.Date_Commande AS Date, 
