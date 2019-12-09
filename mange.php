@@ -116,6 +116,14 @@ if (isset($_GET['deconnexion'])) {
 
             <div class='mb-3 p-4 border rounded row'>
                   <h4 class='col-12 border-bottom text-center pb-3 font-weight-bold'>Bienvenue ! </h4>
+                  <p class='p-5 text-center col-12'>
+                        <!-- <span class='text-primary'>Ajouter un champs 'statut' au compte utilisateur (admin, user); <br></span> -->
+                        <span class='text-primary'>Création d'un back-office pour la gestion totale du site sans utilisation du SGBD -- /!\ Stabilité 100% /!\<br></span>
+                        <span class='text-success'>Ajouter un champs 'statut' à la commande (en cours, fini); <br> </span>
+                        <span class='text-success'>Onclick '.ajouter_plat' --> INSERT INTO plat_commande; <br> </span>
+                        <span class='text-danger'>If commande empty --> INSERT INTO commande with statut : en cours; <br> </span>
+                        <span class='text-danger'>OU créer deux tables temporaire, tant que la commande n'est pas passé et qu'il ne s'est pas passé x temps <br>--> Possibilité d'ajouter à la commande + plat_commande temporaire <br> </span>
+                  </p>
             </div>
 
             <!-- //////////////////////////////////////////////////////////////////////// -->
@@ -267,7 +275,7 @@ if (isset($_GET['deconnexion'])) {
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-start'>
-                                                            <label class='align-self-center' >Quantité : </label>
+                                                            <label class='align-self-center'>Quantité : </label>
                                                             <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
                                                       </p>
 
@@ -280,12 +288,12 @@ if (isset($_GET['deconnexion'])) {
                                                 </div>
                                                 <div class='d-flex justify-content-start border-bottom p-3'>
                                                       <p class='col-4'>
-                                                            <label >Prix : </label>
+                                                            <label>Prix : </label>
                                                             <span class='font-weight-bold text-dark'><?php echo $data['Prix']; ?> €</span>
                                                       </p>
 
                                                       <p class='col-4'>
-                                                            <label >Origine : </label>
+                                                            <label>Origine : </label>
                                                             <span class='text-dark'><?php echo $data['Origine']; ?></span>
                                                       </p>
                                                 </div>
@@ -344,7 +352,7 @@ if (isset($_GET['deconnexion'])) {
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-start'>
-                                                            <label class='align-self-center' >Quantité : </label>
+                                                            <label class='align-self-center'>Quantité : </label>
                                                             <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
                                                       </p>
 
@@ -357,12 +365,12 @@ if (isset($_GET['deconnexion'])) {
                                                 </div>
                                                 <div class='d-flex justify-content-start border-bottom p-3'>
                                                       <p class='col-4'>
-                                                            <label >Prix : </label>
+                                                            <label>Prix : </label>
                                                             <span class='font-weight-bold text-dark'><?php echo $data['Prix']; ?> €</span>
                                                       </p>
 
                                                       <p class='col-4'>
-                                                            <label >Origine : </label>
+                                                            <label>Origine : </label>
                                                             <span class='text-dark'><?php echo $data['Origine']; ?></span>
                                                       </p>
                                                 </div>
@@ -419,7 +427,7 @@ if (isset($_GET['deconnexion'])) {
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-start'>
-                                                            <label class='align-self-center' >Quantité : </label>
+                                                            <label class='align-self-center'>Quantité : </label>
                                                             <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
                                                       </p>
 
@@ -432,12 +440,12 @@ if (isset($_GET['deconnexion'])) {
                                                 </div>
                                                 <div class='d-flex justify-content-start border-bottom p-3'>
                                                       <p class='col-4'>
-                                                            <label >Prix : </label>
+                                                            <label>Prix : </label>
                                                             <span class='font-weight-bold text-dark'><?php echo $data['Prix']; ?> €</span>
                                                       </p>
 
                                                       <p class='col-4'>
-                                                            <label >Origine : </label>
+                                                            <label>Origine : </label>
                                                             <span class='text-dark'><?php echo $data['Origine']; ?></span>
                                                       </p>
                                                 </div>
@@ -494,7 +502,7 @@ if (isset($_GET['deconnexion'])) {
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-start'>
-                                                            <label class='align-self-center' >Quantité : </label>
+                                                            <label class='align-self-center'>Quantité : </label>
                                                             <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
                                                       </p>
 
@@ -507,12 +515,12 @@ if (isset($_GET['deconnexion'])) {
                                                 </div>
                                                 <div class='d-flex justify-content-start border-bottom p-3'>
                                                       <p class='col-4'>
-                                                            <label >Prix : </label>
+                                                            <label>Prix : </label>
                                                             <span class='font-weight-bold text-dark'><?php echo $data['Prix']; ?> €</span>
                                                       </p>
 
                                                       <p class='col-4'>
-                                                            <label >Origine : </label>
+                                                            <label>Origine : </label>
                                                             <span class='text-dark'><?php echo $data['Origine']; ?></span>
                                                       </p>
                                                 </div>
@@ -569,7 +577,7 @@ if (isset($_GET['deconnexion'])) {
                                                       </p>
 
                                                       <p class='col-4 d-flex justify-content-start'>
-                                                            <label class='align-self-center' >Quantité : </label>
+                                                            <label class='align-self-center'>Quantité : </label>
                                                             <input class='ml-3 w-50 form-control text-center' type="number" step='1' value='1' readonly onfocus="this.removeAttribute('readonly');">
                                                       </p>
 
@@ -582,12 +590,12 @@ if (isset($_GET['deconnexion'])) {
                                                 </div>
                                                 <div class='d-flex justify-content-start border-bottom p-3'>
                                                       <p class='col-4'>
-                                                            <label >Prix : </label>
+                                                            <label>Prix : </label>
                                                             <span class='font-weight-bold text-dark'><?php echo $data['Prix']; ?> €</span>
                                                       </p>
 
                                                       <p class='col-4'>
-                                                            <label >Origine : </label>
+                                                            <label>Origine : </label>
                                                             <span class='text-dark'><?php echo $data['Origine']; ?></span>
                                                       </p>
                                                 </div>
@@ -617,14 +625,17 @@ if (isset($_GET['deconnexion'])) {
             <!-- //////////////////////////////////////////////////////////////////////// -->
 
             <section id='sctCommande'>
-                  <?php
 
-                  $req_commande = "SELECT plat_commande.ID AS ID, commande.Date_Commande AS Date, 
-                  commande.Cle_Compte AS Compte, commande.ID_Commande AS N_Com, 
-                  commande.Total_Commande as Total_Com
-                  FROM plat_commande 
-                  INNER JOIN commande ON commande.ID_Commande = plat_commande.Cle_Commande 
-                  WHERE commande.Cle_Compte = '1' GROUP BY N_Com";
+                  <p class='p-5 text-danger font-weight-bold'>Changer le mode d'envoi de la requete pour récuperer l'id avec Ajax OU récuperer l'id courant dans la session avec Php</p>
+
+                  <?php
+                  include('include/sql_retrieve_commande.php');
+                  // $id = $_SESSION['idsession'];
+
+                  // $req_commande = "SELECT plat_commande.ID AS ID, commande.Date_Commande AS Date, 
+                  // commande.Cle_Compte AS Compte, commande.ID_Commande AS N_Com, commande.Total_Commande as Total_Com
+                  // FROM plat_commande INNER JOIN commande ON commande.ID_Commande = plat_commande.Cle_Commande 
+                  // WHERE commande.Cle_Compte = '" . $id . "' GROUP BY N_Com";
 
                   $exec_requete_commande = mysqli_query($db, $req_commande);
 

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  Dim 08 déc. 2019 à 23:43
+-- Généré le :  lun. 09 déc. 2019 à 09:53
 -- Version du serveur :  10.4.8-MariaDB
--- Version de PHP :  7.1.32
+-- Version de PHP :  7.2.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -56,16 +56,17 @@ CREATE TABLE `compte` (
   `ID_Compte` int(11) NOT NULL,
   `Pseudo` varchar(50) NOT NULL,
   `Mail` varchar(150) NOT NULL,
-  `Password` varchar(25) NOT NULL
+  `Password` varchar(25) NOT NULL,
+  `Type` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `compte`
 --
 
-INSERT INTO `compte` (`ID_Compte`, `Pseudo`, `Mail`, `Password`) VALUES
-(1, 'M', 'no-mail@truc.com', '42'),
-(2, 'L', 'leonard.fayolle@gmail.com', '42');
+INSERT INTO `compte` (`ID_Compte`, `Pseudo`, `Mail`, `Password`, `Type`) VALUES
+(1, 'M', 'no-mail@truc.com', '42', 'admin'),
+(2, 'L', 'leonard.fayolle@gmail.com', '42', 'user');
 
 -- --------------------------------------------------------
 
