@@ -133,8 +133,71 @@ $(document).ready(function() {
         for (let i = 0; i < sessionStorage.length; i++) {
             panier.push(sessionStorage.getItem(sessionStorage.key(i)));
         }
-        console.log(panier)
+
+        console.log('PANIER : ');
+        console.log(panier);
+
+        // let tbl_manip = [];
+        // for (let i = 0; i <item.length; i++) {
+        //     if (item[i] == ',') {
+        //         tbl_manip.push(i);
+        //     }
+        // }
+        $('#insertPanier').empty();
+
+        let tbl_manip = [];
+        let cpt = 0;
+        for (let elem of panier) {
+
+            console.log('\n\nElement :');
+            console.log(elem);
+
+            let string = JSON.stringify(elem);
+            var tbl_value = string.split(',');
+            console.log('Image');
+            console.log(tbl_value[6]);
+            $('#insertPanier').append("<div class='border-bottom border-dark p-3 d-flex'><div class='col-2 align-center my-auto'> <p>   <img src='" + tbl_value[6] + "' width='100%'> </p></div><div class='col-10'> <div class='d-flex justify-content-between border-bottom p-3'>   <p class='col-4'> <span class='font-weight-bold'>" + tbl_value[1] + "</span>  <span class='text-secondary'>" + tbl_value[5] + "g</span>   </p> <p class = 'col-4 d-flex justify-content-start' > <label class = 'align-self-center' > Quantité: </label> <input class='ml-3 w-50 form-control text-center' type='number' step='1' value='" + tbl_value[7] + "' readonly onfocus='this.removeAttribute('readonly');'> </p ><p class = 'col-4 d-flex justify-content-end' > <button data - cle = '" + tbl_value[0] + "'class = 'ajouter_plat btn btn-dark'type = 'button' > <i class = 'fas fa-cart-plus mr-2' > </i> <span>Ajouter</span > </button> </p ></div>     <div class='d-flex justify-content-start border-bottom p-3'>           <p class='col-4'>                 <label>Prix : </label > <span class = 'font-weight-bold text-dark' > " + tbl_value[4] + "€ </span>           </p > </div>/div > </div>")
+
+            // for (let i = 0; i <elem.length; i++) {
+            //     if (elem[i] == ',') {
+            //         tbl_manip.push(i);
+            //     }
+            // }
+
+            // for (let i = 0; i <tbl_manip.length; i++) {
+            //     let data = elem.substr(tbl_manip[cpt], i);
+            //     console.log(data)
+            //     cpt++
+            // }
+
+            // // let data = elem.substr(tbl_manip[cpt], i);
+            // // console.log(data)
+            // // cpt++
+
+            // console.log('\n\nTableau : ');
+            // console.log(tbl_manip)
+        }
+
+        // let tbl_object = [];
+
+
+        // for (let i = 0; i <tbl_manip.length; i += 7) {
+        //     tbl_object.push(tbl_manip.slice(i, i + 7));
+        //     console.log(tbl_object)
+        // }
+
+        // // console.log('Tableau : ');
+        // // console.log(tbl_manip)
+
+        // for (let i = 0; i <tbl_manip.length; i++) {
+        //     tbl_manip[i];
+
+        // }
     });
+
+    // let pg = $('<p></p>');
+    // pg.html(champs + '<br>')
+    // $('#insertPanier').append(pg);
 
     /////////////////////////////////////////////////////////////////////////
     //////////////////////// AJOUTER au PANIER //////////////////////////////

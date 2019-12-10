@@ -1,0 +1,6 @@
+Simulation de paiement 
+Statut de la commande, payée / impayée
+
+Backoffice administrateur
+
+Backoffice livraison 

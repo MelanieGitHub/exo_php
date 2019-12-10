@@ -17,9 +17,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"> </script>
     <script src="https://kit.fontawesome.com/1cf86c30d1.js"></script>
 
-    <link rel="stylesheet" href="css/style_login.css">
+    <link rel="stylesheet" href="css/style_login.css?<?php echo filemtime('css/style_login.css'); ?>">
 
-    <script src="js/script_index.js"></script>
+    <script src="js/script_index.js?<?php echo filemtime('js/script_index.js'); ?>"></script>
 </head>
 
 
