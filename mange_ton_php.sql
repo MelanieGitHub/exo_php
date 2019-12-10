@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 09 déc. 2019 à 22:50
+-- Généré le :  mar. 10 déc. 2019 à 16:14
 -- Version du serveur :  10.4.8-MariaDB
--- Version de PHP :  7.1.32
+-- Version de PHP :  7.2.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -56,16 +56,17 @@ CREATE TABLE `compte` (
   `ID_Compte` int(11) NOT NULL,
   `Pseudo` varchar(50) NOT NULL,
   `Mail` varchar(150) NOT NULL,
-  `Password` varchar(25) NOT NULL
+  `Password` varchar(25) NOT NULL,
+  `Type` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `compte`
 --
 
-INSERT INTO `compte` (`ID_Compte`, `Pseudo`, `Mail`, `Password`) VALUES
-(1, 'M', 'no-mail@truc.com', '42'),
-(2, 'L', 'l.f@gmail.com', '42');
+INSERT INTO `compte` (`ID_Compte`, `Pseudo`, `Mail`, `Password`, `Type`) VALUES
+(1, 'M', 'no-mail@truc.com', '42', 'admin'),
+(2, 'L', 'leonard.fayolle@gmail.com', '42', 'user');
 
 -- --------------------------------------------------------
 
@@ -207,17 +208,17 @@ CREATE TABLE `plat` (
 
 INSERT INTO `plat` (`ID`, `Libelle`, `Type`, `Origine`, `Prix`, `Poids`, `Image`) VALUES
 (1, 'McWrap Indian Veggie', 1, 2, 5.8, 200, 'images/mcwrap-indian.png'),
-(2, 'McMuffin Egg & Bacon', 1, 2, 3.4, 100, 'images/mcmuffin-egg.jpg'),
+(2, 'McMuffin Egg & Bacon', 1, 4, 3.4, 100, 'images/mcmuffin-egg.jpg'),
 (3, 'McWrap Crispy Raclette Bacon', 1, 2, 5.8, 120, 'images/mcwrap-raclette.png'),
-(4, 'Big Mac', 1, 2, 5, 230, 'images/big-mac.png'),
-(5, 'Triple Cheesburger', 1, 2, 4.5, 200, 'images/triple-cheese.jpg'),
-(6, 'McChicken', 1, 2, 5, 500, 'images/mc-chicken.jpg'),
+(4, 'Big Mac', 1, 1, 5, 230, 'images/big-mac.png'),
+(5, 'Triple Cheesburger', 1, 1, 4.5, 200, 'images/triple-cheese.jpg'),
+(6, 'McChicken', 1, 3, 5, 500, 'images/mc-chicken.jpg'),
 (7, 'Donut confetti', 2, 2, 2, 100, 'images/donut.png'),
-(8, 'Duo de macarons', 2, 2, 2, 50, 'images/macaron.png'),
-(9, 'Muffin Chocolat noisette', 2, 2, 2.8, 60, 'images/muffin.png'),
-(10, 'Cookie choconuts', 2, 2, 2.2, 55, 'images/cookie.jpg'),
-(11, 'Evian', 6, 2, 2.7, 50, 'images/evian.png'),
-(12, 'Coca-Cola', 6, 2, 2.5, 25, 'images/coca.png');
+(8, 'Duo de macarons', 2, 1, 2, 50, 'images/macaron.png'),
+(9, 'Muffin Chocolat noisette', 2, 4, 2.8, 60, 'images/muffin.png'),
+(10, 'Cookie choconuts', 2, 6, 2.2, 55, 'images/cookie.jpg'),
+(11, 'Evian', 6, 3, 2.7, 50, 'images/evian.png'),
+(12, 'Coca-Cola', 6, 1, 2.5, 25, 'images/coca.png');
 
 -- --------------------------------------------------------
 
