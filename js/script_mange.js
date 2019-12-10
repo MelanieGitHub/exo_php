@@ -154,16 +154,25 @@ $(document).ready(function() {
             },
             success: function(data, statut) {
                 let details_tbl = $.parseJSON(data);
-                // console.log(details_tbl);
 
                 details_tbl.push(quantite);
-                // console.log(details_tbl);
 
-                let cle = '1';
-                let last_id = sessionStorage.length;
-
-                sessionStorage.setItem("plat" + id_plat, details_tbl);
-
+                if (sessionStorage.getItem("plat" + id_plat)) {
+                    let item = sessionStorage.getItem("plat" + id_plat);
+                    let tbl_manip = [];
+                    for (let i = 0; i < item.length; i++) {
+                        if (item[i] == ',') {
+                            tbl_manip.push(i);
+                        }
+                    }
+                    let quantite_before = item.substring(tbl_manip[6] + 1, item.length);
+                    let new_quantite = parseInt(quantite) + parseInt(quantite_before);
+                    details_tbl.pop();
+                    details_tbl.push(new_quantite);
+                    sessionStorage.setItem("plat" + id_plat, details_tbl);
+                } else {
+                    sessionStorage.setItem("plat" + id_plat, details_tbl);
+                }
             },
             error: function(resultat, statut, erreur) {
                 console.log('Erreur lors de l\'ajout au panier.');
