@@ -4,6 +4,9 @@ session_start();
 // connexion à la base de données
 include('../bdd_sql/connexion_bdd.php');
 
+// $db = new Database();
+// $cnn = $db->dbConnection();
+
 $id = mysqli_real_escape_string($db, htmlspecialchars($_GET['id']));
 
 $requete_select_commande = "SELECT plat.Libelle, 

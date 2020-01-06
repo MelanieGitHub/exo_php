@@ -3,6 +3,8 @@ session_start();
 
 // connexion à la base de données
 include('bdd_sql/connexion_bdd.php');
+$db = new Database();
+$cnn = $db->dbConnection();
 
 // Gestion de la session utilisateur 
 if (!$_SESSION) {
@@ -29,7 +31,7 @@ if (isset($_GET['deconnexion'])) {
 
 <head>
       <meta charset="utf-8">
-      <title>Mange mamen</title>
+      <title>Php</title>
 
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="icon" href="images/icon_resto.ico" />
