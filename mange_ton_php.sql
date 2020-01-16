@@ -66,7 +66,7 @@ CREATE TABLE `compte` (
 
 INSERT INTO `compte` (`ID_Compte`, `Pseudo`, `Mail`, `Password`, `Type`) VALUES
 (1, 'M', 'no-mail@truc.com', '42', 'admin'),
-(2, 'L', 'leonard.fayolle@gmail.com', '42', 'user');
+(2, 'L', 'l.f@gmail.com', '42', 'user');
 
 -- --------------------------------------------------------
 
